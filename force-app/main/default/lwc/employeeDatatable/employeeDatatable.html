@@ -1,0 +1,64 @@
+<template>
+    <lightning-card title="Employee Directory" icon-name="standard:employee">
+        <div slot="actions">
+            <lightning-button-icon
+                icon-name="utility:refresh"
+                alternative-text="Refresh"
+                title="Refresh"
+                onclick={handleRefresh}
+            ></lightning-button-icon>
+        </div>
+
+        <div class="slds-var-m-around_medium">
+            <!-- Loading state -->
+            <template lwc:if={isLoading}>
+                <div class="slds-align_absolute-center slds-var-p-around_large">
+                    <lightning-spinner alternative-text="Loading employees..." size="medium"></lightning-spinner>
+                </div>
+            </template>
+
+            <!-- Error state -->
+            <template lwc:elseif={hasError}>
+                <div class="slds-notify slds-notify_alert slds-alert_error" role="alert">
+                    <span class="slds-assistive-text">Error</span>
+                    <lightning-icon icon-name="utility:error" alternative-text="Error" size="small" class="slds-var-m-right_x-small"></lightning-icon>
+                    {errorMessage}
+                </div>
+            </template>
+
+            <!-- Datatable -->
+            <template lwc:else>
+                <!-- Selection banner -->
+                <template lwc:if={selectedEmployee}>
+                    <div class="selection-banner slds-var-m-bottom_small">
+                        <lightning-icon icon-name="utility:check" size="x-small" class="slds-var-m-right_xx-small"></lightning-icon>
+                        <span class="slds-text-body_small">
+                            <strong>{selectedEmployee.name}</strong> selected — opening Employee App
+                        </span>
+                    </div>
+                </template>
+
+                <p class="slds-text-body_small slds-text-color_weak slds-var-m-bottom_small">
+                    Click an employee name to open their details in the Employee App.
+                </p>
+
+                <lightning-datatable
+                    key-field="id"
+                    data={employees}
+                    columns={columns}
+                    hide-checkbox-column
+                    onrowaction={handleRowAction}
+                    sorted-by={sortBy}
+                    sorted-direction={sortDirection}
+                    onsort={handleSort}
+                    default-sort-direction="asc"
+                    class="employee-table"
+                ></lightning-datatable>
+
+                <div class="slds-var-m-top_small slds-text-body_small slds-text-color_weak">
+                    {employeeCount} employees
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

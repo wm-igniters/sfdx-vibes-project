@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Employee Detail</title>
+    <!-- React 18 UMD build (no bundler needed for a static resource demo) -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7/babel.min.js"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Salesforce Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f4f6f9;
+            color: #16325c;
+            padding: 1.25rem;
+            font-size: 0.875rem;
+        }
+
+        .idle {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 80vh;
+            color: #54698d;
+            gap: 1rem;
+            text-align: center;
+        }
+
+        .idle svg { opacity: 0.35; }
+
+        .card {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,.08);
+            overflow: hidden;
+            animation: slideIn 0.25s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.25rem 1.5rem;
+            background: linear-gradient(135deg, #0070d2 0%, #005fb2 100%);
+            color: #fff;
+        }
+
+        .avatar {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            font-weight: 700;
+            flex-shrink: 0;
+            border: 2px solid rgba(255,255,255,0.5);
+        }
+
+        .card-header-text h2 { font-size: 1.1rem; font-weight: 700; }
+        .card-header-text p  { font-size: 0.8125rem; opacity: 0.85; margin-top: 2px; }
+
+        .status-badge {
+            margin-left: auto;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.35);
+        }
+
+        .status-badge.active { background: #2e844a; border-color: #2e844a; }
+        .status-badge.leave  { background: #c23934; border-color: #c23934; }
+
+        .card-body {
+            padding: 1.25rem 1.5rem;
+        }
+
+        .section-title {
+            font-size: 0.6875rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #54698d;
+            margin-bottom: 0.75rem;
+        }
+
+        .field-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.875rem 1.5rem;
+        }
+
+        .field-group label {
+            display: block;
+            font-size: 0.75rem;
+            color: #54698d;
+            margin-bottom: 2px;
+            font-weight: 600;
+        }
+
+        .field-group .value {
+            font-size: 0.875rem;
+            color: #16325c;
+        }
+
+        .field-group a { color: #0070d2; text-decoration: none; }
+        .field-group a:hover { text-decoration: underline; }
+
+        .divider { border: none; border-top: 1px solid #e0e5ee; margin: 1rem 0; }
+
+        .salary-highlight {
+            display: inline-block;
+            background: #eaf5fe;
+            color: #0070d2;
+            font-weight: 700;
+            font-size: 1rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+        }
+
+        .timestamp {
+            font-size: 0.6875rem;
+            color: #98a5b5;
+            margin-top: 1rem;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                minimumFractionDigits: 0
+            }).format(amount);
+        }
+
+        function formatTimestamp(ts) {
+            return new Date(ts).toLocaleString();
+        }
+
+        function IdleState() {
+            return (
+                <div className="idle">
+                    <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+                        <circle cx="40" cy="40" r="38" stroke="#0070d2" strokeWidth="2"/>
+                        <circle cx="40" cy="30" r="12" stroke="#0070d2" strokeWidth="2"/>
+                        <path d="M16 64c0-13.255 10.745-24 24-24s24 10.745 24 24"
+                              stroke="#0070d2" strokeWidth="2" strokeLinecap="round"/>
+                    </svg>
+                    <div>
+                        <strong>No employee selected</strong>
+                        <p style={{marginTop: '0.25rem', fontSize: '0.8125rem'}}>
+                            Click an employee name in the Salesforce datatable to see details here.
+                        </p>
+                    </div>
+                </div>
+            );
+        }
+
+        function EmployeeCard({ employee }) {
+            const isActive = employee.status === 'Active';
+
+            return (
+                <div className="card">
+                    <div className="card-header">
+                        <div className="avatar">{employee.avatarInitials || '??'}</div>
+                        <div className="card-header-text">
+                            <h2>{employee.employeeName}</h2>
+                            <p>{employee.title}</p>
+                        </div>
+                        <span className={`status-badge ${isActive ? 'active' : 'leave'}`}>
+                            {employee.status}
+                        </span>
+                    </div>
+
+                    <div className="card-body">
+                        <p className="section-title">Contact Information</p>
+                        <div className="field-grid">
+                            <div className="field-group">
+                                <label>Email</label>
+                                <div className="value">
+                                    <a href={`mailto:${employee.email}`}>{employee.email}</a>
+                                </div>
+                            </div>
+                            <div className="field-group">
+                                <label>Phone</label>
+                                <div className="value">
+                                    <a href={`tel:${employee.phone}`}>{employee.phone}</a>
+                                </div>
+                            </div>
+                            <div className="field-group">
+                                <label>Location</label>
+                                <div className="value">{employee.location}</div>
+                            </div>
+                            <div className="field-group">
+                                <label>Employee ID</label>
+                                <div className="value">{employee.employeeId}</div>
+                            </div>
+                        </div>
+
+                        <hr className="divider" />
+
+                        <p className="section-title">Employment Details</p>
+                        <div className="field-grid">
+                            <div className="field-group">
+                                <label>Department</label>
+                                <div className="value">{employee.department}</div>
+                            </div>
+                            <div className="field-group">
+                                <label>Hire Date</label>
+                                <div className="value">{employee.hireDate}</div>
+                            </div>
+                            <div className="field-group" style={{gridColumn: '1 / -1'}}>
+                                <label>Salary</label>
+                                <div className="value">
+                                    <span className="salary-highlight">
+                                        {formatCurrency(employee.salary)}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p className="timestamp">
+                            Received from Salesforce at {formatTimestamp(employee.timestamp)}
+                        </p>
+                    </div>
+                </div>
+            );
+        }
+
+        function App() {
+            const [employee, setEmployee] = useState(null);
+
+            useEffect(() => {
+                function handleMessage(event) {
+                    // Accept messages from the parent window (Salesforce)
+                    if (event.data && event.data.type === 'EMPLOYEE_SELECTED') {
+                        setEmployee(event.data.payload);
+                    }
+                }
+
+                window.addEventListener('message', handleMessage);
+                return () => window.removeEventListener('message', handleMessage);
+            }, []);
+
+            return employee ? <EmployeeCard employee={employee} /> : <IdleState />;
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>

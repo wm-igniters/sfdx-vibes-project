@@ -1,0 +1,25 @@
+.selection-banner {
+    display: flex;
+    align-items: center;
+    background-color: #eaf5fe;
+    border-left: 4px solid #0070d2;
+    padding: 0.5rem 0.75rem;
+    border-radius: 4px;
+    color: #0070d2;
+    font-size: 0.8125rem;
+}
+
+.employee-table {
+    width: 100%;
+}
+
+/* Status cell colours — applied via cellAttributes.class */
+:host .status-active {
+    color: #2e844a;
+    font-weight: 500;
+}
+
+:host .status-leave {
+    color: #c23934;
+    font-weight: 500;
+}

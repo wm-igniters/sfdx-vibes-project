@@ -1,0 +1,9 @@
+{
+  "permsetAssignments": {
+    "assignments": {
+      "employeeapp_Access": {
+        "assignee": "currentUser"
+      }
+    }
+  }
+}

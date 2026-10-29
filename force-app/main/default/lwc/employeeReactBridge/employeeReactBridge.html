@@ -1,0 +1,42 @@
+<template>
+    <lightning-card title="Employee Details — React App" icon-name="utility:connected_apps">
+        <div class="slds-var-m-around_medium">
+
+            <!-- Status bar -->
+            <div class="status-bar slds-var-m-bottom_small">
+                <template lwc:if={selectedEmployee}>
+                    <div class="status-connected">
+                        <lightning-icon icon-name="utility:success" size="x-small" class="slds-var-m-right_xx-small"></lightning-icon>
+                        <span>
+                            Showing <strong>{selectedEmployee.employeeName}</strong>
+                            ({selectedEmployee.department}) in React app
+                        </span>
+                    </div>
+                </template>
+                <template lwc:else>
+                    <div class="status-idle">
+                        <lightning-icon icon-name="utility:info" size="x-small" class="slds-var-m-right_xx-small"></lightning-icon>
+                        <span class="slds-text-color_weak">
+                            Waiting for employee selection — click a name in the datatable above
+                        </span>
+                    </div>
+                </template>
+            </div>
+
+            <!-- React app iframe -->
+            <div class="iframe-container">
+                <iframe
+                    src={reactAppUrl}
+                    title="Employee Detail React App"
+                    class="react-iframe"
+                    sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+                    lwc:ref="reactIframe"
+                ></iframe>
+            </div>
+
+            <p class="slds-text-body_small slds-text-color_weak slds-var-m-top_x-small">
+                Communication channel: Lightning Message Service → postMessage (cross-framework)
+            </p>
+        </div>
+    </lightning-card>
+</template>
