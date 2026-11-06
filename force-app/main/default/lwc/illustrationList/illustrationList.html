@@ -1,0 +1,115 @@
+<template>
+  <section class="content" aria-label="Illustrations">
+    <template lwc:if={isLoading}>
+      <div class="dir-state">
+        <lightning-spinner
+          alternative-text="Loading illustrations"
+          size="small"
+        ></lightning-spinner>
+      </div>
+    </template>
+    <template lwc:elseif={hasError}>
+      <div class="dir-error" role="alert">
+        <span>{errorMessage}</span>
+        <button type="button" class="dir-link-btn" onclick={handleRefresh}>
+          Try again
+        </button>
+      </div>
+    </template>
+    <template lwc:else>
+      <div class="dir-scroll">
+        <table class="dir-table">
+          <thead>
+            <tr>
+              <template for:each={columns} for:item="col">
+                <th
+                  key={col.key}
+                  scope="col"
+                  class={col.thClass}
+                  aria-sort={col.ariaSort}
+                >
+                  <template lwc:if={col.sortable}>
+                    <button
+                      type="button"
+                      class="dir-sort"
+                      data-field={col.key}
+                      onclick={handleSortClick}
+                    >
+                      <span>{col.label}</span>
+                      <template lwc:if={col.sortIcon}>
+                        <lightning-icon
+                          icon-name={col.sortIcon}
+                          size="xx-small"
+                        ></lightning-icon>
+                      </template>
+                    </button>
+                  </template>
+                  <template lwc:else>{col.label}</template>
+                </th>
+              </template>
+            </tr>
+          </thead>
+          <tbody>
+            <template for:each={rows} for:item="ill">
+              <tr key={ill.key}>
+                <td class="dir-code">{ill.illustrationRef}</td>
+                <td class="dir-name">{ill.clientName}</td>
+                <td class="dir-status">{ill.statusLabel}</td>
+                <td class="dir-date">{ill.illustratedAtLabel}</td>
+                <td class="dir-action">
+                  <button
+                    type="button"
+                    class="dir-btn"
+                    data-id={ill.key}
+                    data-kind="pdf"
+                    aria-label={ill.pdfLabel}
+                    title={ill.pdfLabel}
+                    disabled={ill.pdfDisabled}
+                    onclick={handleDownload}
+                  >
+                    <lightning-icon
+                      icon-name="utility:download"
+                      size="xx-small"
+                      variant="inverse"
+                    ></lightning-icon>
+                    <span>{ill.pdfText}</span>
+                  </button>
+                </td>
+                <td class="dir-action">
+                  <button
+                    type="button"
+                    class="dir-btn"
+                    data-id={ill.key}
+                    data-kind="xml"
+                    aria-label={ill.xmlLabel}
+                    title={ill.xmlLabel}
+                    disabled={ill.xmlDisabled}
+                    onclick={handleDownload}
+                  >
+                    <lightning-icon
+                      icon-name="utility:download"
+                      size="xx-small"
+                      variant="inverse"
+                    ></lightning-icon>
+                    <span>{ill.xmlText}</span>
+                  </button>
+                </td>
+              </tr>
+            </template>
+          </tbody>
+        </table>
+      </div>
+      <template lwc:if={isEmpty}>
+        <p class="dir-empty">No illustrations yet.</p>
+      </template>
+      <div class="dir-footer">
+        <p class="dir-count">{countLabel}</p>
+        <button type="button" class="dir-link-btn" onclick={handleRefresh}>
+          Refresh
+        </button>
+      </div>
+    </template>
+    <!-- Host for the temporary download links -->
+    <div class="dir-downloads" lwc:ref="downloads" lwc:dom="manual"></div>
+  </section>
+</template>

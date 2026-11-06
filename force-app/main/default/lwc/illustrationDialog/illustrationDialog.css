@@ -1,0 +1,248 @@
+:host {
+    --ill-navy: #1d3557;
+    --ill-panel: #dde3ea;
+    --ill-slate: #6b7d91;
+    --ill-slate-light: #8a9aac;
+    --ill-blue: #2f80c8;
+    --ill-blue-hover: #276daa;
+    --ill-text: #2b2f33;
+    --ill-muted: #8a939c;
+    --ill-error: #c23934;
+}
+
+.ill-container {
+    width: 52rem;
+    max-width: calc(100vw - 2rem);
+    min-width: 0;
+    padding: 0;
+}
+
+/* Header ─────────────────────────────────────────── */
+.ill-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    background: var(--ill-navy);
+    color: #fff;
+}
+
+.ill-title {
+    font-size: 1.125rem;
+    font-weight: 400;
+}
+
+.ill-close {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: none;
+    border: 0;
+    color: #fff;
+    font-size: 1rem;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.ill-close:hover span:first-child {
+    text-decoration: underline;
+}
+
+.ill-circle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 1.5px solid #fff;
+    border-radius: 50%;
+}
+
+/* Body ───────────────────────────────────────────── */
+.ill-body {
+    background: #fff;
+    padding: 2rem;
+}
+
+.ill-panel {
+    background: var(--ill-panel);
+    padding: 1.25rem 1.5rem 0.75rem;
+}
+
+.ill-row {
+    display: grid;
+    grid-template-columns: 9rem minmax(0, 1fr);
+    column-gap: 1rem;
+    align-items: center;
+    margin-bottom: 0.25rem;
+}
+
+.ill-label {
+    justify-self: end;
+    color: var(--ill-text);
+    font-size: 1rem;
+}
+
+.ill-label abbr {
+    text-decoration: none;
+    border: 0;
+}
+
+.ill-control {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.ill-error {
+    grid-column: 2;
+    min-height: 1rem;
+    color: var(--ill-error);
+    font-size: 0.75rem;
+}
+
+/* Select with slate caret box */
+.ill-select {
+    position: relative;
+    flex: 0 1 17.5rem;
+    min-width: 0;
+}
+
+.ill-select select {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 100%;
+    height: 2.25rem;
+    padding: 0 2.75rem 0 0.75rem;
+    border: 1px solid #c9d1da;
+    border-radius: 0;
+    background: #fff;
+    color: var(--ill-text);
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.ill-select select:focus {
+    outline: 2px solid var(--ill-blue);
+    outline-offset: -2px;
+}
+
+.ill-select_placeholder select {
+    color: var(--ill-muted);
+}
+
+.ill-select_error select {
+    border-color: var(--ill-error);
+    box-shadow: inset 0 0 0 1px var(--ill-error);
+}
+
+.ill-caret {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 2.25rem;
+    height: 100%;
+    background: var(--ill-slate);
+    pointer-events: none;
+}
+
+.ill-caret::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid #fff;
+    transform: translate(-50%, -30%);
+}
+
+.ill-search {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    background: var(--ill-slate-light);
+    border: 0;
+    cursor: pointer;
+}
+
+.ill-search:hover,
+.ill-search:focus-visible {
+    background: var(--ill-slate);
+}
+
+.ill-readonly {
+    flex: 0 1 18.5rem;
+    min-width: 0;
+    height: 2.25rem;
+    margin-left: 0.5rem;
+    padding: 0 0.75rem;
+    border: 1px solid #e1e5ea;
+    background: #f1f3f5;
+    color: var(--ill-muted);
+    font-size: 1rem;
+}
+
+/* Footer ─────────────────────────────────────────── */
+.ill-footer {
+    display: flex;
+    justify-content: flex-end;
+    background: var(--ill-navy);
+    min-height: 2.75rem;
+}
+
+.ill-start {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0 1rem;
+    min-height: 2.75rem;
+    background: var(--ill-blue);
+    border: 0;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.ill-start:hover,
+.ill-start:focus-visible {
+    background: var(--ill-blue-hover);
+}
+
+@media (max-width: 40em) {
+    .ill-body {
+        padding: 1rem;
+    }
+
+    .ill-row {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .ill-label {
+        justify-self: start;
+    }
+
+    .ill-error {
+        grid-column: 1;
+    }
+
+    .ill-control {
+        flex-wrap: wrap;
+    }
+
+    .ill-select {
+        flex: 1 1 0;
+    }
+
+    .ill-readonly {
+        margin-left: 0;
+        flex-basis: 100%;
+    }
+
+    .ill-title {
+        font-size: 1rem;
+    }
+}

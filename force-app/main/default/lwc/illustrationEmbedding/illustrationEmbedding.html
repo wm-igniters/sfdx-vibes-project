@@ -1,0 +1,62 @@
+<template>
+    <!-- No src → configuration error (lwc:else below) -->
+    <template lwc:if={hasSrc}>
+        <!-- Shown only when something fails -->
+        <template lwc:if={embeddingError}>
+            <div class="slds-notify slds-notify_alert slds-alert_error" role="alert">
+                <span class="slds-assistive-text">Error</span>
+                <span>
+                    <strong>{embeddingError.code}</strong>: {embeddingError.message}
+                    <template lwc:if={embeddingError.retryable}> (retryable)</template>
+                </span>
+                <template lwc:if={embeddingError.retryable}>
+                    <button class="slds-button slds-var-m-left_small" onclick={handleRetry}>Try again</button>
+                </template>
+            </div>
+        </template>
+        <template lwc:if={loadError}>
+            <div class="slds-notify slds-notify_alert slds-alert_warning" role="alert">
+                <span class="slds-assistive-text">Warning</span>
+                <span>{loadError}</span>
+            </div>
+        </template>
+
+        <div class="frame-wrap">
+            <template lwc:if={showEmbedding}>
+                <lightning-ui-embedding
+                    lwc:ref="embedding"
+                    style={embeddingStyle}
+                    src={embedSrc}
+                    title={cardTitle}
+                    props={embeddingProps}
+                    onemployeeselect={handleEmployeeSelect}
+                    ontrackdirtystate={handleTrackDirtyState}
+                    onappready={handleAppReady}
+                    onnavigatetab={handleNavigateTab}
+                ></lightning-ui-embedding>
+            </template>
+
+            <!-- Loading overlay until the embedded app has connected -->
+            <template lwc:if={showLoading}>
+                <div class="loading-overlay" data-id="loading-overlay" aria-busy="true">
+                    <div class="loading-content">
+                        <lightning-spinner alternative-text="Loading illustration" size="medium" variant="brand"></lightning-spinner>
+                        <p class="loading-text">{loadingText}</p>
+                    </div>
+                </div>
+            </template>
+        </div>
+
+        <!-- Connection status for screen readers only -->
+        <p class="slds-assistive-text" aria-live="polite">{statusText}</p>
+    </template>
+    <template lwc:else>
+        <div class="slds-notify slds-notify_alert slds-alert_error" role="alert">
+            <span class="slds-assistive-text">Error</span>
+            <span>
+                Embedded app URL not configured. Set the <strong>Employee App URL</strong> (https URL of the
+                WaveMaker app) or <strong>UI Bundle name</strong> property in Lightning App Builder.
+            </span>
+        </div>
+    </template>
+</template>

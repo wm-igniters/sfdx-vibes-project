@@ -6,6 +6,22 @@
     </applicationVisibilities>
     <hasActivationRequired>false</hasActivationRequired>
     <label>employeeapp Access</label>
+    <tabSettings>
+        <tab>Client_Illustration</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>Illustration_Embedding</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>Illustration_List</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>illustrationClientList</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
     <userPermissions>
         <enabled>true</enabled>
         <name>ApiEnabled</name>

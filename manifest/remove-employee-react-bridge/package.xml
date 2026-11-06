@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Deployed together with destructiveChanges.xml: the page without the
+     employeeReactBridge instance goes in first, then the component is deleted. -->
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>Employee_by_AgentforceVibes</members>
+        <name>FlexiPage</name>
+    </types>
+    <version>68.0</version>
+</Package>

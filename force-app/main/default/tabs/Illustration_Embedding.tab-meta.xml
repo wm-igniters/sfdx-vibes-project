@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomTab xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Hosts c-illustration-embedding (WaveMaker app via lightning-ui-embedding). Opened by the Employee Directory "Create Illustration" button.</description>
+    <label>Create Illustration</label>
+    <lwcComponent>illustrationEmbedding</lwcComponent>
+    <motif>Custom9: Lightning</motif>
+</CustomTab>

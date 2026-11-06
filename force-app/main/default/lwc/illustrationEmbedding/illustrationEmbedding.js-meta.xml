@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>68.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Illustration Embedding</masterLabel>
+    <description>Embeds the WaveMaker app (employeeapp UI Bundle, package-free embedding bridge) with lightning-ui-embedding and shares Employee Directory data with it.</description>
+    <targets>
+        <target>lightning__AppPage</target>
+        <target>lightning__RecordPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightning__Tab</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__AppPage,lightning__HomePage,lightning__RecordPage">
+            <property
+                name="cardTitle"
+                type="String"
+                default="Employee Illustration"
+                label="Frame title (accessible name, not shown)"
+            />
+            <property
+                name="appName"
+                type="String"
+                default="employeeapp"
+                label="UI Bundle name"
+                description="API name of the UI Bundle that serves the WaveMaker app. Used to derive https://mydomain--c.instance.my.salesforce.app/app/c__NAME when Employee App URL is blank."
+            />
+            <property
+                name="employeeAppUrl"
+                type="String"
+                label="Employee App URL"
+                description="Optional: https URL of the WaveMaker app / employeeapp UI Bundle (copy it from the address bar after opening employeeapp from the App Launcher). Leave blank to derive it from the current org."
+            />
+            <supportedFormFactors>
+                <supportedFormFactor type="Large"/>
+                <supportedFormFactor type="Small"/>
+            </supportedFormFactors>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

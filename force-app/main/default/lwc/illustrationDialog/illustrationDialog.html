@@ -1,0 +1,132 @@
+<template>
+    <section
+        role="dialog"
+        tabindex="-1"
+        aria-modal="true"
+        aria-labelledby="ill-title"
+        class="slds-modal slds-fade-in-open ill-modal"
+        onkeydown={handleKeydown}
+    >
+        <div class="slds-modal__container ill-container">
+            <header class="ill-header">
+                <h2 id="ill-title" class="ill-title">Select illustration parties</h2>
+                <button type="button" class="ill-close" onclick={handleCancel}>
+                    <span>Cancel and close</span>
+                    <span class="ill-circle" aria-hidden="true">
+                        <lightning-icon icon-name="utility:close" size="xx-small" variant="inverse"></lightning-icon>
+                    </span>
+                </button>
+            </header>
+
+            <div class="ill-body">
+                <div class="ill-panel">
+                    <!-- First party -->
+                    <div class="ill-row">
+                        <label class="ill-label" for="first-party">First party<abbr title="required">*</abbr></label>
+                        <div class="ill-control">
+                            <div class={firstPartyClass}>
+                                <select
+                                    id="first-party"
+                                    data-field="firstParty"
+                                    required
+                                    aria-describedby="first-party-error"
+                                    onchange={handleChange}
+                                >
+                                    <template for:each={firstPartyOptions} for:item="o">
+                                        <option key={o.value} value={o.value} selected={o.selected}>{o.label}</option>
+                                    </template>
+                                </select>
+                                <span class="ill-caret" aria-hidden="true"></span>
+                            </div>
+                            <button
+                                type="button"
+                                class="ill-search"
+                                title="Search first party"
+                                data-target="firstParty"
+                                onclick={handleSearch}
+                            >
+                                <lightning-icon icon-name="utility:search" size="x-small" variant="inverse"></lightning-icon>
+                                <span class="slds-assistive-text">Search first party</span>
+                            </button>
+                        </div>
+                        <p id="first-party-error" class="ill-error">{firstPartyError}</p>
+                    </div>
+
+                    <!-- Second party -->
+                    <div class="ill-row">
+                        <label class="ill-label" for="second-party">Second party<abbr title="required">*</abbr></label>
+                        <div class="ill-control">
+                            <div class={secondPartyClass}>
+                                <select
+                                    id="second-party"
+                                    data-field="secondParty"
+                                    required
+                                    aria-describedby="second-party-error"
+                                    onchange={handleChange}
+                                >
+                                    <template for:each={secondPartyOptions} for:item="o">
+                                        <option key={o.value} value={o.value} selected={o.selected}>{o.label}</option>
+                                    </template>
+                                </select>
+                                <span class="ill-caret" aria-hidden="true"></span>
+                            </div>
+                            <button
+                                type="button"
+                                class="ill-search"
+                                title="Search second party"
+                                data-target="secondParty"
+                                onclick={handleSearch}
+                            >
+                                <lightning-icon icon-name="utility:search" size="x-small" variant="inverse"></lightning-icon>
+                                <span class="slds-assistive-text">Search second party</span>
+                            </button>
+                        </div>
+                        <p id="second-party-error" class="ill-error">{secondPartyError}</p>
+                    </div>
+
+                    <!-- Prepared by -->
+                    <div class="ill-row">
+                        <label class="ill-label" for="prepared-by">Prepared by<abbr title="required">*</abbr></label>
+                        <div class="ill-control">
+                            <div class={preparedByClass}>
+                                <select
+                                    id="prepared-by"
+                                    data-field="preparedBy"
+                                    required
+                                    aria-describedby="prepared-by-error"
+                                    onchange={handleChange}
+                                >
+                                    <template for:each={preparedByOptions} for:item="o">
+                                        <option key={o.value} value={o.value} selected={o.selected} disabled={o.placeholder}>
+                                            {o.label}
+                                        </option>
+                                    </template>
+                                </select>
+                                <span class="ill-caret" aria-hidden="true"></span>
+                            </div>
+                            <input
+                                class="ill-readonly"
+                                type="text"
+                                value={adviserName}
+                                readonly
+                                aria-label="Adviser"
+                                tabindex="-1"
+                            />
+                        </div>
+                        <p id="prepared-by-error" class="ill-error">{preparedByError}</p>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="ill-footer">
+                <button type="button" class="ill-start" onclick={handleStart}>
+                    <span class="ill-circle" aria-hidden="true">
+                        <lightning-icon icon-name="utility:chevronright" size="xx-small" variant="inverse"></lightning-icon>
+                    </span>
+                    <span>Start illustration</span>
+                </button>
+            </footer>
+        </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+</template>

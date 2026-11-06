@@ -1,64 +1,119 @@
 <template>
-    <lightning-card title="Employee Directory" icon-name="standard:employee">
-        <div slot="actions">
-            <lightning-button-icon
-                icon-name="utility:refresh"
-                alternative-text="Refresh"
-                title="Refresh"
-                onclick={handleRefresh}
-            ></lightning-button-icon>
-        </div>
+    <div class="shell">
+        <!-- Left navigation -->
+        <nav class="nav" aria-label="Client sections">
+            <ul class="nav-list">
+                <template for:each={navItems} for:item="item">
+                    <li key={item.key}>
+                        <button
+                            type="button"
+                            class={item.className}
+                            data-key={item.key}
+                            aria-current={item.ariaCurrent}
+                            aria-label={item.ariaLabel}
+                            onclick={handleNavClick}
+                        >
+                            <span>{item.label}</span>
+                            <template lwc:if={item.external}>
+                                <lightning-icon
+                                    class="nav-external"
+                                    icon-name="utility:new_window"
+                                    size="x-small"
+                                ></lightning-icon>
+                            </template>
+                        </button>
+                    </li>
+                </template>
+            </ul>
+        </nav>
 
-        <div class="slds-var-m-around_medium">
-            <!-- Loading state -->
-            <template lwc:if={isLoading}>
-                <div class="slds-align_absolute-center slds-var-p-around_large">
-                    <lightning-spinner alternative-text="Loading employees..." size="medium"></lightning-spinner>
-                </div>
-            </template>
-
-            <!-- Error state -->
-            <template lwc:elseif={hasError}>
-                <div class="slds-notify slds-notify_alert slds-alert_error" role="alert">
-                    <span class="slds-assistive-text">Error</span>
-                    <lightning-icon icon-name="utility:error" alternative-text="Error" size="small" class="slds-var-m-right_x-small"></lightning-icon>
-                    {errorMessage}
-                </div>
-            </template>
-
-            <!-- Datatable -->
-            <template lwc:else>
-                <!-- Selection banner -->
-                <template lwc:if={selectedEmployee}>
-                    <div class="selection-banner slds-var-m-bottom_small">
-                        <lightning-icon icon-name="utility:check" size="x-small" class="slds-var-m-right_xx-small"></lightning-icon>
-                        <span class="slds-text-body_small">
-                            <strong>{selectedEmployee.name}</strong> selected — opening Employee App
-                        </span>
+        <!-- Content -->
+        <section class="content" aria-label={activeSectionLabel}>
+            <template lwc:if={showTable}>
+                <template lwc:if={isLoading}>
+                    <div class="dir-state">
+                        <lightning-spinner alternative-text="Loading clients" size="small"></lightning-spinner>
                     </div>
                 </template>
-
-                <p class="slds-text-body_small slds-text-color_weak slds-var-m-bottom_small">
-                    Click an employee name to open their details in the Employee App.
-                </p>
-
-                <lightning-datatable
-                    key-field="id"
-                    data={employees}
-                    columns={columns}
-                    hide-checkbox-column
-                    onrowaction={handleRowAction}
-                    sorted-by={sortBy}
-                    sorted-direction={sortDirection}
-                    onsort={handleSort}
-                    default-sort-direction="asc"
-                    class="employee-table"
-                ></lightning-datatable>
-
-                <div class="slds-var-m-top_small slds-text-body_small slds-text-color_weak">
-                    {employeeCount} employees
+                <template lwc:elseif={hasError}>
+                    <div class="dir-error" role="alert">{errorMessage}</div>
+                </template>
+                <template lwc:else>
+                    <div class="dir-scroll">
+                        <table class="dir-table">
+                            <thead>
+                                <tr>
+                                    <template for:each={columns} for:item="col">
+                                        <th key={col.key} scope="col" class={col.thClass} aria-sort={col.ariaSort}>
+                                            <template lwc:if={col.sortable}>
+                                                <button
+                                                    type="button"
+                                                    class="dir-sort"
+                                                    data-field={col.key}
+                                                    onclick={handleSortClick}
+                                                >
+                                                    <span>{col.label}</span>
+                                                    <template lwc:if={col.sortIcon}>
+                                                        <lightning-icon
+                                                            icon-name={col.sortIcon}
+                                                            size="xx-small"
+                                                        ></lightning-icon>
+                                                    </template>
+                                                </button>
+                                            </template>
+                                            <template lwc:else>{col.label}</template>
+                                        </th>
+                                    </template>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={rows} for:item="emp">
+                                    <tr key={emp.id}>
+                                        <td class="dir-name">{emp.displayName}</td>
+                                        <td class="dir-code">{emp.externalRef}</td>
+                                        <td>{emp.dobLabel}</td>
+                                        <td>{emp.adviserName}</td>
+                                        <td class="dir-action">
+                                            <button
+                                                type="button"
+                                                class="dir-btn"
+                                                data-id={emp.id}
+                                                aria-label={emp.createLabel}
+                                                onclick={handleCreateIllustration}
+                                            >
+                                                <span class="dir-circle" aria-hidden="true">
+                                                    <lightning-icon
+                                                        icon-name="utility:chevronright"
+                                                        size="xx-small"
+                                                        variant="inverse"
+                                                    ></lightning-icon>
+                                                </span>
+                                                <span>Create Illustration</span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="dir-count">{countLabel}</p>
+                </template>
+            </template>
+            <template lwc:else>
+                <div class="placeholder">
+                    <h2 class="placeholder-title">{activeSectionLabel}</h2>
+                    <p>This section isn't available yet.</p>
                 </div>
             </template>
-        </div>
-    </lightning-card>
+        </section>
+    </div>
+
+    <template lwc:if={dialogEmployee}>
+        <c-illustration-dialog
+            employee={dialogEmployee}
+            employees={employees}
+            onstart={handleStartIllustration}
+            oncancel={handleDialogCancel}
+        ></c-illustration-dialog>
+    </template>
 </template>

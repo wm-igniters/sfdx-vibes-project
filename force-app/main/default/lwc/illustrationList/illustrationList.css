@@ -1,0 +1,194 @@
+/* Same look as c-employee-datatable */
+:host {
+  --dir-head: #a3b4c5;
+  --dir-head-text: #3b4651;
+  --dir-row: #ffffff;
+  --dir-row-alt: #eef1f4;
+  --dir-row-hover: #e4d9e8;
+  --dir-sep: #ffffff;
+  --dir-link: #2a6db5;
+  --dir-blue: #2f80c8;
+  --dir-blue-hover: #276daa;
+  --dir-disabled: #b9c3cc;
+  --dir-text: #3a3f44;
+  display: block;
+}
+
+.content {
+  min-width: 0;
+  padding: 2rem 1.75rem 1.5rem;
+  background: #fff;
+}
+
+.dir-state {
+  position: relative;
+  min-height: 6rem;
+}
+
+.dir-error {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  background: #fdecea;
+  color: #c23934;
+}
+
+/* Table ──────────────────────────────────────────── */
+.dir-scroll {
+  overflow-x: auto;
+}
+
+.dir-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--dir-text);
+  font-size: 1rem;
+}
+
+.dir-th {
+  background: var(--dir-head);
+  color: var(--dir-head-text);
+  font-weight: 400;
+  text-align: center;
+  padding: 0.875rem 0.75rem;
+  border-right: 2px solid var(--dir-sep);
+  white-space: nowrap;
+}
+
+.dir-th:last-child {
+  border-right: 0;
+}
+
+.dir-sort {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  background: none;
+  border: 0;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.dir-sort:hover span,
+.dir-sort:focus-visible span {
+  text-decoration: underline;
+}
+
+.dir-table td {
+  padding: 0.625rem 0.5rem;
+  border-right: 2px solid var(--dir-sep);
+  vertical-align: middle;
+}
+
+.dir-table td:last-child {
+  border-right: 0;
+}
+
+.dir-table tbody tr:nth-child(odd) td {
+  background: var(--dir-row-alt);
+}
+
+.dir-table tbody tr:nth-child(even) td {
+  background: var(--dir-row);
+}
+
+.dir-table tbody tr:hover td {
+  background: var(--dir-row-hover);
+}
+
+.dir-status,
+.dir-date {
+  text-align: center;
+  white-space: nowrap;
+}
+
+.dir-code {
+  color: var(--dir-link);
+}
+
+.dir-action {
+  width: 1%;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.dir-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-width: 6.5rem;
+  min-height: 2.25rem;
+  padding: 0 0.875rem;
+  background: var(--dir-blue);
+  border: 0;
+  color: #fff;
+  font-size: 0.9375rem;
+  cursor: pointer;
+}
+
+.dir-btn:hover,
+.dir-btn:focus-visible {
+  background: var(--dir-blue-hover);
+}
+
+.dir-btn:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: -4px;
+}
+
+.dir-btn:disabled,
+.dir-btn:disabled:hover {
+  background: var(--dir-disabled);
+  cursor: not-allowed;
+}
+
+.dir-empty {
+  padding: 2rem 1rem;
+  color: #6b7580;
+  text-align: center;
+}
+
+.dir-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+}
+
+.dir-count {
+  color: #6b7580;
+  font-size: 0.8125rem;
+}
+
+.dir-link-btn {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: var(--dir-link);
+  font-size: 0.8125rem;
+  cursor: pointer;
+}
+
+.dir-link-btn:hover,
+.dir-link-btn:focus-visible {
+  text-decoration: underline;
+}
+
+.dir-downloads {
+  display: none;
+}
+
+@media (max-width: 48em) {
+  .content {
+    padding: 1rem;
+  }
+
+  .dir-table {
+    min-width: 44rem;
+  }
+}

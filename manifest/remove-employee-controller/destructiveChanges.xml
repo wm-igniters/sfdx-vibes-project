@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Removes the old sample EmployeeController (replaced by ClientController) and the
+     org-only employeeList LWC that still called it. -->
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>EmployeeController</members>
+        <members>EmployeeControllerTest</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>employeeList</members>
+        <name>LightningComponentBundle</name>
+    </types>
+    <version>68.0</version>
+</Package>

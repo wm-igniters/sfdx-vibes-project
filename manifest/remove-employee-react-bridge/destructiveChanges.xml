@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Removes the "Employee Details — React App" iframe component and the static
+     resource it loaded. Remove the component from every Lightning page first. -->
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>employeeReactBridge</members>
+        <name>LightningComponentBundle</name>
+    </types>
+    <types>
+        <members>EmployeeReactApp</members>
+        <name>StaticResource</name>
+    </types>
+    <version>68.0</version>
+</Package>

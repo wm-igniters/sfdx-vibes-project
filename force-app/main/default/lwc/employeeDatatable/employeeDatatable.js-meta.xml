@@ -6,21 +6,24 @@
         <target>lightning__AppPage</target>
         <target>lightning__RecordPage</target>
         <target>lightning__HomePage</target>
+        <target>lightning__Tab</target>
     </targets>
     <targetConfigs>
         <targetConfig targets="lightning__AppPage,lightning__HomePage,lightning__RecordPage">
+            <!-- Deprecated: unused since Employee Name navigation was removed. Kept because
+                 Salesforce won't remove a property while the component is on a Lightning page. -->
             <property
                 name="employeeAppUrl"
                 type="String"
-                label="Employee App URL"
-                description="Optional: URL of the employeeapp UI Bundle (e.g. https://mydomain--c.develop.my.salesforce.app/app/c__employeeapp). Leave blank to derive it from the current org."
+                label="(Deprecated) Employee App URL"
+                description="No longer used."
             />
             <property
                 name="openInNewTab"
                 type="Boolean"
                 default="false"
-                label="Open Employee App in new tab"
-                description="When unchecked, clicking an employee name redirects the current tab to the Employee App."
+                label="(Deprecated) Open Employee App in new tab"
+                description="No longer used."
             />
             <supportedFormFactors>
                 <supportedFormFactor type="Large"/>
