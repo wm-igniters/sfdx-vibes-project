@@ -1,0 +1,29 @@
+{
+  "chips" : {
+    "appearances" : {
+      "filled" : {
+        "variantGroups" : {
+          "status" : {
+            "primary" : {
+              "list" : {
+                "border" : {
+                  "color" : {
+                    "value" : "{color.transparent.value}"
+                  }
+                },
+                "padding" : {
+                  "value" : "{space.0.value}"
+                }
+              },
+              "item" : {
+                "font-size" : {
+                  "value" : "{body.small.font-size.value}"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

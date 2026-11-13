@@ -1,0 +1,25 @@
+{
+  "popover" : {
+    "mapping" : {
+      "background" : {
+        "value" : "{color.surface.@.value}"
+      },
+      "radius" : {
+        "value" : "{radius.xs.value}"
+      },
+      "body" : {
+        "padding" : {
+          "value" : "{space.0.value}"
+        }
+      },
+      "arrow" : {
+        "size" : {
+          "value" : "{space.1.value}"
+        },
+        "background" : {
+          "value" : "{color.transparent.value}"
+        }
+      }
+    }
+  }
+}

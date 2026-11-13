@@ -1,0 +1,168 @@
+<template>
+    <div class="bm" onkeydown={handleKeydown}>
+        <!-- Toolbar -->
+        <div class="bm-toolbar">
+            <div class="bulk">
+                <button
+                    type="button"
+                    class="bulk-toggle"
+                    aria-haspopup="true"
+                    aria-expanded={bulkExpanded}
+                    disabled={noneSelected}
+                    onclick={handleBulkToggle}
+                >
+                    <span>{bulkLabel}</span>
+                    <lightning-icon icon-name="utility:down" size="xx-small" class="bulk-caret"></lightning-icon>
+                </button>
+                <template lwc:if={bulkMenuOpen}>
+                    <div class="bulk-menu" role="menu">
+                        <button type="button" role="menuitem" class="action-item" data-kind="pdf" onclick={handleBulkAction}>
+                            Get PDFs
+                        </button>
+                        <button type="button" role="menuitem" class="action-item" data-kind="xml" onclick={handleBulkAction}>
+                            Get XMLs
+                        </button>
+                    </div>
+                </template>
+            </div>
+            <span class="bm-sep" aria-hidden="true"></span>
+            <label class="bm-check">
+                <input type="checkbox" checked={includeProtection} onchange={handleIncludeProtection} />
+                <span>Include protection?</span>
+            </label>
+            <span class="bm-sep" aria-hidden="true"></span>
+            <button type="button" class="bm-refresh" onclick={handleRefresh} disabled={isLoading}>
+                <lightning-icon icon-name="utility:refresh" size="x-small" class="bm-refresh-icon"></lightning-icon>
+                <span>Refresh</span>
+            </button>
+        </div>
+
+        <template lwc:if={hasClient}>
+            <template lwc:if={hasError}>
+                <div class="bm-error" role="alert">{errorMessage}</div>
+            </template>
+            <div class="bm-scroll">
+                <table class="bm-table">
+                    <thead>
+                        <tr>
+                            <th class="th th_check" scope="col">
+                                <input
+                                    type="checkbox"
+                                    aria-label="Select all illustrations"
+                                    checked={allSelected}
+                                    onchange={handleSelectAll}
+                                />
+                            </th>
+                            <th class="th th_date" scope="col">Date</th>
+                            <th class="th" scope="col">Name</th>
+                            <th class="th" scope="col">Plan</th>
+                            <th class="th" scope="col">Single</th>
+                            <th class="th" scope="col">Regular</th>
+                            <th class="th" scope="col">Transfer</th>
+                            <th class="th" scope="col">SA / benefit amount</th>
+                            <th class="th th_icon" scope="col"><span class="assistive">Details</span></th>
+                            <th class="th" scope="col">EBS / App status</th>
+                            <th class="th" scope="col">Set</th>
+                            <th class="th th_icon" scope="col"><span class="assistive">Actions</span></th>
+                            <th class="th th_icon" scope="col"><span class="assistive">Lock</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={rows} for:item="row">
+                            <tr key={row.id} class={row.rowClass}>
+                                <td class="td_check">
+                                    <input
+                                        type="checkbox"
+                                        data-id={row.id}
+                                        aria-label={row.selectLabel}
+                                        checked={row.selected}
+                                        onchange={handleSelectRow}
+                                    />
+                                </td>
+                                <td>{row.dateLabel}</td>
+                                <td>{row.clientName}</td>
+                                <td class="td_center link">{row.plan}</td>
+                                <td class="td_num">{row.single}</td>
+                                <td class="td_num">{row.regular}</td>
+                                <td class="td_num">{row.transfer}</td>
+                                <td class="td_num"></td>
+                                <td class="td_icon">
+                                    <span class="info" title={row.info} aria-label={row.info} role="img">i</span>
+                                </td>
+                                <td>{row.status}</td>
+                                <td class="link">{row.setRef}</td>
+                                <td class="td_icon">
+                                    <button
+                                        type="button"
+                                        class="play"
+                                        data-id={row.id}
+                                        aria-label={row.actionsLabel}
+                                        aria-haspopup="true"
+                                        aria-expanded={row.menuExpanded}
+                                        onclick={handleOpenActions}
+                                    >
+                                        <lightning-icon icon-name="utility:play" size="xx-small" class="play-icon"></lightning-icon>
+                                    </button>
+                                </td>
+                                <td class="td_icon">
+                                    <span class={row.lockClass} title={row.lockLabel} aria-label={row.lockLabel} role="img">
+                                        <lightning-icon icon-name={row.lockIcon} size="xx-small"></lightning-icon>
+                                    </span>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+            <template lwc:if={isLoading}>
+                <div class="bm-loading">
+                    <lightning-spinner alternative-text="Loading illustrations" size="small"></lightning-spinner>
+                </div>
+            </template>
+            <template lwc:if={isEmpty}>
+                <p class="bm-empty">{emptyText}</p>
+            </template>
+        </template>
+        <template lwc:else>
+            <p class="bm-empty">Choose a client from <strong>Clients</strong> to see their illustrations.</p>
+        </template>
+
+        <!-- Row action menu (drawn beside the play button) -->
+        <template lwc:if={menuRowId}>
+            <div class="action-menu" style={menuStyle} role="menu" aria-label={menuIllustrationLabel}>
+                <template for:each={menuGroups} for:item="group">
+                    <div key={group.key} class="action-group" role="group" aria-label={group.label}>
+                        <p class="action-group-label">{group.label}</p>
+                        <template for:each={group.items} for:item="item">
+                            <button
+                                key={item.key}
+                                type="button"
+                                role="menuitem"
+                                class={item.className}
+                                data-action={item.key}
+                                disabled={item.disabled}
+                                onclick={handleAction}
+                            >
+                                <span>{item.label}</span>
+                                <template lwc:if={item.external}>
+                                    <lightning-icon icon-name="utility:new_window" size="xx-small" class="action-external"></lightning-icon>
+                                </template>
+                            </button>
+                        </template>
+                    </div>
+                </template>
+            </div>
+        </template>
+
+        <template lwc:if={showSummary}>
+            <c-illustration-summary-dialog
+                illustration-id={summaryIllustrationId}
+                show-create-ebs={summaryForEbs}
+                onclose={handleSummaryClose}
+                oncreateebs={handleCreateEbs}
+            ></c-illustration-summary-dialog>
+        </template>
+
+        <div class="downloads" lwc:ref="downloads" lwc:dom="manual"></div>
+    </div>
+</template>

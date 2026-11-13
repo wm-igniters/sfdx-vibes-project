@@ -1,0 +1,17 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/react-pages/layout,_N_T_/react-pages/(layout1)/layout,_N_T_/react-pages/(layout1)/clientIllustrationList/layout,_N_T_/react-pages/(layout1)/clientIllustrationList/page,_N_T_/react-pages/clientIllustrationList"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/react-pages/!KGxheW91dDEp/clientIllustrationList/__PAGE__",
+    "/react-pages/!KGxheW91dDEp/clientIllustrationList",
+    "/react-pages/!KGxheW91dDEp",
+    "/react-pages",
+    "/_index",
+    "/_head"
+  ]
+}

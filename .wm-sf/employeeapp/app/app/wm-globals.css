@@ -1,0 +1,148 @@
+.wm-app
+  .app-composite-widget:has([disabled]):not(:has([aria-readonly='true'])) {
+  opacity: var(--wm-btn-disabled-opacity);
+  cursor: not-allowed;
+  pointer-events: unset;
+}
+
+/* Error Boundary Component styles Start */
+
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+  background-color: #f5f5f5;
+}
+
+.error-info-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 600px;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.error-card {
+  background-color: oklch(88.5% 0.062 18.334);
+  border-radius: 8px;
+  padding: 16px;
+  margin: 16px 0;
+  width: 100%;
+}
+
+.error-card-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.error-card-row .error-fallback-erroricon {
+  margin-right: 8px;
+  color: #f44336;
+}
+
+.error-button-container {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.error-button-container .error-fallback-gotohome-btn,
+.error-button-container .error-fallback-goback-btn {
+  min-width: 120px;
+}
+
+/* Image container styles */
+.error-image-container {
+  margin-bottom: 20px;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Title styles */
+.error-fallback-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 8px !important;
+  text-align: center;
+}
+
+/* Subtitle styles */
+.error-fallback-subtitle {
+  font-size: 16px;
+  text-align: center;
+}
+
+/* Error label styles */
+.error-fallback-error-label {
+  font-size: 16px;
+  font-weight: bold;
+  color: red;
+}
+
+/* Error message styles */
+.error-fallback-error-message {
+  font-size: 14px;
+  color: #666;
+  word-break: break-word;
+}
+
+/* Error Boundary Component styles End  */
+
+/* for composite disabled styles */
+.wm-app
+  .app-composite-widget:has([disabled]).app-composite-widget:has(
+    [disabled]
+  ):not(:has([aria-readonly='true'])) {
+  opacity: 0.38;
+  cursor: not-allowed;
+}
+
+.wm-app
+  .app-composite-widget:has([disabled]):not(:has([aria-readonly='true']))
+  * {
+  pointer-events: none;
+}
+
+.wm-app
+  .app-composite-widget:has(.app-richtexteditor .jodit-container [disabled]) {
+  pointer-events: auto !important;
+  opacity: 1 !important;
+  cursor: auto !important;
+}
+
+/* Ensure all Jodit children are interactive */
+.wm-app
+  .app-composite-widget:has(.app-richtexteditor .jodit-container [disabled])
+  .app-richtexteditor
+  .jodit-container,
+.wm-app
+  .app-composite-widget:has(.app-richtexteditor .jodit-container [disabled])
+  .app-richtexteditor
+  .jodit-container
+  * {
+  pointer-events: auto !important;
+}
+
+.app-richtexteditor[aria-readonly='true'] .jodit-workplace {
+  cursor: not-allowed !important ;
+}
+
+.app-loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: transparent;
+  position: fixed;
+  z-index: 1000;
+}

@@ -367,6 +367,8 @@ describe('c-illustration-embedding', () => {
                     c__secondPartyId: 'EMP-007',
                     c__preparedById: '__none__',
                     c__adviser: 'Kumar, Raj',
+                    c__productCode: 'PISA',
+                    c__productName: 'Bluedoor Individual Savings Account',
                     c__requestId: 'r9'
                 }
             });
@@ -378,9 +380,13 @@ describe('c-illustration-embedding', () => {
                 firstParty: { id: 'EMP-001' },
                 secondParty: { id: 'EMP-007', name: 'Grace Patel' },
                 preparedBy: null,
-                adviser: 'Kumar, Raj'
+                adviser: 'Kumar, Raj',
+                product: { code: 'PISA', description: 'Bluedoor Individual Savings Account' }
             });
-            expect(embedding(el).decodedProps.selectionParties).toMatchObject({ secondParty: { id: 'EMP-007' } });
+            expect(embedding(el).decodedProps.selectionParties).toMatchObject({
+                secondParty: { id: 'EMP-007' },
+                product: { code: 'PISA' }
+            });
         });
 
         it('re-sends the current employee when the app reports appready', async () => {
@@ -529,6 +535,34 @@ describe('c-illustration-embedding', () => {
             const el = await setup();
             embedding(el).dispatchEvent(new CustomEvent('navigatetab', { detail: { apiName: 'Illustration_List' } }));
             expect(getNavigateCalls()[0].pageRef.attributes.apiName).toBe('Illustration_List');
+        });
+
+        it('opens a left-nav section of the Clients tab for the illustration\'s client', async () => {
+            const el = await setup();
+            CurrentPageReference.emit({ state: { c__employeeId: 'EMP-007', c__requestId: 'r31' } });
+            getClients.emit(EMPLOYEES);
+            await flush();
+            resetNavigateCalls();
+            embedding(el).dispatchEvent(
+                new CustomEvent('navigatetab', { detail: { apiName: 'Client_Illustration', section: 'businessManager' } })
+            );
+            expect(getNavigateCalls()[0].pageRef).toEqual({
+                type: 'standard__navItemPage',
+                attributes: { apiName: 'Client_Illustration' },
+                state: { c__refresh: expect.stringMatching(/^\d+$/), c__section: 'businessManager', c__clientId: 'EMP-007' }
+            });
+        });
+
+        it('uses the clientId the app sends and drops an invalid section', async () => {
+            const el = await setup();
+            const warn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+            embedding(el).dispatchEvent(
+                new CustomEvent('navigatetab', { detail: { section: 'businessManager', clientId: 12 } })
+            );
+            embedding(el).dispatchEvent(new CustomEvent('navigatetab', { detail: { section: '../x' } }));
+            expect(getNavigateCalls()[0].pageRef.state).toMatchObject({ c__section: 'businessManager', c__clientId: '12' });
+            expect(getNavigateCalls()[1].pageRef.state).toEqual({ c__refresh: expect.stringMatching(/^\d+$/) });
+            warn.mockRestore();
         });
 
         it('ignores tabs that are not allowed', async () => {

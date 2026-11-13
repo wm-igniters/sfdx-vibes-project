@@ -1,0 +1,1011 @@
+/* ==========================================================================
+   WaveMaker React Runtime — Aggregate Stylesheet
+   ==========================================================================
+
+
+/* --------------------------------------------------------------------------
+   Utility classes
+   -------------------------------------------------------------------------- */
+
+.wm-app .wm-position-relative {
+  position: relative;
+}
+
+.wm-app .wm-overflow-inherit {
+  overflow: inherit;
+}
+
+.wm-app .wm-overflow-x-hidden {
+  overflow-x: hidden;
+}
+
+.wm-app .wm-touch-action-none {
+  touch-action: none;
+}
+
+.wm-app .wm-user-select-none {
+  user-select: none;
+}
+
+.wm-app .wm-will-change-transform {
+  will-change: transform;
+}
+
+.wm-app .wm-w-full {
+  width: 100%;
+}
+
+.wm-app .wm-text-center {
+  text-align: center;
+}
+
+.wm-app .wm-all-unset {
+  all: unset;
+}
+
+/* Image helpers */
+.wm-app .wm-img-circle {
+  border-radius: 50%;
+}
+
+.wm-app .wm-w-32 {
+  width: 32px;
+}
+
+.wm-app .wm-h-32 {
+  height: 32px;
+}
+
+/* --------------------------------------------------------------------------
+     List component — inner container structure
+     -------------------------------------------------------------------------- */
+
+.wm-app .app-livelist.app-panel .list-group .app-horizontal-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.wm-app
+  .app-livelist.app-panel
+  .list-group
+  .app-horizontal-list
+  > .app-list-item {
+  min-width: fit-content;
+  flex-shrink: 0;
+}
+
+/* --------------------------------------------------------------------------
+     List component — Load More footer
+     -------------------------------------------------------------------------- */
+
+.wm-app .app-livelist.app-panel .app-livelist-container .wm-load-more-footer {
+  padding: 16px;
+}
+
+/* --------------------------------------------------------------------------
+     DnD sortable item
+     --wm-dnd-transform and --wm-dnd-transition are per-frame values from
+     @dnd-kit, set as inline style variables. All other DnD states use classes.
+     -------------------------------------------------------------------------- */
+
+.wm-app .app-livelist.app-panel .app-livelist-container .wm-sortable-item {
+  transform: var(--wm-dnd-transform);
+  transition: var(--wm-dnd-transition);
+}
+
+.wm-app
+  .app-livelist.app-panel
+  .app-livelist-container
+  .wm-sortable-item.wm-dragging {
+  opacity: 0.5;
+}
+
+.wm-app
+  .app-livelist.app-panel
+  .app-livelist-container
+  .wm-sortable-item.wm-cursor-grab {
+  cursor: grab;
+}
+.wm-app .app-livelist .app-livelist-container.clearfix {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+/* --------------------------------------------------------------------------
+   Wm-anchor component — inline styles for legacy support
+     -------------------------------------------------------------------------- */
+
+/* Former inline icon layout (iconposition). */
+.wm-app .app-anchor.wm-anchor-link.wm-anchor-icon-top {
+  flex-direction: column;
+  align-items: center;
+}
+
+.wm-app .app-anchor.wm-anchor-link .wm-anchor-icon-media {
+  margin: var(--wm-anchor-icon-margin, 0 4px);
+  width: var(--wm-anchor-icon-width, var(--wm-anchor-icon-size));
+  height: var(--wm-anchor-icon-height, var(--wm-anchor-icon-size));
+}
+
+/* Former Badge sx (font-size + badge transform). */
+.wm-app .app-anchor.wm-anchor-link .wm-anchor-badge {
+  font-size: inherit;
+}
+
+.wm-app .app-anchor.wm-anchor-link .wm-anchor-badge .wm-anchor-badge-mark {
+  transform: none;
+}
+
+/* --------------------------------------------------------------------------
+   WmHtml  component — inline styles for legacy support
+   -------------------------------------------------------------------------- */
+
+.wm-app .app-html-container.wm-html-root.wm-html-align-left {
+  text-align: left !important;
+}
+
+.wm-app .app-html-container.wm-html-root.wm-html-align-center {
+  text-align: center !important;
+}
+
+.wm-app .app-html-container.wm-html-root.wm-html-align-right {
+  text-align: right !important;
+}
+
+.wm-app .app-html-container.wm-html-root {
+  width: var(--wm-html-width);
+  height: var(--wm-html-height);
+  overflow: var(--wm-html-overflow);
+}
+
+/* --------------------------------------------------------------------------
+   WmIcon — layout + size via CSS vars on .wm-icon-root for legacy support
+   Runtime sets --icon-size, --icon-width, --icon-height (no --wm- prefix; see rules/rulz.txt).
+   -------------------------------------------------------------------------- */
+
+.wm-app .app-icon-wrapper.wm-icon-root {
+  flex-direction: row;
+  font-size: var(--icon-size);
+}
+
+.wm-app .app-icon-wrapper.wm-icon-root.wm-icon-pos-right {
+  flex-direction: row-reverse;
+}
+
+.wm-app .app-icon-wrapper.wm-icon-root .wm-icon-media {
+  width: var(--icon-width, auto);
+  height: var(--icon-height, auto);
+}
+
+/* --------------------------------------------------------------------------
+   WmIframe — former inner sx: border/margin; dimensions via vars from runtime.
+   -------------------------------------------------------------------------- */
+
+.wm-app .embed-responsive.app-iframe.wm-iframe-root {
+  width: var(--wm-iframe-width);
+  height: var(--wm-iframe-height);
+}
+
+.wm-app .embed-responsive.app-iframe.wm-iframe-root .wm-iframe-frame {
+  border: 0;
+  margin: 0;
+  width: var(--wm-iframe-inner-width);
+  height: var(--wm-iframe-inner-height);
+}
+
+/* --------------------------------------------------------------------------
+   WmLabel — former styled(Box) display; former inline styles on caption links.
+   -------------------------------------------------------------------------- */
+
+.wm-label-root {
+  display: inline-block;
+}
+
+.wm-app .app-label.wm-label-root a {
+  color: blue;
+  text-decoration: underline;
+}
+
+/* WmPicture: former sx {{ objectFit: resizemode || "cover" }} — .app-picture + wm-picture-object-fit-* (Rule 5) */
+.wm-app .app-picture.wm-picture-object-fit-fill {
+  object-fit: fill;
+}
+
+.wm-app .app-picture.wm-picture-object-fit-cover {
+  object-fit: cover;
+}
+
+.wm-app .app-picture.wm-picture-object-fit-contain {
+  object-fit: contain;
+}
+
+/* WmProgressBar: dynamic segment width via inline CSS var only */
+.wm-app .app-progress .wm-progress-segment {
+  width: var(--wm-progress-segment-width);
+}
+
+/* WmVideo: former styled(video) { width: 100%; height: auto; } — .app-video .wm-video-media */
+.wm-app .wm-video-media {
+  width: 100%;
+  height: auto;
+}
+
+/* WmProgressCircle — former default Box 150×150, SVG overflow, arc transform/transition, caption font sizes */
+.wm-app .app-progress.circle.wm-progress-circle-root {
+  width: 150px;
+  height: 150px;
+}
+
+.wm-app .app-progress.circle.wm-progress-circle-root .wm-progress-circle-svg {
+  overflow: visible;
+}
+
+.wm-app .app-progress.circle.wm-progress-circle-root .wm-progress-circle-arc {
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+  transition: stroke-dashoffset 0.5s ease;
+}
+
+/* Shared 0.7em caption text (value, title, subtitle) */
+.wm-app
+  .app-progress.circle.wm-progress-circle-root
+  .wm-progress-circle-caption-primary {
+  font-size: 0.7em;
+}
+
+.wm-app
+  .app-progress.circle.wm-progress-circle-root
+  .wm-progress-circle-caption-suffix {
+  font-size: 0.45em;
+}
+
+/* --------------------------------------------------------------------------
+   WmSearch — former inline static styles (dropdown may portal outside .app-search)
+   -------------------------------------------------------------------------- */
+
+.wm-app .wm-search-popper,
+.wm-search-popper {
+  z-index: 1300;
+}
+
+.wm-app .wm-search-group-title,
+.wm-search-group-title {
+  padding: 10px 16px;
+}
+
+.wm-app .wm-search-match-highlight,
+.wm-search-match-highlight {
+  color: var(--wm-search-dropdown-menu-item-color-matched);
+}
+
+.wm-app .wm-search-dropdown-item,
+.wm-search-dropdown-item {
+  padding: 10px 16px;
+}
+
+.wm-app .wm-search-item-link,
+.wm-search-item-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.wm-app .wm-search-item-image,
+.wm-search-item-image {
+  margin-right: 8px;
+  border-radius: 100%;
+}
+
+.wm-app .wm-search-loading-spinner,
+.wm-search-loading-spinner {
+  display: inline-flex;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+.wm-app .wm-search-dropdown-message,
+.wm-search-dropdown-message {
+  padding: 8px 16px;
+}
+
+.wm-app .wm-search-dropdown-completion,
+.wm-search-dropdown-completion {
+  padding: 8px 16px;
+  text-align: center;
+}
+
+.wm-app .wm-search-dropdown-scroll,
+.wm-search-dropdown-scroll {
+  max-height: 300px;
+  overflow: auto;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* WmTree: former empty-state inline styles */
+.wm-app .app-tree .wm-tree-empty-message {
+  padding: 16px;
+  color: inherit;
+}
+
+.wm-app .app-tree .wm-tree-children-list {
+  margin-left: 20px;
+  list-style: none;
+  padding: 0;
+}
+
+.wm-app .app-tree .wm-tree-children-open {
+  display: block;
+}
+
+.wm-app .app-tree .wm-tree-children-closed {
+  display: none;
+}
+
+/* WmSpinner: former styled(Box) image static styles */
+.wm-app .app-spinner .wm-spinner-image {
+  width: var(--wm-spinner-image-width, 20px);
+  height: var(--wm-spinner-image-height, auto);
+  background-image: var(--wm-spinner-image-bg-image);
+  background-size: var(--wm-spinner-image-bg-size, 20px);
+  background-repeat: no-repeat;
+  display: inline-block;
+}
+
+.wm-app .app-spinner .wm-spinner-icon {
+  font-size: var(--wm-spinner-icon-size);
+}
+
+/* WmRichTextEditor: static placeholder textarea styles */
+.wm-app .wm-richtexteditor-placeholder {
+  border: 1px solid;
+  border-radius: 4px;
+  padding: 8px;
+  font: inherit;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+/* EditorContainer  */
+.wm-app .wm-richtexteditor-root .jodit-workplace {
+  height: var(--richtexteditor-height, auto) !important;
+}
+
+.wm-richtexteditor-root .jodit-container {
+  border: 1px solid var(--wm-richtexteditor-divider);
+}
+
+.wm-app .wm-richtexteditor-root .jodit-react-container {
+  min-height: unset !important;
+  min-width: unset !important;
+  max-width: unset !important;
+}
+
+.wm-app .wm-richtexteditor-root .jodit-status-bar {
+  border: 1px solid var(--richtexteditor-divider);
+  border-top: none;
+}
+
+.wm-app .wm-richtexteditor-root .jodit-toolbar {
+  background: var(--richtexteditor-paper-bg);
+  border: 1px solid var(--richtexteditor-divider);
+  border-bottom: none;
+}
+
+.wm-app .wm-richtexteditor-root .jodit-toolbar__box {
+  background: var(--richtexteditor-paper-bg);
+}
+
+.wm-app .wm-richtexteditor-root .jodit-toolbar-button {
+  margin: 2px;
+}
+
+.wm-app .wm-richtexteditor-root div[contenteditable='true'] {
+  background: var(--wm-note-editable-background);
+  color: var(--wm-note-editable-color);
+}
+
+.wm-app .wm-richtexteditor-root .jodit-wysiwyg {
+  padding: unset !important;
+  margin: unset !important;
+  min-height: 100px !important;
+}
+
+.wm-app .wm-richtexteditor-root .jodit-wysiwyg ul,
+.wm-app .wm-richtexteditor-root .jodit-wysiwyg li {
+  padding-left: 2em !important;
+  margin: 1em 0 !important;
+  list-style-type: unset;
+}
+
+.wm-app .wm-richtexteditor-root .jodit-container * {
+  box-sizing: border-box;
+}
+
+.wm-app .wm-richtexteditor-root .jodit-wysiwyg ol {
+  list-style-type: decimal;
+  padding-left: 2em !important;
+  margin: 1em 0 !important;
+}
+
+/*  Hidden Input  */
+.wm-app .wm-richtexteditor-hidden-input {
+  display: none;
+}
+
+/*  PreviewContainer */
+.wm-app .wm-richtexteditor-preview {
+  margin-top: var(--richtexteditor-preview-margin-top);
+  padding: var(--richtexteditor-preview-padding);
+  border-radius: var(--richtexteditor-preview-radius);
+  background-color: var(--richtexteditor-paper-bg);
+  color: var(--richtexteditor-text-primary);
+  min-height: 100px !important;
+  overflow-y: auto;
+}
+
+.wm-app .wm-richtexteditor-preview img {
+  max-width: 100%;
+}
+
+.wm-app .wm-richtexteditor-preview table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: var(--richtexteditor-preview-table-margin);
+}
+
+.wm-app .wm-richtexteditor-preview th,
+.wm-app .wm-richtexteditor-preview td {
+  border: 1px solid var(--richtexteditor-divider);
+  padding: var(--richtexteditor-preview-cell-padding);
+}
+
+/* WmCalendar: former root inline width */
+.wm-app .app-calendar.wm-calendar-root {
+  width: 100%;
+}
+
+/* WmChips: former MUI Box flex layout on chip list (display/flexWrap/gap) */
+.wm-chips-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* WmChips SortableChip: former static margin + cursor/opacity from inline style */
+.wm-app .wm-chips-chip-item,
+.wm-chips-chip-item {
+  margin: 2px;
+}
+
+.wm-app .wm-chips-chip-item.wm-chips-chip-grab,
+.wm-chips-chip-item.wm-chips-chip-grab {
+  cursor: grab;
+}
+
+.wm-app .wm-chips-chip-item:not(.wm-chips-chip-grab),
+.wm-chips-chip-item:not(.wm-chips-chip-grab) {
+  cursor: default;
+}
+
+.wm-app .wm-chips-chip-item.wm-chips-chip-dragging,
+.wm-chips-chip-item.wm-chips-chip-dragging {
+  opacity: 0.5;
+}
+
+/* WmColorPicker: former root sx position:relative */
+.wm-app .input-group.app-colorpicker.wm-colorpicker-root,
+.input-group.app-colorpicker.wm-colorpicker-root {
+  position: relative;
+}
+
+/* Addon cursor: one of enabled | disabled (matches former pointer / not-allowed) */
+.wm-app .wm-colorpicker-addon-enabled,
+.wm-colorpicker-addon-enabled {
+  cursor: pointer;
+}
+
+.wm-app .wm-colorpicker-addon-disabled,
+.wm-colorpicker-addon-disabled {
+  cursor: not-allowed;
+}
+
+/* Portal popup: former styled(Box) ChromePicker wrapper (fixed + arrow + .chrome-picker chrome) */
+.wm-app .wm-colorpicker-popup,
+.wm-colorpicker-popup {
+  position: fixed;
+  z-index: 1300;
+  top: var(--colorpicker-popup-top, 0);
+  left: var(--colorpicker-popup-left, 0);
+  margin-top: var(--colorpicker-popup-margin-top, 8px);
+}
+
+.wm-app .wm-colorpicker-popup.wm-colorpicker-popup-direction-down::before,
+.wm-colorpicker-popup.wm-colorpicker-popup-direction-down::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  z-index: 999999;
+  top: -10px;
+  border-width: 0 5px 10px 5px;
+  border-color: transparent transparent #777 transparent;
+}
+
+.wm-app .wm-colorpicker-popup.wm-colorpicker-popup-direction-up::before,
+.wm-colorpicker-popup.wm-colorpicker-popup-direction-up::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  z-index: 999999;
+  bottom: -10px;
+  border-width: 10px 5px 0 5px;
+  border-color: #777 transparent transparent transparent;
+}
+
+.wm-app .wm-colorpicker-popup .chrome-picker,
+.wm-colorpicker-popup .chrome-picker {
+  box-shadow:
+    0 2px 15px rgba(0, 0, 0, 0.12),
+    0 2px 10px rgba(0, 0, 0, 0.16) !important;
+  height: auto;
+  border: #777 solid 1px;
+  cursor: default;
+  user-select: none;
+  background-color: #fff !important;
+  border-radius: 4px;
+  padding: 8px;
+  width: 226px !important;
+  box-sizing: border-box !important;
+}
+
+.wm-app .wm-colorpicker-swatch,
+.wm-colorpicker-swatch {
+  background-color: var(--colorpicker-swatch-bg, transparent);
+}
+
+/* WmCheckboxset: former inline/sx styles */
+.wm-checkboxset-item-reset {
+  all: unset;
+}
+
+.wm-app .wm-checkboxset-input-readonly,
+.wm-checkboxset-input-readonly {
+  background: transparent !important;
+}
+
+.wm-app .wm-checkboxset-label-row {
+  margin-bottom: 1px;
+}
+
+.wm-app .wm-checkboxset-required-mark,
+.wm-checkboxset-required-mark {
+  color: red;
+}
+
+.wm-app .wm-checkboxset-group-list {
+  padding-left: 2px;
+}
+
+/* WmRadioset: former styled(List) static + collapsible/disabled + list width */
+.wm-radioset-styled-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  width: var(--radioset-list-width, 100%);
+}
+
+.wm-radioset-styled-list.wm-radioset-list-collapsible
+  li.app-list-item-group
+  ul.item-group {
+  padding: 0;
+  display: none;
+}
+
+.wm-radioset-styled-list.wm-radioset-list-collapsible
+  li.app-list-item-group
+  ul.collapse-open {
+  display: block;
+}
+
+.wm-radioset-styled-list.wm-radioset-list-disabled {
+  opacity: 0.5;
+  user-select: none;
+}
+
+/* WmSwitch: former root / btn-group inline layout */
+.wm-app .app-switch.wm-switch-root {
+  overflow: auto;
+}
+
+.wm-app .app-switch .wm-switch-inner {
+  overflow: visible;
+  position: relative;
+}
+
+/* WmFileUpload */
+.wm-app .app-fileupload.wm-fileupload-root {
+  width: 100%;
+}
+
+.wm-app input.file-input.wm-fileupload-file-input {
+  display: none;
+}
+
+.wm-app .file-list-container.wm-fileupload-file-list-container {
+  overflow: auto;
+  max-height: var(--fileupload-list-max-height) px;
+}
+
+.wm-fileupload-media-full-width {
+  width: 100%;
+}
+
+/* WmNumber: former TextField static sx; dynamic props.styles on sx + htmlInput (type=text) */
+.wm-number-textfield {
+  width: 100%;
+}
+
+.wm-number-textfield.wm-number-textfield-disabled .wm-number-slot-input {
+  -webkit-text-fill-color: inherit;
+}
+
+.wm-number-helper-text {
+  margin-left: 0;
+}
+
+.wm-number-helper-text.wm-number-helper-text-error {
+  color: #ee5f5b;
+}
+
+/* WmRating only: single-class hooks (not the default pattern for other widgets — see wm-csp-widget-styles Rule 6) */
+.wm-rating-star {
+  transition: all 0.2s ease-in-out;
+  font-size: var(--wm-rating-star-font-size, inherit);
+  color: var(--wm-rating-star-color, #ccc);
+  border: 1px solid var(--wm-rating-star-border-color, transparent);
+}
+
+.wm-rating-star-icon {
+  color: inherit;
+}
+
+.wm-rating-star.wm-rating-star-readonly {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* WmSelect inline styles */
+.wm-app .app-select optgroup {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* WmSlider inline styles */
+.wm-app .app-slider.slider .slider-container .slider-control.wm-slider-control {
+  --end: var(--wm-slider-end);
+}
+
+.wm-app
+  .app-slider.slider
+  .marker-container
+  .marker-wrapper.wm-slider-marker-wrapper {
+  left: var(--wm-slider-marker-left);
+}
+
+/* WmText: former TextField static sx (kept low-specificity like sx output) */
+.wm-text-input:disabled {
+  -webkit-text-fill-color: inherit;
+}
+
+.wm-text-helper-text {
+  margin-left: 0;
+}
+
+.wm-text-helper-text.wm-text-helper-text-error {
+  color: #ee5f5b;
+}
+
+/* WmTextarea: former TextField static sx */
+.wm-textarea-root {
+  width: 100%;
+}
+
+.wm-textarea-input {
+  height: var(--wm-textarea-height, auto) !important;
+}
+
+/* WmUpload inline styles */
+.wm-upload-existing-image {
+  height: 2em;
+}
+
+/* WmTime: former TimePicker popper sx */
+.wm-timepicker-popper .MuiPaper-root {
+  background: var(--wm-timepicker-background);
+  padding: var(--wm-timepicker-padding);
+  border-radius: var(--wm-timepicker-border-radius);
+  width: auto;
+  box-shadow: none;
+}
+
+.wm-timepicker-popper .Mui-selected,
+.wm-timepicker-popper .Mui-selected:hover {
+  background-color: var(--wm-btn-secondary-background) !important;
+  color: var(--wm-btn-secondary-color) !important;
+}
+
+/* WmDate DatePickerPopover — chained hooks for popover/calendar (dynamic width via --wm-datepicker-calendar-width on root) */
+.wm-datepicker-popover .MuiPopover-paper {
+  box-shadow:
+    0px 3px 3px -2px rgba(0, 0, 0, 0.2),
+    0px 3px 4px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 8px 0px rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+}
+
+.wm-app .app-date.wm-datepicker-popover .MuiDateCalendar-root {
+  width: var(--wm-datepicker-calendar-width);
+}
+
+.wm-app .app-date.wm-datepicker-popover .wm-datepicker-popover-paper {
+  width: auto;
+  padding-bottom: 2px;
+  background: var(--wm-datepicker-background);
+}
+
+.wm-app .app-date.wm-datepicker-popover .wm-datepicker-button-bar {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 2px;
+  padding-right: 2px;
+  margin-top: 1px;
+}
+
+.wm-app .app-date.wm-datepicker-popover .wm-datepicker-bar-btn {
+  --wm-btn-color: var(--wm-color-primary);
+  --wm-btn-state-layer-color: var(--wm-color-primary);
+  background: none;
+  border: none;
+}
+
+/* WmDateTime — former styled.ts (single-class roots; calendar width stays sx on popper) */
+.wm-datetime-html-input {
+  box-sizing: inherit !important;
+}
+
+.wm-datetime-picker-textfield-hidden {
+  display: none !important;
+}
+
+.wm-datetime-input-label {
+  background-color: white;
+}
+
+.wm-datetime-input-label.MuiInputLabel-shrink {
+  transform: translate(14px, -9px) scale(0.75);
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+}
+
+.wm-datetime-input-label:not(.MuiInputLabel-shrink) {
+  transform: translate(14px, 16px) scale(1);
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+}
+
+.wm-datetime-date-picker-popper .MuiPaper-root {
+  background: var(--wm-datepicker-background);
+  padding: var(--wm-datepicker-padding);
+  border-radius: var(--wm-datepicker-border-radius);
+}
+
+.wm-datetime-date-picker-popper .MuiDateCalendar-root {
+  width: var(--wm-datetime-calendar-width, 370px);
+}
+
+.wm-datetime-date-picker-popper .MuiDayCalendar-header {
+  justify-content: space-evenly;
+}
+
+.wm-datetime-date-picker-popper .MuiDayCalendar-weekNumber {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.wm-datetime-date-picker-popper .MuiDayCalendar-slideTransition {
+  min-height: 260px;
+}
+
+.wm-datetime-date-picker-popper .MuiDayCalendar-weekNumberLabel {
+  width: 32px !important;
+  padding: 0 !important;
+}
+
+.wm-datetime-date-picker-popper .MuiTypography-caption {
+  padding: 0 24px;
+}
+
+.wm-datetime-date-picker-popper .MuiYearCalendar-root {
+  width: auto;
+}
+
+.wm-datetime-date-picker-popper .MuiPickersDay-root.Mui-selected {
+  background-color: var(--wm-btn-secondary-background) !important;
+  color: var(--wm-btn-secondary-color);
+  font-weight: bold;
+}
+
+.wm-datetime-date-picker-popper .MuiMonthCalendar-button.Mui-selected {
+  background-color: var(--wm-btn-secondary-background) !important;
+  color: var(--wm-btn-secondary-color);
+  font-weight: bold;
+}
+
+.wm-datetime-date-picker-popper .MuiPickersDay-root.Mui-selected:hover {
+  background-color: var(--wm-btn-secondary-background);
+  color: var(--wm-btn-secondary-color);
+}
+
+.wm-datetime-date-picker-popper .MuiYearCalendar-button.Mui-selected {
+  background-color: var(--wm-btn-secondary-background) !important;
+  color: var(--wm-btn-secondary-color);
+  font-weight: bold;
+}
+
+.wm-datetime-date-picker-popper .MuiPickersDay-today {
+  background-color: transparent !important;
+}
+
+.wm-datetime-time-picker-popper .MuiPickersLayout-root {
+  display: inline-block;
+}
+
+.wm-datetime-time-picker-popper .MuiPaper-root {
+  background: var(--wm-timepicker-background);
+  padding: var(--wm-timepicker-padding);
+  border-radius: var(--wm-timepicker-border-radius);
+}
+
+.wm-datetime-time-picker-popper .Mui-selected,
+.wm-datetime-time-picker-popper .Mui-selected:hover {
+  background-color: var(--wm-btn-secondary-background) !important;
+  color: var(--wm-btn-secondary-color) !important;
+}
+
+.wm-datetime-datepicker-action-bar .MuiButton-root {
+  --wm-btn-color: var(--wm-color-primary);
+  --wm-btn-state-layer-color: var(--wm-color-primary);
+  background: none;
+  border: none;
+}
+
+/* WmAccordionPane — former inline flex on title row (styles/static extraction → scoped chain; not sx) */
+.wm-app .app-accordion-panel.panel .wm-accordion-pane-title-main {
+  flex: 1;
+}
+
+/* --------------------------------------------------------------------------
+   Panel — header image icon (defaults; optional --wm-panel-icon-* from runtime)
+   -------------------------------------------------------------------------- */
+
+.wm-app .app-panel.panel .wm-panel-header-icon-img {
+  width: var(--wm-panel-icon-width);
+  height: var(--wm-panel-icon-height);
+  margin: var(--wm-panel-icon-margin);
+}
+
+/* --------------------------------------------------------------------------
+   Tabs + TabPane — extracted from inline styles (static + state classes)
+   -------------------------------------------------------------------------- */
+
+.wm-app .app-tabs.clearfix .wm-tabs-heading {
+  cursor: pointer;
+  gap: var(--wm-anchor-gap);
+}
+
+.wm-app .app-tabs.clearfix .wm-tabs-heading.wm-tabs-heading-disabled {
+  cursor: not-allowed;
+}
+
+.wm-app
+  .app-tabs.clearfix
+  .tab-content.wm-tabs-content.wm-tabs-content-vertical {
+  flex: 1;
+  min-width: 0;
+}
+
+.wm-app .app-tabs.clearfix .tab-pane.wm-tab-pane-root {
+  width: 100%;
+}
+
+.wm-app .app-tabs.clearfix .tab-pane.wm-tab-pane-root.wm-tab-pane-active {
+  display: block;
+}
+
+.wm-app .app-tabs.clearfix .tab-pane.wm-tab-pane-root.wm-tab-pane-inactive {
+  display: none;
+}
+
+/* --------------------------------------------------------------------------
+   App-Spinner — root for list (defaults; optional --wm-spinner-* from runtime)
+   -------------------------------------------------------------------------- */
+
+.wm-app .app-spinner.wm-spinner-root {
+  z-index: 100;
+}
+
+/* --------------------------------------------------------------------------
+   WmCard — static presentation (dynamic: Card width/height; CardMedia maxHeight)
+   -------------------------------------------------------------------------- */
+
+.wm-app .app-card.card .app-card-avatar .wm-card-avatar-img {
+  border-radius: 50%;
+}
+
+.wm-app .app-card.card .app-card-image.wm-card-media-root {
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+}
+
+.wm-app
+  .app-card.card
+  .app-card-image.wm-card-media-root
+  .card-image.wm-card-media-img {
+  width: 100%;
+  height: 100%;
+}
+
+.wm-app .app-card-content.wm-card-content-root {
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+}
+
+.wm-app .app-card-content.wm-card-content-root:last-child {
+  padding-bottom: 0;
+}
+
+/* * --------------------------------------------------------------------------
+   WmCard — static presentation (dynamic: Card width/height; CardMedia maxHeight)
+   -------------------------------------------------------------------------- */
+
+.wm-app .app-card.card .app-card-avatar .wm-card-avatar-img {
+  border-radius: 50%;
+}
+
+.wm-app .app-card.card .app-card-image.wm-card-media-root {
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+}
+
+.wm-app
+  .app-card.card
+  .app-card-image.wm-card-media-root
+  .card-image.wm-card-media-img {
+  width: 100%;
+  height: 100%;
+}
+
+.wm-app .app-card-content.wm-card-content-root {
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+}
+
+.wm-app .app-card-content.wm-card-content-root:last-child {
+  padding-bottom: 0;
+}
+
+/* * --------------------------------------------------------------------------
+   WmButton — inline css 
+   -------------------------------------------------------------------------- */
+
+.wm-app .btn.app-button.Mui-disabled {
+  pointer-events: auto !important;
+  color: var(--wm-btn-color) !important;
+}

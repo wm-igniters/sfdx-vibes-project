@@ -1,0 +1,437 @@
+{
+  "anchor": {
+    "appearances": {
+      "secondary": {
+        "mapping": {
+          "color": {
+            "@": {
+              "value": "{color.secondary.@.value}"
+            }
+          },
+          "font-size": {
+            "value": "{body.medium.font-size.value}"
+          },
+          "font-family": {
+            "value": "{body.medium.font-family.value}"
+          },
+          "font-weight": {
+            "value": "{body.medium.font-weight.value}"
+          },
+          "line-height": {
+            "value": "{body.medium.line-height.value}"
+          },
+          "letter-spacing": {
+            "value": "{body.medium.letter-spacing.value}"
+          },
+          "text-transform": {
+            "value": "none"
+          },
+          "text": {
+            "decoration": {
+              "@": {
+                "value": "none"
+              }
+            }
+          },
+          "gap": {
+            "value": "{space.1.value}"
+          },
+          "icon": {
+            "size": {
+              "value": "{icon.size.@.value}"
+            }
+          },
+          "image": {
+            "size": {
+              "value": "{icon.size.@.value}"
+            },
+            "radius": {
+              "value": "{radius.circle.value}"
+            }
+          },
+          "states": {
+            "hover": {
+              "color": {
+                "@": {
+                  "value": "{color.secondary.@.value}"
+                }
+              },
+              "text": {
+                "decoration": {
+                  "@": {
+                    "value": "underline"
+                  }
+                }
+              }
+            },
+            "focus": {
+              "color": {
+                "@": {
+                  "value": "~\"color-mix(in srgb, {color.primary.@.value}, {color.black.@.value} {opacity.focus.value})\""
+                }
+              },
+              "text": {
+                "decoration": {
+                  "@": {
+                    "value": "none"
+                  }
+                }
+              }
+            },
+            "active": {
+              "color": {
+                "@": {
+                  "value": "~\"color-mix(in srgb, {color.primary.@.value}, {color.black.@.value} {opacity.active.value})\""
+                }
+              },
+              "text": {
+                "decoration": {
+                  "@": {
+                    "value": "none"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "error": {
+        "mapping": {
+          "color": {
+            "@": {
+              "value": "{color.error.@.value}"
+            }
+          },
+          "font-size": {
+            "value": "{body.medium.font-size.value}"
+          },
+          "font-family": {
+            "value": "{body.medium.font-family.value}"
+          },
+          "font-weight": {
+            "value": "{body.medium.font-weight.value}"
+          },
+          "line-height": {
+            "value": "{body.medium.line-height.value}"
+          },
+          "letter-spacing": {
+            "value": "{body.medium.letter-spacing.value}"
+          },
+          "text-transform": {
+            "value": "none"
+          },
+          "text": {
+            "decoration": {
+              "@": {
+                "value": "none"
+              }
+            }
+          },
+          "gap": {
+            "value": "{space.1.value}"
+          },
+          "icon": {
+            "size": {
+              "value": "{icon.size.@.value}"
+            }
+          },
+          "image": {
+            "size": {
+              "value": "{icon.size.@.value}"
+            },
+            "radius": {
+              "value": "{radius.circle.value}"
+            }
+          },
+          "states": {
+            "hover": {
+              "color": {
+                "@": {
+                  "value": "{color.error.@.value}"
+                }
+              },
+              "text": {
+                "decoration": {
+                  "@": {
+                    "value": "underline"
+                  }
+                }
+              }
+            },
+            "focus": {
+              "color": {
+                "@": {
+                  "value": "~\"color-mix(in srgb, {color.primary.@.value}, {color.black.@.value} {opacity.focus.value})\""
+                }
+              },
+              "text": {
+                "decoration": {
+                  "@": {
+                    "value": "none"
+                  }
+                }
+              }
+            },
+            "active": {
+              "color": {
+                "@": {
+                  "value": "~\"color-mix(in srgb, {color.primary.@.value}, {color.black.@.value} {opacity.active.value})\""
+                }
+              },
+              "text": {
+                "decoration": {
+                  "@": {
+                    "value": "none"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "dark": {
+        "mapping": {
+          "color": {
+            "@": {
+              "value": "{color.on-background.@.value}"
+            }
+          },
+          "gap": {
+            "value": "{space.2.value}"
+          },
+          "states": {
+            "hover": {
+              "color": {
+                "@": {
+                  "value": "~\"color-mix(in srgb, {color.on-background.@.value}, {color.white.@.value} {opacity.hover.value})\""
+                }
+              }
+            },
+            "focus": {
+              "color": {
+                "@": {
+                  "value": "~\"color-mix(in srgb, {color.primary.@.value}, {color.white.@.value} {opacity.focus.value})\""
+                }
+              }
+            },
+            "active": {
+              "color": {
+                "@": {
+                  "value": "~\"color-mix(in srgb, {color.primary.@.value}, {color.white.@.value} {opacity.active.value})\""
+                }
+              }
+            }
+          }
+        }
+      },
+      "small": {
+        "mapping": {
+          "color": {
+            "@": {
+              "value": "{color.on-info.container.@.value}"
+            }
+          },
+          "font-size": {
+            "value": "{body.small.font-size.value}"
+          },
+          "font-family": {
+            "value": "{body.small.font-family.value}"
+          },
+          "font-weight": {
+            "value": "{body.small.font-weight.value}"
+          },
+          "line-height": {
+            "value": "{body.small.line-height.value}"
+          },
+          "letter-spacing": {
+            "value": "{body.small.letter-spacing.value}"
+          },
+          "text-transform": {
+            "value": "none"
+          },
+          "text": {
+            "decoration": {
+              "@": {
+                "value": "none"
+              }
+            }
+          },
+          "gap": {
+            "value": "{space.1.value}"
+          },
+          "icon": {
+            "size": {
+              "value": "{icon.size.sm.value}"
+            }
+          },
+          "image": {
+            "size": {
+              "value": "{icon.size.sm.value}"
+            },
+            "radius": {
+              "value": "{radius.circle.value}"
+            }
+          },
+          "states": {
+            "hover": {
+              "color": {
+                "@": {
+                  "value": "~\"color-mix(in srgb, {color.primary.@.value}, {color.black.@.value} {opacity.hover.value})\""
+                }
+              },
+              "text": {
+                "decoration": {
+                  "@": {
+                    "value": "none"
+                  }
+                }
+              }
+            },
+            "focus": {
+              "color": {
+                "@": {
+                  "value": "~\"color-mix(in srgb, {color.primary.@.value}, {color.black.@.value} {opacity.focus.value})\""
+                }
+              },
+              "text": {
+                "decoration": {
+                  "@": {
+                    "value": "none"
+                  }
+                }
+              }
+            },
+            "active": {
+              "color": {
+                "@": {
+                  "value": "~\"color-mix(in srgb, {color.primary.@.value}, {color.black.@.value} {opacity.active.value})\""
+                }
+              },
+              "text": {
+                "decoration": {
+                  "@": {
+                    "value": "none"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "success": {
+        "mapping": {
+          "color": {
+            "@": {
+              "value": "{color.success.@.value}"
+            }
+          },
+          "font-size": {
+            "value": "{body.small.font-size.value}"
+          },
+          "font-family": {
+            "value": "{body.small.font-family.value}"
+          },
+          "font-weight": {
+            "value": "{body.small.font-weight.value}"
+          },
+          "line-height": {
+            "value": "{body.small.line-height.value}"
+          },
+          "letter-spacing": {
+            "value": "{body.small.letter-spacing.value}"
+          },
+          "text-transform": {
+            "value": "none"
+          },
+          "text": {
+            "decoration": {
+              "@": {
+                "value": "none"
+              }
+            }
+          },
+          "gap": {
+            "value": "{space.1.value}"
+          },
+          "icon": {
+            "size": {
+              "value": "{icon.size.sm.value}"
+            }
+          },
+          "image": {
+            "size": {
+              "value": "{icon.size.sm.value}"
+            },
+            "radius": {
+              "value": "{radius.circle.value}"
+            }
+          },
+          "states": {
+            "hover": {
+              "color": {
+                "@": {
+                  "value": "~\"color-mix(in srgb, {color.primary.@.value}, {color.black.@.value} {opacity.hover.value})\""
+                }
+              },
+              "text": {
+                "decoration": {
+                  "@": {
+                    "value": "none"
+                  }
+                }
+              }
+            },
+            "focus": {
+              "color": {
+                "@": {
+                  "value": "~\"color-mix(in srgb, {color.primary.@.value}, {color.black.@.value} {opacity.focus.value})\""
+                }
+              },
+              "text": {
+                "decoration": {
+                  "@": {
+                    "value": "none"
+                  }
+                }
+              }
+            },
+            "active": {
+              "color": {
+                "@": {
+                  "value": "~\"color-mix(in srgb, {color.primary.@.value}, {color.black.@.value} {opacity.active.value})\""
+                }
+              },
+              "text": {
+                "decoration": {
+                  "@": {
+                    "value": "none"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "meta": {
+      "appearances": {
+        "secondary": {
+          "source": "user"
+        },
+        "error": {
+          "source": "user"
+        },
+        "dark": {
+          "source": "aira",
+          "description": "Dark theme anchor — on-background text color with white-based color-mix for hover/focus/active states (prevents darkening in dark mode)"
+        },
+        "small": {
+          "source": "user"
+        },
+        "success": {
+          "source": "user"
+        }
+      }
+    }
+  }
+}

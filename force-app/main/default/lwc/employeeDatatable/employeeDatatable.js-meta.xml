@@ -25,6 +25,9 @@
                 label="(Deprecated) Open Employee App in new tab"
                 description="No longer used."
             />
+            <property name="appTitle" type="String" default="iBusiness" label="Header title" description="Title in the centre of the top bar." />
+            <property name="brandName" type="String" default="Adviser Portal" label="Brand text" description="Shown in the header's logo area when no logo URL is set." />
+            <property name="logoUrl" type="String" label="Logo URL" description="Optional logo image for the header, e.g. /resource/MyLogo." />
             <supportedFormFactors>
                 <supportedFormFactor type="Large"/>
                 <supportedFormFactor type="Small"/>

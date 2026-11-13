@@ -1,0 +1,33 @@
+{
+  "icon" : {
+    "size" : {
+      "@" : {
+        "value" : "20px"
+      },
+      "xs" : {
+        "value" : "10px"
+      },
+      "sm" : {
+        "value" : "11px"
+      },
+      "md" : {
+        "value" : "12px"
+      },
+      "lg" : {
+        "value" : "14px"
+      },
+      "2x" : {
+        "value" : "15px"
+      },
+      "3x" : {
+        "value" : "16px"
+      },
+      "4x" : {
+        "value" : "18px"
+      },
+      "5x" : {
+        "value" : "22px"
+      }
+    }
+  }
+}

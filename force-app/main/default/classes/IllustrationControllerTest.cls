@@ -209,4 +209,137 @@ private class IllustrationControllerTest {
         Assert.isNull(IllustrationController.fileNameFrom('inline'));
         Assert.isNull(IllustrationController.fileNameFrom(null));
     }
+
+    /** Answers by endpoint: the list, then one detail per illustration. */
+    private class RoutingMock implements HttpCalloutMock {
+        private Map<String, String> bodies;
+        public Integer calls = 0;
+        RoutingMock(Map<String, String> bodies) {
+            this.bodies = bodies;
+        }
+        public HttpResponse respond(HttpRequest req) {
+            calls++;
+            String path = req.getEndpoint().removeStart('callout:WM_Illustration_API');
+            HttpResponse res = new HttpResponse();
+            if (bodies.containsKey(path)) {
+                res.setStatusCode(200);
+                res.setBody(bodies.get(path));
+            } else {
+                res.setStatusCode(404);
+                res.setBody('{}');
+            }
+            return res;
+        }
+    }
+
+    private static final String CLIENT_LIST =
+        '[{"illustrationId":1,"illustrationRef":"ILL-1","status":"ILLUSTRATED","client":{"clientId":5,"forename":"Sarah","surname":"Brown"},' +
+        '"product":{"code":"PISA","category":"Investment"},"illustratedAt":"2026-10-01T10:00:00Z","txLife":{"versionNo":1}},' +
+        '{"illustrationId":2,"illustrationRef":"ILL-2","status":"ILLUSTRATED","client":{"clientId":5,"forename":"Sarah","surname":"Brown"},' +
+        '"product":{"code":"RA"},"illustratedAt":"2026-11-01T10:00:00Z","txLife":null},' +
+        '{"illustrationId":3,"illustrationRef":"ILL-3","client":{"clientId":9}}]';
+
+    @IsTest
+    static void getClientIllustrations_filtersSortsAndAddsAmounts() {
+        RoutingMock mock = new RoutingMock(new Map<String, String>{
+            '/api/v1/illustrations' => CLIENT_LIST,
+            '/api/v1/illustrations/1' => '{"illustration":{"contributions":[' +
+                '{"contributionType":"SINGLE","grossAmount":15000.00},' +
+                '{"contributionType":"SINGLE","grossAmount":500.50},' +
+                '{"contributionType":"REGULAR","grossAmount":250,"frequency":"MONTHLY"},' +
+                '{"contributionType":"TRANSFER","grossAmount":null,"transferValue":40000}]}}'
+            // illustration 2 has no detail → amounts stay blank
+        });
+        Test.setMock(HttpCalloutMock.class, mock);
+
+        Test.startTest();
+        List<IllustrationController.IllustrationDTO> rows = IllustrationController.getClientIllustrations(5);
+        Test.stopTest();
+
+        Assert.areEqual(2, rows.size(), 'only client 5');
+        Assert.areEqual(2, rows[0].illustrationId, 'newest first');
+        Assert.areEqual('RA', rows[0].productCode);
+        Assert.isNull(rows[0].singleAmount);
+        Assert.isFalse(rows[0].hasDocuments);
+
+        IllustrationController.IllustrationDTO first = rows[1];
+        Assert.areEqual('PISA', first.productCode);
+        Assert.areEqual('Investment', first.productCategory);
+        Assert.isTrue(first.singleAmount == 15500.50, String.valueOf(first.singleAmount));
+        Assert.isTrue(first.regularAmount == 250, String.valueOf(first.regularAmount));
+        Assert.areEqual('MONTHLY', first.regularFrequency);
+        Assert.isTrue(first.transferAmount == 40000, String.valueOf(first.transferAmount));
+        Assert.areEqual(3, mock.calls, 'list + one detail per illustration');
+    }
+
+    @IsTest
+    static void getClientIllustrations_requiresClientId() {
+        try {
+            IllustrationController.getClientIllustrations(null);
+            Assert.fail('Expected an AuraHandledException');
+        } catch (AuraHandledException e) {
+            Assert.isTrue(e.getMessage().contains('client id is required'), e.getMessage());
+        }
+    }
+
+    @IsTest
+    static void getClientIllustrations_listErrorSurfaces() {
+        Test.setMock(HttpCalloutMock.class, new RoutingMock(new Map<String, String>()));
+        try {
+            IllustrationController.getClientIllustrations(5);
+            Assert.fail('Expected an AuraHandledException');
+        } catch (AuraHandledException e) {
+            Assert.isTrue(e.getMessage().contains('404'), e.getMessage());
+        }
+    }
+
+    private static final String DETAIL =
+        '{"illustration":{"illustrationId":69,"illustrationRef":"ILL-94A090EFA4","status":"ILLUSTRATED","clientId":6,' +
+        '"product":{"code":"PISA","description":"Bluedoor Individual Savings Account","category":"Investment"},' +
+        '"preparedBy":{"adviserId":1,"displayName":"Kumar, Raj"},"taxYear":"2026/27",' +
+        '"parties":[{"role":"FIRST_PARTY","clientId":6,"title":"Mr","forename":"William","surname":"Miller","dateOfBirth":"1985-07-12"}],' +
+        '"contributions":[{"contributionId":67,"contributionType":"SINGLE","grossAmount":15000.00,"frequency":null,' +
+        '"contributors":[{"contributorType":"ACCOUNT_OWNER","contributorName":"William Miller","amount":15000.00,"systemCalculated":false}],' +
+        '"charges":[{"chargeTypeCode":"INITIAL_ADVICE_CHARGE","displayName":"Initial Advice Charge","kind":"CHARGE","standardRatePct":3,"appliedRatePct":3.000}],' +
+        '"allocations":[{"fundId":4,"fundCode":"BALPORT","fundName":"Balanced Portfolio","shareClass":"ACCUMULATION","allocationPct":100}],' +
+        '"allocationTotalPct":100}],' +
+        '"createdAt":"2026-11-06T11:06:24.002143Z","illustratedAt":"2026-11-06T11:06:24.058015Z","txLife":{"versionNo":1}},' +
+        '"latestRun":{"runNo":1,"projections":[{"scenario":"LOWER","year":0}]}}';
+
+    @IsTest
+    static void getIllustrationSummary_mapsDetail() {
+        RoutingMock mock = new RoutingMock(new Map<String, String>{ '/api/v1/illustrations/69' => DETAIL });
+        Test.setMock(HttpCalloutMock.class, mock);
+
+        Test.startTest();
+        IllustrationController.SummaryDTO s = IllustrationController.getIllustrationSummary(69);
+        Test.stopTest();
+
+        Assert.areEqual(69, s.illustrationId);
+        Assert.areEqual('ILL-94A090EFA4', s.illustrationRef);
+        Assert.areEqual('Bluedoor Individual Savings Account', s.productDescription);
+        Assert.areEqual('William Miller', s.clientName);
+        Assert.areEqual('2026-11-06T11:06:24.058015Z', s.illustrationDate);
+        Assert.isTrue(s.hasDocuments);
+        Assert.areEqual(1, s.contributions.size());
+        IllustrationController.SummaryContribution c = s.contributions[0];
+        Assert.areEqual('SINGLE', c.contributionType);
+        Assert.isTrue(c.grossAmount == 15000);
+        Assert.areEqual('ACCOUNT_OWNER', c.contributors[0].contributorType);
+        Assert.areEqual('INITIAL_ADVICE_CHARGE', c.charges[0].chargeTypeCode);
+        Assert.isTrue(c.charges[0].appliedRatePct == 3);
+        Assert.areEqual('Balanced Portfolio', c.allocations[0].fundName);
+        Assert.areEqual('ACCUMULATION', c.allocations[0].shareClass);
+    }
+
+    @IsTest
+    static void getIllustrationSummary_notFound() {
+        Test.setMock(HttpCalloutMock.class, new RoutingMock(new Map<String, String>()));
+        try {
+            IllustrationController.getIllustrationSummary(5);
+            Assert.fail('Expected an AuraHandledException');
+        } catch (AuraHandledException e) {
+            Assert.areEqual('Illustration 5 was not found.', e.getMessage());
+        }
+    }
 }

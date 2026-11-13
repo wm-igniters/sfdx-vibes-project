@@ -1,0 +1,42 @@
+{
+  "name": "generated-react-app",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "wmx-components/*"
+  ],
+  "packageManager": "npm@10.9.2",
+  "engines": {
+    "node": "22.18.0"
+  },
+  "scripts": {
+    "dev": "next dev --turbo",
+    "local-build": "node scripts/getlibs.js && next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "lodash": "4.17.21",
+    "moment": "2.30.1",
+    "next": "16.1.1",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "@wavemaker-ai/app-runtime-wm-build": "12.1.1-rc.352",
+    "@wavemaker-ai/react-codegen": "12.1.1-rc.352",
+    "@wavemaker-ai/react-runtime": "12.1.1-rc.352",
+    "@wavemaker-ai/variables": "12.1.1-rc.352",
+    "dotenv": "16.5.0",
+    "core-js": "3.46.0",
+    "axios": "^1.11.0"
+  },
+  "devDependencies": {
+    "@types/node": "20",
+    "@types/react": "19.2.8",
+    "@types/react-dom": "19.2.3",
+    "typescript": "5",
+    "@types/core-js": "2.5.8",
+    "@vitejs/plugin-react": "5.1.1",
+    "vite": "7.3.1"
+  }
+}

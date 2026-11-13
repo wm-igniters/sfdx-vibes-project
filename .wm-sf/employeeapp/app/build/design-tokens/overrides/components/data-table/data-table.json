@@ -1,0 +1,147 @@
+{
+  "data-table" : {
+    "appearances" : {
+      "default-table" : {
+        "mapping" : {
+          "border" : {
+            "collapse" : {
+              "value" : "collapse"
+            },
+            "spacing" : {
+              "value" : "0"
+            }
+          },
+          "padding" : {
+            "value" : "{space.0.value}"
+          },
+          "overlay" : {
+            "background" : {
+              "value" : "{color.surface.@.value}"
+            },
+            "color" : {
+              "value" : "{color.on-surface.@.value}"
+            }
+          },
+          "header" : {
+            "row" : {
+              "background" : {
+                "value" : "{color.surface.@.value}"
+              },
+              "color" : {
+                "value" : "{color.tertiary.@.value}"
+              },
+              "font-weight" : {
+                "value" : "500"
+              }
+            },
+            "cell" : {
+              "padding" : {
+                "value" : "{space.4.value} {space.6.value}"
+              },
+              "border" : {
+                "width" : {
+                  "value" : "0 0 {border.width.1.value} 0"
+                },
+                "style" : {
+                  "value" : "solid"
+                }
+              }
+            }
+          },
+          "body" : {
+            "row" : {
+              "color" : {
+                "value" : "{color.on-surface.@.value}"
+              }
+            },
+            "cell" : {
+              "padding" : {
+                "value" : "{space.4.value} {space.6.value}"
+              },
+              "border" : {
+                "width" : {
+                  "value" : "0 0 {border.width.1.value} 0"
+                },
+                "style" : {
+                  "value" : "solid"
+                },
+                "radius" : {
+                  "value" : "0"
+                }
+              }
+            }
+          },
+          "sort" : {
+            "icon" : {
+              "color" : {
+                "value" : "{color.tertiary.@.value}"
+              }
+            }
+          },
+          "states" : {
+            "hover" : {
+              "body" : {
+                "row" : {
+                  "background-even" : {
+                    "value" : "{color.surface.dim.@.value}"
+                  },
+                  "background-odd" : {
+                    "value" : "{color.surface.dim.@.value}"
+                  }
+                }
+              }
+            },
+            "active" : {
+              "body" : {
+                "row" : {
+                  "background-even" : {
+                    "value" : "{color.surface.dim.@.value}"
+                  },
+                  "background-odd" : {
+                    "value" : "{color.surface.dim.@.value}"
+                  }
+                }
+              }
+            },
+            "selected" : {
+              "body" : {
+                "row" : {
+                  "background-even" : {
+                    "value" : "{color.surface.dim.@.value}"
+                  },
+                  "background-odd" : {
+                    "value" : "{color.surface.dim.@.value}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "default" : {
+        "mapping" : {
+          "body" : {
+            "action" : {
+              "icon-size" : {
+                "value" : "16px"
+              }
+            },
+            "row" : {
+              "font-weight" : {
+                "value" : "{body.medium.font-weight.value}"
+              }
+            }
+          }
+        }
+      }
+    },
+    "meta" : {
+      "appearances" : {
+        "default-table" : {
+          "source" : "aira",
+          "description" : "Clean transactions table — white background, muted gray headers, thin row separators, subtle shadow, no outer border"
+        }
+      }
+    }
+  }
+}

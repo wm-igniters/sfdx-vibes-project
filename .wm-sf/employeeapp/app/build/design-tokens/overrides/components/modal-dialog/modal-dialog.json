@@ -1,0 +1,22 @@
+{
+  "modal" : {
+    "appearances" : {
+      "default" : {
+        "variantGroups" : {
+          "size" : {
+            "md" : {
+              "background" : {
+                "value" : "{color.surface.@.value}"
+              },
+              "backdrop" : {
+                "background" : {
+                  "value" : "#2c3e50"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

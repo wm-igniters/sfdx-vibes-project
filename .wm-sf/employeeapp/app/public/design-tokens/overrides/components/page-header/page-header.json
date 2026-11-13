@@ -1,0 +1,73 @@
+{
+  "header" : {
+    "appearances" : {
+      "dark-header" : {
+        "mapping" : {
+          "background" : {
+            "value" : "{color.surface.dim.@.value}"
+          },
+          "color" : {
+            "value" : "{color.on-surface.@.value}"
+          },
+          "border" : {
+            "color" : {
+              "value" : "{color.border.@.value}"
+            }
+          },
+          "shadow" : {
+            "value" : "{elevation.elevation.shadow.1.value}"
+          },
+          "height" : {
+            "value" : "60px"
+          }
+        }
+      },
+      "dark-header-elevated" : {
+        "mapping" : {
+          "background" : {
+            "value" : "{color.surface.container.@.value}"
+          },
+          "color" : {
+            "value" : "{color.on-surface.@.value}"
+          },
+          "border" : {
+            "color" : {
+              "value" : "{color.border.translucent.value}"
+            }
+          },
+          "shadow" : {
+            "value" : "{elevation.elevation.shadow.2.value}"
+          },
+          "height" : {
+            "value" : "60px"
+          }
+        }
+      }
+    },
+    "meta" : {
+      "appearances" : {
+        "dark-header" : {
+          "source" : "aira",
+          "description" : "Dark theme page header — deep surface background with bottom border separator"
+        },
+        "dark-header-elevated" : {
+          "source" : "aira",
+          "description" : "Dark theme elevated page header — surface container with stronger shadow for depth"
+        }
+      }
+    },
+    "mapping" : {
+      "height" : {
+        "value" : "60px"
+      },
+      "border" : {
+        "color" : {
+          "value" : "{color.outline.@.value}"
+        },
+        "style" : {
+          "value" : "{border.style.base.value}"
+        }
+      }
+    }
+  }
+}

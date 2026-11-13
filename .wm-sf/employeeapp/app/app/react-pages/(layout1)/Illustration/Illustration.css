@@ -1,0 +1,990 @@
+/* ==========================================================================
+   Illustration page — modern refresh (style-only)
+   --------------------------------------------------------------------------
+   Selectors are written WITHOUT a page prefix on purpose: the WaveMaker
+   React codegen automatically scopes every rule in this file under
+   ".wm-app .app-page-illustration". (The previous ".page.Illustration"
+   prefix never matched the runtime DOM, so none of those rules applied.)
+   Rules inside @media are NOT auto-scoped, so they carry the prefix by hand.
+   ========================================================================== */
+
+/* ---------- Local design tokens (reuse app tokens where they exist) ------ */
+.wm-app .app-page-illustration .app-page-content {
+    --ill-ink: var(--wm-color-secondary, #0A1428);
+    --ill-ink-hover: #1E2C4A;
+    --ill-text: #344054;
+    --ill-muted: #667085;
+    --ill-subtle: #98A2B3;
+    --ill-accent: var(--wm-color-sjp-stepper-active, #4A6FA5);
+    --ill-accent-soft: #EAF0F8;
+    --ill-surface: #F4F5F7;
+    --ill-card: #FFFFFF;
+    --ill-band: #F8F9FB;
+    --ill-border: #E4E7EC;
+    --ill-divider: #EEF0F3;
+    --ill-input-border: #D0D5DD;
+    --ill-input-readonly: #F2F4F7;
+    --ill-danger: #B42318;
+    --ill-danger-soft: #FEF3F2;
+    --ill-danger-border: #FECDCA;
+    --ill-radius-lg: 12px;
+    --ill-radius-md: 8px;
+    --ill-shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.05);
+    --ill-shadow-card: 0 1px 3px rgba(16, 24, 40, 0.06), 0 1px 2px rgba(16, 24, 40, 0.04);
+    --ill-focus-ring: 0 0 0 4px rgba(74, 111, 165, 0.18);
+
+    background-color: var(--ill-surface);
+    padding: 28px 32px 48px;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+/* ---------- Page surface + wizard shell -------------------------------- */
+.wm-app .app-page-illustration .app-illustration-surface, .wm-app .app-page-illustration .app-page-content>.app-container {
+    background: transparent;
+    padding: 0;
+}
+.wm-app .app-page-illustration .app-wizard.wizard-classic {
+    max-width: 1120px;
+    margin: 0 auto;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+}
+/* ---------- Stepper (numbered steps + progress line) ------------------- */
+.wm-app .app-page-illustration .app-wizard.wizard-classic .app-wizard-heading {
+    background-color: var(--ill-card);
+    border: 1px solid var(--ill-border);
+    border-radius: var(--ill-radius-lg);
+    box-shadow: var(--ill-shadow-card);
+    padding: 18px 28px;
+}
+.wm-app .app-page-illustration .app-wizard.wizard-classic .app-wizard-heading .app-wizard-steps {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    counter-reset: ill-step;
+}
+/* Hide MUI default connectors — the progress line is drawn per step below */
+.wm-app .app-page-illustration .app-wizard.wizard-classic .app-wizard-heading .app-wizard-steps>.MuiStepConnector-root {
+    display: none;
+}
+.wm-app .app-page-illustration .app-wizard.wizard-classic .app-wizard-heading .app-wizard-steps .app-wizard-step {
+    counter-increment: ill-step;
+    display: flex;
+    align-items: center;
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 0;
+    --wm-wizard-step-title-color: var(--ill-muted);
+    --wm-wizard-step-title-font-weight: 500;
+    --wm-wizard-step-title-font-size: 14px;
+    --wm-wizard-step-title-line-height: 20px;
+}
+.wm-app .app-page-illustration .app-wizard.wizard-classic .app-wizard-heading .app-wizard-steps .app-wizard-step:last-child {
+    flex: 0 0 auto;
+}
+.wm-app .app-page-illustration .app-wizard.wizard-classic .app-wizard-heading .app-wizard-steps .app-wizard-step.active {
+    --wm-wizard-step-title-color: var(--ill-ink);
+    --wm-wizard-step-title-font-weight: 600;
+}
+.wm-app .app-page-illustration .app-wizard.wizard-classic .app-wizard-heading .app-wizard-steps .app-wizard-step.finished {
+    --wm-wizard-step-title-color: var(--ill-text);
+}
+/* progress line between steps */
+.wm-app .app-page-illustration .app-wizard.wizard-classic .app-wizard-heading .app-wizard-steps .app-wizard-step::after {
+    content: "";
+    flex: 1 1 auto;
+    min-width: 16px;
+    height: 2px;
+    margin: 0 16px;
+    border: 0;
+    border-radius: 2px;
+    background-color: var(--ill-border);
+}
+.wm-app .app-page-illustration .app-wizard.wizard-classic .app-wizard-heading .app-wizard-steps .app-wizard-step.finished::after {
+    background-color: var(--ill-accent);
+}
+.wm-app .app-page-illustration .app-wizard.wizard-classic .app-wizard-heading .app-wizard-steps .app-wizard-step:last-child::after {
+    display: none;
+}
+/* step link: flat, no chevron background */
+.wm-app .app-page-illustration .app-wizard.wizard-classic .app-wizard-heading .app-wizard-steps .app-wizard-step a, .wm-app .app-page-illustration .app-wizard.wizard-classic .app-wizard-heading .app-wizard-steps .app-wizard-step .title-center-align {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex: 0 0 auto;
+    height: auto;
+    padding: 4px 6px 4px 0;
+    background: transparent;
+    border-radius: 999px;
+    text-decoration: none;
+    cursor: pointer;
+    outline: none;
+}
+.wm-app .app-page-illustration .app-wizard.wizard-classic .app-wizard-heading .app-wizard-steps .app-wizard-step a:focus-visible {
+    box-shadow: var(--ill-focus-ring);
+}
+.wm-app .app-page-illustration .app-wizard.wizard-classic .app-wizard-heading .app-wizard-steps .app-wizard-step a:hover {
+    --wm-wizard-step-title-color: var(--ill-ink);
+}
+.wm-app .app-page-illustration .app-wizard.wizard-classic .app-wizard-heading .app-wizard-steps .app-wizard-step .arrow {
+    display: none;
+}
+/* number circle (number comes from a CSS counter) */
+.wm-app .app-page-illustration .app-wizard.wizard-classic .app-wizard-heading .app-wizard-steps .app-wizard-step .MuiStepLabel-iconContainer {
+    flex-shrink: 0;
+    padding-right: 10px;
+}
+.wm-app .app-page-illustration .app-wizard.wizard-classic .app-wizard-heading .app-wizard-steps .app-wizard-step .MuiStepLabel-labelContainer {
+    flex-shrink: 0;
+    width: auto;
+}
+.wm-app .app-page-illustration .app-wizard.wizard-classic .app-wizard-heading .app-wizard-steps .app-wizard-step .MuiStepLabel-iconContainer .wizard-step-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1.5px solid var(--ill-input-border);
+    background-color: var(--ill-card);
+    color: var(--ill-muted);
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.wm-app .app-page-illustration .app-wizard.wizard-classic .app-wizard-heading .app-wizard-steps .app-wizard-step .MuiStepLabel-iconContainer .wizard-step-number::before {
+    content: counter(ill-step);
+}
+.wm-app .app-page-illustration .app-wizard.wizard-classic .app-wizard-heading .app-wizard-steps .app-wizard-step.active .MuiStepLabel-iconContainer .wizard-step-number {
+    border: 2px solid var(--ill-accent);
+    color: var(--ill-accent);
+    box-shadow: var(--ill-focus-ring);
+}
+.wm-app .app-page-illustration .app-wizard.wizard-classic .app-wizard-heading .app-wizard-steps .app-wizard-step.finished .MuiStepLabel-iconContainer .wizard-step-number {
+    border-color: var(--ill-accent);
+    background-color: var(--ill-accent);
+    color: #FFFFFF;
+}
+.wm-app .app-page-illustration .app-wizard.wizard-classic .app-wizard-heading .app-wizard-steps .app-wizard-step.finished .MuiStepLabel-iconContainer .wizard-step-number::before {
+    content: "\2713";
+    font-size: 14px;
+}
+/* step title */
+.wm-app .app-page-illustration .app-wizard.wizard-classic .app-wizard-heading .app-wizard-steps .app-wizard-step .MuiStepLabel-label {
+    display: inline-flex !important;
+    width: auto !important;
+}
+.wm-app .app-page-illustration .app-wizard.wizard-classic .app-wizard-heading .app-wizard-steps .app-wizard-step .MuiStepLabel-label .title-wrapper {
+    display: inline-flex;
+    line-height: 20px;
+    padding: 0;
+    white-space: nowrap;
+}
+/* ---------- Wizard body + step layout ---------------------------------- */
+.wm-app .app-page-illustration .app-wizard.wizard-classic .app-wizard-body {
+    padding: 0;
+    margin-top: 20px;
+    background: transparent;
+    border: 0;
+}
+/* let the footer follow the content instead of a fixed-height step */
+.wm-app .app-page-illustration .app-wizard.wizard-classic .app-wizard-body .app-wizard-step-content {
+    min-height: 0;
+}
+/* Form-field wrappers: drop the default field padding / min-height */
+.wm-app .app-page-illustration .illustration-owner-form .form-elements {
+    margin: 0;
+}
+.wm-app .app-page-illustration .illustration-owner-form .form-elements>div, .wm-app .app-page-illustration div.illustration-pct-field, .wm-app .app-page-illustration div.illustration-benefits-radio, .wm-app .app-page-illustration div.illustration-aft-radio {
+    padding: 0;
+    margin: 0;
+}
+.wm-app .app-page-illustration .illustration-owner-form .form-group, .wm-app .app-page-illustration div.illustration-pct-field .form-group, .wm-app .app-page-illustration div.illustration-benefits-radio .form-group, .wm-app .app-page-illustration div.illustration-aft-radio .form-group {
+    min-height: 0;
+}
+.wm-app .app-page-illustration .illustration-step-body {
+    gap: 16px;
+    padding: 0;
+}
+/* Step heading (e.g. "Benefits") */
+.wm-app .app-page-illustration .illustration-section-heading {
+    margin: 0 0 4px 0;
+    color: var(--ill-ink);
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 28px;
+    letter-spacing: -0.01em;
+}
+/* ---------- Cards ------------------------------------------------------ */
+.wm-app .app-page-illustration .illustration-section-panel {
+    background-color: var(--ill-card);
+    border: 1px solid var(--ill-border);
+    border-radius: var(--ill-radius-lg);
+    box-shadow: var(--ill-shadow-card);
+    padding: 0;
+    margin: 0;
+    gap: 0;
+    overflow: hidden;
+}
+/* Card titles */
+.wm-app .app-page-illustration .illustration-owner-heading, .wm-app .app-page-illustration .illustration-benefits-heading, .wm-app .app-page-illustration .illustration-charges-title, .wm-app .app-page-illustration .illustration-aft-title, .wm-app .app-page-illustration .illustration-fundsel-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    margin: 0;
+    padding: 16px 24px;
+    background-color: var(--ill-card);
+    border-bottom: 1px solid var(--ill-divider);
+    color: var(--ill-ink);
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 0;
+    text-align: left;
+}
+.wm-app .app-page-illustration .illustration-owner-heading::before, .wm-app .app-page-illustration .illustration-benefits-heading::before, .wm-app .app-page-illustration .illustration-charges-title::before, .wm-app .app-page-illustration .illustration-aft-title::before, .wm-app .app-page-illustration .illustration-fundsel-title::before {
+    content: "";
+    flex: 0 0 auto;
+    width: 4px;
+    height: 18px;
+    border-radius: 2px;
+    background-color: var(--ill-accent);
+}
+/* Small "Single contributions" chips */
+.wm-app .app-page-illustration .illustration-aft-subheading, .wm-app .app-page-illustration .illustration-fundsel-subheading {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    width: auto;
+    margin: 16px 24px 4px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background-color: var(--ill-accent-soft);
+    color: var(--ill-accent);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 16px;
+    letter-spacing: 0.02em;
+    text-align: left;
+}
+/* ---------- Account owner form ---------------------------------------- */
+.wm-app .app-page-illustration .illustration-owner-form, .wm-app .app-page-illustration .illustration-owner-form.app-panel {
+    --wm-form-field-padding: 0;
+    width: 100%;
+    margin: 0;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+}
+.wm-app .app-page-illustration .illustration-owner-form .form-body, .wm-app .app-page-illustration .illustration-owner-form .panel-body {
+    padding: 4px 24px 8px;
+}
+.wm-app .app-page-illustration .illustration-owner-form .form-group.caption-left {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--ill-divider);
+}
+.wm-app .app-page-illustration .illustration-owner-form .form-elements>div:last-child .form-group.caption-left {
+    border-bottom: 0;
+}
+.wm-app .app-page-illustration .illustration-owner-form .form-group .control-label {
+    flex: 0 0 200px;
+    width: 200px;
+    max-width: none;
+    float: none;
+    margin: 0;
+    padding: 0 16px 0 0;
+    text-align: left;
+    color: var(--ill-text);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+}
+.wm-app .app-page-illustration .illustration-owner-form .form-group .app-input-wrapper, .wm-app .app-page-illustration .illustration-owner-form .form-group .app-select-wrapper, .wm-app .app-page-illustration .illustration-owner-form .form-group .app-date {
+    flex: 0 1 360px;
+    width: 100%;
+    max-width: 360px;
+}
+.wm-app .app-page-illustration .illustration-owner-form .form-group .form-control {
+    height: 40px;
+    width: 100%;
+    padding: 0 12px;
+    border: 1px solid var(--ill-input-border);
+    border-radius: var(--ill-radius-md);
+    background-color: var(--ill-card);
+    box-shadow: var(--ill-shadow-sm);
+    color: var(--ill-ink);
+    font-size: 14px;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.wm-app .app-page-illustration .illustration-owner-form .form-group .form-control:hover {
+    border-color: var(--ill-subtle);
+}
+.wm-app .app-page-illustration .illustration-owner-form .form-group .form-control:focus {
+    border-color: var(--ill-accent);
+    box-shadow: var(--ill-focus-ring);
+    outline: none;
+}
+/* Read-only fields (Surname, Date of birth) */
+.wm-app .app-page-illustration .illustration-owner-form .form-group .form-control[readonly], .wm-app .app-page-illustration .illustration-owner-form .form-group .form-control[readonly]:hover {
+    background-color: var(--ill-input-readonly);
+    border-color: var(--ill-border);
+    box-shadow: none;
+    color: var(--ill-muted);
+    cursor: not-allowed;
+}
+.wm-app .app-page-illustration .illustration-owner-form .form-group .app-date .input-group-btn .btn {
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    color: var(--ill-subtle);
+}
+/* ---------- Yes / No radios → segmented control ------------------------ */
+.wm-app .app-page-illustration .illustration-benefits-question-row, .wm-app .app-page-illustration .illustration-aft-question-row {
+    gap: 32px;
+    width: 100%;
+    margin: 0;
+    padding: 20px 24px;
+    background-color: var(--ill-card);
+}
+.wm-app .app-page-illustration .illustration-benefits-question, .wm-app .app-page-illustration .illustration-aft-question {
+    flex: 0 1 auto;
+    max-width: 440px;
+    margin: 0;
+    color: var(--ill-text);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+}
+.wm-app .app-page-illustration .illustration-benefits-radio .form-group, .wm-app .app-page-illustration .illustration-aft-radio .form-group {
+    margin: 0;
+    padding: 0;
+}
+.wm-app .app-page-illustration .illustration-benefits-radio .app-radioset, .wm-app .app-page-illustration .illustration-aft-radio .app-radioset {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    width: auto;
+    margin: 0;
+    padding: 4px;
+    background-color: var(--ill-input-readonly);
+    border: 1px solid var(--ill-border);
+    border-radius: 10px;
+}
+.wm-app .app-page-illustration .illustration-benefits-radio .app-radioset .app-radio, .wm-app .app-page-illustration .illustration-aft-radio .app-radioset .app-radio {
+    position: relative;
+    float: none;
+    width: auto;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+}
+.wm-app .app-page-illustration .illustration-benefits-radio .app-radioset .app-radioset-label, .wm-app .app-page-illustration .illustration-aft-radio .app-radioset .app-radioset-label {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 72px;
+    height: 34px;
+    margin: 0;
+    padding: 0 18px;
+    border-radius: 7px;
+    color: var(--ill-muted);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+.wm-app .app-page-illustration .illustration-benefits-radio .app-radioset .app-radioset-label input, .wm-app .app-page-illustration .illustration-aft-radio .app-radioset .app-radioset-label input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+.wm-app .app-page-illustration .illustration-benefits-radio .app-radioset .app-radioset-label .caption, .wm-app .app-page-illustration .illustration-aft-radio .app-radioset .app-radioset-label .caption {
+    padding: 0;
+    margin: 0;
+    color: inherit;
+    font: inherit;
+}
+/* hide the default radio circle drawn on the caption */
+.wm-app .app-page-illustration .illustration-benefits-radio .app-radioset .app-radioset-label .caption::before, .wm-app .app-page-illustration .illustration-benefits-radio .app-radioset .app-radioset-label .caption::after, .wm-app .app-page-illustration .illustration-aft-radio .app-radioset .app-radioset-label .caption::before, .wm-app .app-page-illustration .illustration-aft-radio .app-radioset .app-radioset-label .caption::after {
+    display: none;
+}
+.wm-app .app-page-illustration .illustration-benefits-radio .app-radioset .app-radioset-label:hover, .wm-app .app-page-illustration .illustration-aft-radio .app-radioset .app-radioset-label:hover {
+    color: var(--ill-ink);
+}
+.wm-app .app-page-illustration .illustration-benefits-radio .app-radioset .app-radio.active .app-radioset-label, .wm-app .app-page-illustration .illustration-benefits-radio .app-radioset .app-radioset-label:has(input:checked), .wm-app .app-page-illustration .illustration-aft-radio .app-radioset .app-radio.active .app-radioset-label, .wm-app .app-page-illustration .illustration-aft-radio .app-radioset .app-radioset-label:has(input:checked) {
+    background-color: var(--ill-card);
+    color: var(--ill-ink);
+    font-weight: 600;
+    box-shadow: 0 1px 3px rgba(16, 24, 40, 0.1), 0 1px 2px rgba(16, 24, 40, 0.06);
+}
+.wm-app .app-page-illustration .illustration-benefits-radio .app-radioset .app-radioset-label:has(input:focus-visible), .wm-app .app-page-illustration .illustration-aft-radio .app-radioset .app-radioset-label:has(input:focus-visible) {
+    box-shadow: var(--ill-focus-ring);
+}
+/* ---------- AFT card body --------------------------------------------- */
+.wm-app .app-page-illustration .illustration-aft-body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    gap: 0;
+    background-color: var(--ill-card);
+}
+.wm-app .app-page-illustration .illustration-aft-question-row {
+    padding-top: 12px;
+}
+/* ---------- Shared % inputs (Charges + Fund selection) ----------------- */
+.wm-app .app-page-illustration div.illustration-pct-field {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.wm-app .app-page-illustration div.illustration-pct-field::after {
+    content: "%";
+    color: var(--ill-muted);
+    font-size: 14px;
+    font-weight: 500;
+}
+.wm-app .app-page-illustration div.illustration-pct-field .form-group {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+.wm-app .app-page-illustration div.illustration-pct-field .app-input-wrapper {
+    width: 88px;
+    min-width: 0;
+}
+.wm-app .app-page-illustration div.illustration-pct-field input.form-control {
+    width: 88px;
+    height: 36px;
+    padding: 0 10px;
+    border: 1px solid var(--ill-input-border);
+    border-radius: var(--ill-radius-md);
+    background-color: var(--ill-card);
+    box-shadow: var(--ill-shadow-sm);
+    color: var(--ill-ink);
+    font-size: 14px;
+    font-weight: 500;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.wm-app .app-page-illustration div.illustration-pct-field input.form-control::placeholder {
+    color: transparent;
+}
+.wm-app .app-page-illustration div.illustration-pct-field input.form-control:hover {
+    border-color: var(--ill-subtle);
+}
+.wm-app .app-page-illustration div.illustration-pct-field input.form-control:focus {
+    border-color: var(--ill-accent);
+    box-shadow: var(--ill-focus-ring);
+    outline: none;
+}
+/* ---------- Charges table --------------------------------------------- */
+.wm-app .app-page-illustration .illustration-charges-panel {
+    gap: 0;
+}
+.wm-app .app-page-illustration .illustration-charges-row {
+    align-items: center;
+    gap: 0;
+    width: 100%;
+    min-height: 56px;
+    margin: 0;
+    padding: 10px 24px;
+    background-color: var(--ill-card);
+    border-bottom: 1px solid var(--ill-divider);
+    transition: background-color 0.12s ease;
+}
+.wm-app .app-page-illustration .illustration-charges-row:last-child {
+    border-bottom: 0;
+}
+.wm-app .app-page-illustration .illustration-charges-row:not(.illustration-charges-header):hover {
+    background-color: #FAFBFC;
+}
+.wm-app .app-page-illustration .illustration-charges-header {
+    min-height: 0;
+    padding: 10px 24px;
+    background-color: var(--ill-band);
+    border-bottom: 1px solid var(--ill-divider);
+}
+.wm-app .app-page-illustration .illustration-charges-name {
+    flex: 0 0 320px;
+    margin: 0;
+    color: var(--ill-text);
+    font-size: 14px;
+    font-weight: 500;
+}
+.wm-app .app-page-illustration .illustration-charges-standard {
+    flex: 0 0 160px;
+    margin: 0;
+    color: var(--ill-muted);
+    font-size: 14px;
+    font-variant-numeric: tabular-nums;
+}
+.wm-app .app-page-illustration .illustration-charges-rate {
+    flex: 1 1 auto;
+    margin: 0;
+}
+.wm-app .app-page-illustration div.illustration-charges-input {
+    flex: 1 1 auto;
+}
+.wm-app .app-page-illustration .illustration-charges-colhead, .wm-app .app-page-illustration .illustration-charges-header .illustration-charges-name, .wm-app .app-page-illustration .illustration-charges-header .illustration-charges-standard {
+    color: var(--ill-muted);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 16px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+/* ---------- Fund selection table -------------------------------------- */
+.wm-app .app-page-illustration .illustration-fundsel-panel {
+    gap: 0;
+    padding: 0;
+}
+.wm-app .app-page-illustration .illustration-fund-row {
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    margin: 0;
+    padding: 8px 24px;
+    background-color: var(--ill-card);
+    border-bottom: 1px solid var(--ill-divider);
+    transition: background-color 0.12s ease;
+}
+.wm-app .app-page-illustration .illustration-fund-row:not(.illustration-fund-header):not(.illustration-fund-total-row):hover {
+    background-color: #FAFBFC;
+}
+.wm-app .app-page-illustration .illustration-fund-header {
+    padding: 10px 24px;
+    background-color: var(--ill-band);
+}
+.wm-app .app-page-illustration .illustration-fund-name {
+    flex: 0 0 320px;
+    margin: 0;
+    color: var(--ill-text);
+    font-size: 14px;
+    font-weight: 500;
+}
+.wm-app .app-page-illustration .illustration-fund-colhead {
+    flex: 0 0 140px;
+    margin: 0;
+    color: var(--ill-muted);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 16px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+/* Group heading inside the header row (e.g. "Polaris and InRetirement Range") */
+.wm-app .app-page-illustration .illustration-fund-name.illustration-fund-colhead {
+    flex: 0 0 320px;
+    color: var(--ill-ink);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    letter-spacing: 0;
+    text-transform: none;
+}
+.wm-app .app-page-illustration .illustration-fund-row div.illustration-pct-field {
+    flex: 0 0 140px;
+}
+/* Show / hide individual funds */
+.wm-app .app-page-illustration .illustration-toggle-funds, .wm-app .app-page-illustration .illustration-toggle-funds.app-anchor {
+    --wm-anchor-color: var(--ill-accent);
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin: 12px 16px;
+    padding: 6px 10px;
+    border-radius: var(--ill-radius-md);
+    color: var(--ill-accent);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.15s ease;
+}
+.wm-app .app-page-illustration .illustration-toggle-funds:hover, .wm-app .app-page-illustration .illustration-toggle-funds:focus-visible {
+    background-color: var(--ill-accent-soft);
+    text-decoration: none;
+    outline: none;
+}
+.wm-app .app-page-illustration .illustration-toggle-funds .anchor-caption {
+    color: inherit;
+}
+.wm-app .app-page-illustration .illustration-toggle-funds .app-icon {
+    color: inherit;
+    font-size: 12px;
+}
+.wm-app .app-page-illustration .illustration-individual-funds {
+    gap: 0;
+    border-top: 1px solid var(--ill-divider);
+}
+/* Total row */
+.wm-app .app-page-illustration .illustration-fund-total-row {
+    gap: 16px;
+    margin: 0;
+    padding: 16px 24px;
+    background-color: var(--ill-band);
+    border-top: 1px solid var(--ill-border);
+    border-bottom: 0;
+}
+.wm-app .app-page-illustration .illustration-fund-total-label {
+    color: var(--ill-ink);
+    font-size: 14px;
+    font-weight: 600;
+}
+.wm-app .app-page-illustration .illustration-fund-total-value {
+    margin: 0;
+    color: var(--ill-ink);
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 24px;
+    font-variant-numeric: tabular-nums;
+}
+/* Allocation validation message → inline alert */
+.wm-app .app-page-illustration .illustration-fund-validation-row {
+    align-items: center;
+    gap: 10px;
+    max-width: calc(100% - 48px);
+    margin: 0 24px 20px;
+    padding: 10px 14px;
+    background-color: var(--ill-danger-soft);
+    border: 1px solid var(--ill-danger-border);
+    border-radius: var(--ill-radius-md);
+}
+.wm-app .app-page-illustration .illustration-fund-validation-icon {
+    flex: 0 0 auto;
+    display: inline-flex;
+    color: var(--ill-danger);
+    font-size: 16px;
+}
+.wm-app .app-page-illustration .illustration-fund-validation-icon .app-icon {
+    color: inherit;
+    font-size: inherit;
+}
+.wm-app .app-page-illustration .illustration-fund-validation-text {
+    margin: 0;
+    color: var(--ill-danger);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+}
+/* ---------- Footer actions -------------------------------------------- */
+.wm-app .app-page-illustration .app-wizard.wizard-classic .app-wizard-actions {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    padding: 14px 24px;
+    background-color: var(--ill-card);
+    border: 1px solid var(--ill-border);
+    border-radius: var(--ill-radius-lg);
+    box-shadow: var(--ill-shadow-card);
+}
+.wm-app .app-page-illustration .app-wizard.wizard-classic .app-wizard-actions .app-wizard-actions-right {
+    align-items: center;
+    gap: 12px;
+}
+.wm-app .app-page-illustration .app-wizard.wizard-classic .app-wizard-actions .btn-sjp-nav.app-button {
+    --wm-btn-min-height: 40px;
+    --wm-btn-min-width: 112px;
+    --wm-btn-padding: 0 18px;
+    --wm-btn-radius: var(--ill-radius-md);
+    --wm-btn-font-size: 14px;
+    --wm-btn-font-weight: 600;
+    --wm-btn-gap: 8px;
+    --wm-btn-background: var(--ill-card);
+    --wm-btn-color: var(--ill-text);
+    --wm-btn-border-color: var(--ill-input-border);
+    --wm-btn-state-layer-color: var(--ill-ink);
+    --wm-btn-shadow: var(--ill-shadow-sm);
+    margin-left: 0;
+    transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.wm-app .app-page-illustration .app-wizard.wizard-classic .app-wizard-actions .btn-sjp-nav.app-button:focus-visible {
+    --wm-btn-shadow: var(--ill-focus-ring);
+    outline: none;
+}
+/* Close — quiet tertiary action, pinned left */
+.wm-app .app-page-illustration .app-wizard.wizard-classic .app-wizard-actions .btn-sjp-nav.illustration-close-btn {
+    --wm-btn-background: transparent;
+    --wm-btn-border-color: transparent;
+    --wm-btn-color: var(--ill-muted);
+    --wm-btn-shadow: none;
+    --wm-btn-min-width: 0;
+    margin-right: auto;
+}
+.wm-app .app-page-illustration .app-wizard.wizard-classic .app-wizard-actions .btn-sjp-nav.illustration-close-btn:hover {
+    --wm-btn-background: var(--ill-input-readonly);
+    --wm-btn-color: var(--ill-ink);
+}
+/* Previous — secondary outline */
+.wm-app .app-page-illustration .app-wizard.wizard-classic .app-wizard-actions .btn-sjp-nav[name="btnPrevious"]:hover {
+    --wm-btn-border-color: var(--ill-subtle);
+    --wm-btn-background: #F9FAFB;
+}
+/* Continue / Done — primary */
+.wm-app .app-page-illustration .app-wizard.wizard-classic .app-wizard-actions .btn-sjp-nav.illustration-continue-btn, .wm-app .app-page-illustration .app-wizard.wizard-classic .app-wizard-actions .btn-sjp-nav[name="btnDone"] {
+    --wm-btn-background: var(--ill-ink);
+    --wm-btn-border-color: var(--ill-ink);
+    --wm-btn-color: #FFFFFF;
+    --wm-btn-state-layer-color: #FFFFFF;
+    --wm-btn-shadow: 0 1px 2px rgba(10, 20, 40, 0.18);
+}
+.wm-app .app-page-illustration .app-wizard.wizard-classic .app-wizard-actions .btn-sjp-nav.illustration-continue-btn:hover, .wm-app .app-page-illustration .app-wizard.wizard-classic .app-wizard-actions .btn-sjp-nav[name="btnDone"]:hover {
+    --wm-btn-background: var(--ill-ink-hover);
+    --wm-btn-border-color: var(--ill-ink-hover);
+}
+/* Continue's chevron sits after the caption */
+.wm-app .app-page-illustration .app-wizard.wizard-classic .app-wizard-actions .btn-sjp-nav.illustration-continue-btn {
+    flex-direction: row-reverse;
+}
+/* ==========================================================================
+   Investment step — Add panels, required questions, Illustration basis
+   (reuses the shared .illustration-section-panel / .illustration-owner-form
+    / .illustration-benefits-radio styling from above)
+   ========================================================================== */
+
+/* ---------- "Add …" panels (Single / Regular contributions, Transfers) - */
+.wm-app .app-page-illustration .illustration-add-panel {
+    gap: 0;
+    padding: 16px 24px 18px;
+}
+.wm-app .app-page-illustration .illustration-add-title {
+    margin: 0 0 10px 0;
+    color: var(--ill-ink);
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 20px;
+}
+.wm-app .app-page-illustration .illustration-add-row {
+    gap: 10px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+.wm-app .app-page-illustration .illustration-add-link, .wm-app .app-page-illustration .illustration-add-link.app-anchor {
+    --wm-anchor-color: var(--ill-ink);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    width: auto;
+    margin: 0;
+    padding: 0;
+    color: var(--ill-ink);
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    cursor: pointer;
+}
+.wm-app .app-page-illustration .illustration-add-link:hover {
+    color: var(--ill-accent);
+    text-decoration: underline;
+}
+.wm-app .app-page-illustration .illustration-add-link .anchor-caption {
+    color: inherit;
+    text-decoration: inherit;
+}
+.wm-app .app-page-illustration .illustration-add-link .app-icon {
+    color: var(--ill-ink);
+    font-size: 13px;
+    text-decoration: none;
+}
+/* Small square help "?" button next to the Add link */
+.wm-app .app-page-illustration .illustration-help-icon {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border: 1px solid var(--ill-input-border);
+    border-radius: 4px;
+    background-color: var(--ill-band);
+    color: var(--ill-accent);
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+.wm-app .app-page-illustration .illustration-help-icon:hover {
+    background-color: var(--ill-accent-soft);
+    border-color: var(--ill-accent);
+}
+.wm-app .app-page-illustration .illustration-help-icon .app-icon {
+    color: inherit;
+    font-size: 11px;
+}
+/* ---------- Account details / Illustration basis panels ---------------- */
+.wm-app .app-page-illustration .illustration-account-title, .wm-app .app-page-illustration .illustration-basis-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    margin: 0;
+    padding: 16px 24px;
+    background-color: var(--ill-card);
+    border-bottom: 1px solid var(--ill-divider);
+    color: var(--ill-ink);
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 0;
+    text-align: left;
+}
+.wm-app .app-page-illustration .illustration-account-title::before, .wm-app .app-page-illustration .illustration-basis-title::before {
+    content: "";
+    flex: 0 0 auto;
+    width: 4px;
+    height: 18px;
+    border-radius: 2px;
+    background-color: var(--ill-accent);
+}
+/* Required question block (red exclamation + red question text) */
+.wm-app .app-page-illustration .illustration-required-card {
+    gap: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: var(--ill-card);
+}
+.wm-app .app-page-illustration .illustration-required-question-row {
+    gap: 20px;
+    width: 100%;
+    margin: 0;
+    padding: 18px 24px;
+    background-color: var(--ill-card);
+}
+.wm-app .app-page-illustration .illustration-required-icon {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    margin-top: 2px;
+    border: 1.5px solid var(--ill-danger-border);
+    border-radius: 6px;
+    background-color: var(--ill-danger-soft);
+    color: var(--ill-danger);
+}
+.wm-app .app-page-illustration .illustration-required-icon .app-icon {
+    color: inherit;
+    font-size: 13px;
+}
+.wm-app .app-page-illustration .illustration-required-question {
+    flex: 0 1 auto;
+    max-width: 420px;
+    margin: 0;
+    color: var(--ill-danger);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+}
+/* helper / small-print text under the account details question */
+.wm-app .app-page-illustration .illustration-required-helper {
+    width: 100%;
+    margin: 0;
+    padding: 0 24px 18px;
+    color: var(--ill-muted);
+    font-size: 13px;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 18px;
+}
+/* Illustration basis — commencement date + term fields (reuses owner-form) */
+.wm-app .app-page-illustration .illustration-basis-form .form-body, .wm-app .app-page-illustration .illustration-basis-form .panel-body {
+    padding: 8px 24px 12px;
+}
+.wm-app .app-page-illustration .illustration-basis-form .form-group .app-input-wrapper, .wm-app .app-page-illustration .illustration-basis-form .form-group .app-date {
+    flex: 0 0 auto;
+    max-width: 220px;
+}
+/* the "Other than in this illustration…" required row sits in a tinted band */
+.wm-app .app-page-illustration .illustration-basis-required-row {
+    margin: 4px 0 0;
+    padding: 18px 24px;
+    background-color: var(--ill-band);
+    border-top: 1px solid var(--ill-divider);
+}
+/* ---------- Narrow screens (not auto-scoped → prefixed by hand) -------- */
+@media (max-width: 900px) {
+    .wm-app .app-page-illustration .app-page-content {
+        padding: 16px;
+    }
+
+    .wm-app .app-page-illustration .app-wizard.wizard-classic .app-wizard-heading {
+        padding: 14px 16px;
+    }
+
+    /* only the current step keeps its title; others show the number/check */
+    .wm-app .app-page-illustration .app-wizard.wizard-classic .app-wizard-heading .app-wizard-steps .app-wizard-step:not(.active) .MuiStepLabel-labelContainer {
+        display: none;
+    }
+
+    .wm-app .app-page-illustration .app-wizard.wizard-classic .app-wizard-heading .app-wizard-steps .app-wizard-step:not(.active) .MuiStepLabel-iconContainer {
+        padding-right: 0;
+    }
+
+    .wm-app .app-page-illustration .app-wizard.wizard-classic .app-wizard-heading .app-wizard-steps .app-wizard-step.active a .title-wrapper .step-title {
+        display: inline-block;
+    }
+
+    .wm-app .app-page-illustration .app-wizard.wizard-classic .app-wizard-heading .app-wizard-steps .app-wizard-step::after {
+        margin: 0 8px;
+        min-width: 8px;
+    }
+
+    .wm-app .app-page-illustration .illustration-fund-name,
+    .wm-app .app-page-illustration .illustration-fund-name.illustration-fund-colhead,
+    .wm-app .app-page-illustration .illustration-charges-name {
+        flex-basis: 180px;
+    }
+
+    .wm-app .app-page-illustration .illustration-charges-standard {
+        flex-basis: 100px;
+    }
+
+    .wm-app .app-page-illustration .illustration-owner-form .form-group.caption-left {
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+
+    .wm-app .app-page-illustration .illustration-owner-form .form-group .control-label {
+        flex-basis: 100%;
+    }
+
+    .wm-app .app-page-illustration .illustration-benefits-question-row,
+    .wm-app .app-page-illustration .illustration-aft-question-row {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .wm-app .app-page-illustration .illustration-required-question-row {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+}
+/* Neutral wrapper forms (wm-form-field requires a parent wm-form) */
+.wm-app .app-page-illustration .illustration-inline-form, .wm-app .app-page-illustration .illustration-inline-form.app-panel {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+}
+.wm-app .app-page-illustration .illustration-inline-form .form-body, .wm-app .app-page-illustration .illustration-inline-form .panel-body {
+    padding: 0;
+}

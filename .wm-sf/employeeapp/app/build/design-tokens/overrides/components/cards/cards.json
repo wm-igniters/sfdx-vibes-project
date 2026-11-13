@@ -1,0 +1,135 @@
+{
+  "card": {
+    "appearances": {
+      "dark-elevated": {
+        "mapping": {
+          "background": {
+            "value": "{color.surface.container.@.value}"
+          },
+          "border": {
+            "color": {
+              "value": "{color.border.@.value}"
+            }
+          },
+          "shadow": {
+            "value": "{elevation.elevation.shadow.2.value}"
+          },
+          "footer": {
+            "border": {
+              "color": {
+                "value": "{color.border.@.value}"
+              }
+            }
+          },
+          "states": {
+            "hover": {
+              "shadow": {
+                "value": "{elevation.elevation.shadow.3.value}"
+              }
+            },
+            "focus": {
+              "shadow": {
+                "value": "{elevation.elevation.shadow.2.value}"
+              }
+            },
+            "active": {
+              "shadow": {
+                "value": "{elevation.elevation.shadow.1.value}"
+              }
+            }
+          }
+        }
+      },
+      "dark-filled": {
+        "mapping": {
+          "background": {
+            "value": "{color.surface.container.high.@.value}"
+          },
+          "states": {
+            "hover": {
+              "shadow": {
+                "value": "{elevation.elevation.shadow.1.value}"
+              }
+            }
+          }
+        }
+      },
+      "dark-outlined": {
+        "mapping": {
+          "border": {
+            "color": {
+              "value": "{color.outline.@.value}"
+            }
+          },
+          "footer": {
+            "border": {
+              "color": {
+                "value": "{color.outline.@.value}"
+              }
+            }
+          },
+          "states": {
+            "hover": {
+              "shadow": {
+                "value": "{elevation.elevation.shadow.1.value}"
+              }
+            }
+          }
+        }
+      },
+      "dark-tonal": {
+        "mapping": {
+          "background": {
+            "value": "{color.primary.container.@.value}"
+          },
+          "border": {
+            "color": {
+              "value": "{color.primary.container.@.value}"
+            }
+          },
+          "state": {
+            "layer": {
+              "color": {
+                "value": "{color.on-primary.container.@.value}"
+              }
+            }
+          },
+          "footer": {
+            "border": {
+              "color": {
+                "value": "{color.primary.container.@.value}"
+              }
+            }
+          },
+          "states": {
+            "hover": {
+              "shadow": {
+                "value": "{elevation.elevation.shadow.1.value}"
+              }
+            }
+          }
+        }
+      }
+    },
+    "meta": {
+      "appearances": {
+        "dark-elevated": {
+          "source": "aira",
+          "description": "Dark theme elevated card — surface background with prominent shadow for depth"
+        },
+        "dark-filled": {
+          "source": "aira",
+          "description": "Dark theme filled card — surface container background with subtle border, no shadow"
+        },
+        "dark-outlined": {
+          "source": "aira",
+          "description": "Dark theme outlined card — transparent bg with clear border, no shadow"
+        },
+        "dark-tonal": {
+          "source": "aira",
+          "description": "Dark theme tonal card — primary container background with matching border"
+        }
+      }
+    }
+  }
+}

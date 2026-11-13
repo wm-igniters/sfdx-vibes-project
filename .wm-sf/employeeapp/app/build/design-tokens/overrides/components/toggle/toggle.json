@@ -1,0 +1,40 @@
+{
+  "toggle" : {
+    "mapping" : {
+      "states" : {
+        "checked" : {
+          "background" : {
+            "@" : {
+              "value" : "{color.primary.@.value}"
+            }
+          },
+          "border" : {
+            "color" : {
+              "value" : "{color.primary.@.value}"
+            }
+          },
+          "state" : {
+            "layer" : {
+              "color" : {
+                "@" : {
+                  "value" : "{color.primary.@.value}"
+                }
+              }
+            }
+          }
+        }
+      },
+      "width" : {
+        "value" : "40px"
+      },
+      "border" : {
+        "width" : {
+          "value" : "1px"
+        }
+      },
+      "height" : {
+        "value" : "24px"
+      }
+    }
+  }
+}

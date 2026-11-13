@@ -1,0 +1,31 @@
+sequenceDiagram
+  autonumber
+  actor A as Adviser
+  participant C as Clients tab (LWC)
+  participant H as Create Illustration tab (LWC host)
+  participant W as WaveMaker app (iframe, salesforce.app)
+  participant X as Apex + Named Credential
+  participant API as Illustration API
+  participant L as Illustrations tab (LWC)
+
+  A->>C: Open Clients
+  C->>X: getClients()
+  X->>API: GET /clients?adviserId=1
+  API-->>C: clients
+  A->>C: Create Illustration → choose parties → Start illustration
+  C->>H: navigate (c__employeeId, parties)
+  H->>W: load UI Bundle in sandboxed iframe
+  W-->>H: sf-embedding/ready (handshake)
+  H-->>W: MessagePort + props (selected client as JSON)
+  W->>W: selectedEmployee variable ← client
+  A->>W: complete the illustration journey and submit
+  W->>API: POST /illustrations
+  W->>H: event navigatetab (illustrationClientList)
+  H->>L: open tab with c__refresh
+  L->>X: refresh getIllustrations()
+  X->>API: GET /illustrations
+  API-->>L: illustrations (new one included)
+  A->>L: Download PDF / XML
+  L->>X: getIllustrationPdf / getIllustrationXml
+  X->>API: GET /{id}/generate-pdf · /{id}/txlife/download
+  X-->>L: file (base64) → browser download

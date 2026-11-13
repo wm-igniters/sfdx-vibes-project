@@ -1,0 +1,185 @@
+/* ---------- Document tokens (measured from the PDF) ---------- */
+.wm-app .app-page-printillustration .print-illustration-content {
+    --pi-band: #002D62;
+    /* section header band          */
+    --pi-ink: #1D2A5B;
+    /* frame, headings, field labels */
+    --pi-value: #101210;
+    /* field values                 */
+    --pi-rule: #666766;
+    /* row dividers                 */
+    --pi-font: Carlito, Calibri, Lato, Arial, Helvetica, sans-serif;
+    --pi-sheet: 718px;
+    /* A4 content width (538pt)     */
+
+    background: #FFFFFF;
+    padding: 24px 16px 48px;
+}
+/* Lay everything out on an A4-width sheet, centred */
+.wm-app .app-page-printillustration .print-illustration-content>* {
+    max-width: var(--pi-sheet);
+    margin-left: auto;
+    margin-right: auto;
+}
+.wm-app .app-page-printillustration .print-illustration-content [name="top_bar"] {
+    margin-bottom: 16px;
+}
+/* ---------- Section card: square 1px navy frame, no shadow ---------- */
+.wm-app .app-page-printillustration .container-illustration-card {
+    background: #FFFFFF;
+    border: 1px solid var(--pi-ink);
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0 5px 16px;
+    overflow: hidden;
+}
+/* ---------- Navy header band (inset 4pt left/right, flush top) ---------- */
+.wm-app .app-page-printillustration .container-card-header {
+    background: var(--pi-band);
+    border: 0;
+    border-radius: 0;
+    min-height: 36px;
+    padding: 6px 5px 2px !important;
+}
+.wm-app .app-page-printillustration .label-header-title {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    color: #FFFFFF;
+    font-family: var(--pi-font);
+    font-size: 21.33px;
+    /* 16pt */
+    font-weight: 700;
+    line-height: 1.27;
+    letter-spacing: 0;
+}
+/* ---------- Card body ---------- */
+.wm-app .app-page-printillustration .container-card-body {
+    background: #FFFFFF;
+    padding: 4px 11px 0 4px !important;
+}
+/* ---------- Section heading (navy bold 12pt) ---------- */
+.wm-app .app-page-printillustration .label-section-heading {
+    margin: 0;
+    padding: 16px 0 5px 8px;
+    background: transparent;
+    color: var(--pi-ink);
+    font-family: var(--pi-font);
+    font-size: 16px;
+    /* 12pt */
+    font-weight: 700;
+    line-height: 1.27;
+    letter-spacing: 0;
+}
+/* ---------- List chrome reset (lists render as .app-livelist.app-panel) ---------- */
+.wm-app .app-page-printillustration .list-detail-rows, .wm-app .app-page-printillustration .list-contribution-cards {
+    min-height: 0;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+}
+.wm-app .app-page-printillustration .list-detail-rows .list-group, .wm-app .app-page-printillustration .list-contribution-cards .list-group {
+    margin: 0;
+    padding: 0;
+}
+/* ---------- Detail rows: hairline divider, bottom-aligned columns ---------- */
+.wm-app .app-page-printillustration .list-detail-rows .app-list-item {
+    gap: 0 !important;
+    align-items: flex-end !important;
+    padding: 10px 0 8.5px 13px !important;
+    background: transparent;
+    border: 0;
+    border-bottom: 0.5px solid var(--pi-rule);
+    border-radius: 0;
+    box-shadow: none;
+    cursor: default;
+}
+.wm-app .app-page-printillustration .list-detail-rows .app-list-item::before {
+    display: none;
+}
+/* Left column: field label (navy, regular 11pt) */
+.wm-app .app-page-printillustration .label-field-label {
+    flex: 0 0 235px;
+    width: 235px !important;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0 6px 0 0;
+    background: transparent;
+    color: var(--pi-ink);
+    font-family: var(--pi-font);
+    font-size: 14.67px;
+    /* 11pt */
+    font-weight: 400;
+    line-height: 1.27;
+    letter-spacing: 0;
+}
+/* Middle column: field value (near-black, regular 11pt) */
+.wm-app .app-page-printillustration .label-field-value {
+    flex: 1 1 0;
+    min-width: 0;
+    width: auto !important;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0 8px 0 0;
+    background: transparent;
+    color: var(--pi-value);
+    font-family: var(--pi-font);
+    font-size: 14.67px;
+    /* 11pt */
+    font-weight: 400;
+    line-height: 1.27;
+    letter-spacing: 0;
+    overflow-wrap: anywhere;
+}
+/* Right column: amount (same text style as values, left aligned) */
+.wm-app .app-page-printillustration .label-field-value.label-field-amount {
+    flex: 0 0 147px;
+    width: 147px !important;
+    padding-right: 0;
+    text-align: left;
+    font-weight: 400;
+    color: var(--pi-value);
+}
+/* ---------- Contribution cards list ---------- */
+.wm-app .app-page-printillustration .list-contribution-cards {
+    margin-top: 24px;
+}
+.wm-app .app-page-printillustration .list-contribution-cards .contribution-card-tmpl {
+    padding: 0 !important;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    cursor: default;
+}
+.wm-app .app-page-printillustration .list-contribution-cards .contribution-card-tmpl::before {
+    display: none;
+}
+/* ---------- Print ---------- */
+@media print {
+    .wm-app .app-page-printillustration .print-illustration-content {
+        padding: 0;
+    }
+
+    .wm-app .app-page-printillustration .print-illustration-content [name="top_bar"] {
+        display: none !important;
+    }
+
+    .wm-app .app-page-printillustration .container-card-header {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .wm-app .app-page-printillustration .label-section-heading {
+        break-after: avoid;
+    }
+
+    .wm-app .app-page-printillustration .list-detail-rows .app-list-item {
+        break-inside: avoid;
+    }
+
+    .wm-app .app-page-printillustration .list-contribution-cards .contribution-card-tmpl {
+        break-before: page;
+    }
+}

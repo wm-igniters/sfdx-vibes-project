@@ -37,6 +37,9 @@ const NOT_INCLUDED = '__none__';
 // sandboxed (no top navigation / popups), so the host navigates on the app's behalf.
 // Only these tabs can be opened from the app; the first one is the default.
 const NAVIGABLE_TABS = ['Client_Illustration', 'illustrationClientList', 'Illustration_List'];
+// Clients tab (c-employee-datatable): `section` opens one of its left-nav items.
+const CLIENTS_TAB = 'Client_Illustration';
+const SECTION_PATTERN = /^[A-Za-z][A-Za-z0-9]{0,39}$/;
 
 /**
  * c-illustration-embedding
@@ -62,12 +65,14 @@ const NAVIGABLE_TABS = ['Client_Illustration', 'illustrationClientList', 'Illust
  *  Tab request: Employee Directory "Create Illustration" → "Select illustration
  *               parties" dialog → "Start illustration" opens this component's tab
  *               with state { c__employeeId, c__secondPartyId, c__preparedById,
- *               c__adviser, c__requestId } ('__none__' = not included). Once the
+ *               c__adviser, c__productCode, c__productName, c__requestId }
+ *               ('__none__' = not included). Once the
  *               app is connected, the host dispatches `employeeselect` ON the
  *               <lightning-ui-embedding> element → forwarded to the app as
  *               ui/events/dispatch { eventType: 'employeeselect',
  *               detail: { employeeId, employee, parties, requestId, origin: 'salesforce' } }
- *               parties = { firstParty, secondParty|null, preparedBy|null, adviser }.
+ *               parties = { firstParty, secondParty|null, preparedBy|null, adviser,
+ *               product: { code, description }|null }.
  *               The same data is also put in props (selectedEmployee/selectionParties/selectionRequestId)
  *               so the app still gets it if it subscribed to events late.
  *
@@ -197,8 +202,15 @@ export default class IllustrationEmbedding extends NavigationMixin(LightningElem
         if (requestId === this._lastRequestId) return; // same request re-emitted (tab revisit)
         const hadPreviousRequest = this._lastRequestId !== undefined;
         this._lastRequestId = requestId;
-        const { c__secondPartyId: secondPartyId, c__preparedById: preparedById, c__adviser: adviser } = pageRef.state;
-        this._pendingRequest = { employeeId, secondPartyId, preparedById, adviser, requestId };
+        const {
+            c__secondPartyId: secondPartyId,
+            c__preparedById: preparedById,
+            c__adviser: adviser,
+            c__productCode: productCode,
+            c__productName: productName
+        } = pageRef.state;
+        const product = productCode ? { code: productCode, description: productName ?? productCode } : null;
+        this._pendingRequest = { employeeId, secondPartyId, preparedById, adviser, product, requestId };
         // Every "Start illustration" opens the app from the start. Lightning keeps this
         // tab alive between visits, so if the app was already loaded (an earlier request,
         // or connected), replace the embedding with a fresh instance; the request is
@@ -234,7 +246,8 @@ export default class IllustrationEmbedding extends NavigationMixin(LightningElem
             firstParty: { ...employee },
             secondParty: party(req.secondPartyId),
             preparedBy: party(req.preparedById),
-            adviser: req.adviser ?? null
+            adviser: req.adviser ?? null,
+            product: req.product ?? null
         };
 
         if (this._selectionRequestId !== req.requestId) {
@@ -338,20 +351,35 @@ export default class IllustrationEmbedding extends NavigationMixin(LightningElem
         }
     }
 
-    /** `navigatetab` from the app: open an allowed Lightning tab (default: the client list). */
+    /**
+     * `navigatetab` from the app: open an allowed Lightning tab (default: the Clients tab).
+     * detail { apiName?, section?, clientId? }:
+     *   section  — left-nav item to open on the Clients tab (e.g. 'businessManager')
+     *   clientId — client to open there; defaults to the illustration's client
+     */
     handleNavigateTab(event) {
-        const requested = event.detail?.apiName;
-        const apiName = requested ?? NAVIGABLE_TABS[0];
+        const detail = event.detail ?? {};
+        const apiName = detail.apiName ?? NAVIGABLE_TABS[0];
         if (!NAVIGABLE_TABS.includes(apiName)) {
             console.warn(`illustrationEmbedding: navigatetab to "${apiName}" is not allowed`);
             return;
         }
         // c__refresh: a new value on every navigation tells the target tab to reload its
         // data (Lightning keeps tabs alive, so the list would otherwise show cached rows).
+        const state = { c__refresh: String(Date.now()) };
+        if (apiName === CLIENTS_TAB && detail.section) {
+            if (SECTION_PATTERN.test(String(detail.section))) {
+                state.c__section = String(detail.section);
+                const clientId = detail.clientId ?? this._selectedEmployeeId;
+                if (clientId != null && clientId !== '') state.c__clientId = String(clientId);
+            } else {
+                console.warn(`illustrationEmbedding: navigatetab section "${detail.section}" is not valid`);
+            }
+        }
         this[NavigationMixin.Navigate]({
             type: 'standard__navItemPage',
             attributes: { apiName },
-            state: { c__refresh: String(Date.now()) }
+            state
         });
     }
 

@@ -1,0 +1,105 @@
+{
+  "tabs" : {
+    "appearances" : {
+      "dark-tabs" : {
+        "mapping" : {
+          "nav" : {
+            "border" : {
+              "color" : {
+                "value" : "{color.border.@.value}"
+              }
+            }
+          },
+          "item" : {
+            "heading" : {
+              "background" : {
+                "value" : "{color.surface.@.value}"
+              },
+              "indicator" : {
+                "background" : {
+                  "value" : "{color.surface.@.value}"
+                }
+              }
+            }
+          }
+        }
+      },
+      "dark-tabs-surface" : {
+        "mapping" : {
+          "background" : {
+            "value" : "{color.surface.container.@.value}"
+          },
+          "nav" : {
+            "border" : {
+              "color" : {
+                "value" : "{color.outline.@.value}"
+              }
+            }
+          },
+          "item" : {
+            "heading" : {
+              "background" : {
+                "value" : "{color.surface.container.@.value}"
+              },
+              "border" : {
+                "color" : {
+                  "value" : "{color.outline.@.value}"
+                }
+              },
+              "indicator" : {
+                "background" : {
+                  "value" : "{color.surface.container.@.value}"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "meta" : {
+      "appearances" : {
+        "dark-tabs" : {
+          "source" : "aira",
+          "description" : "Dark theme tabs — surface background, on-surface-variant inactive tabs, primary teal active indicator"
+        },
+        "dark-tabs-surface" : {
+          "source" : "aira",
+          "description" : "Dark theme surface tabs — surface container background with elevated appearance and primary teal active indicator"
+        }
+      }
+    },
+    "mapping" : {
+      "states" : {
+        "active" : {
+          "item" : {
+            "heading" : {
+              "color" : {
+                "@" : {
+                  "value" : "{color.on-background.@.value}"
+                }
+              },
+              "font-weight" : {
+                "value" : "{h6.font-weight.value}"
+              }
+            }
+          }
+        }
+      },
+      "item" : {
+        "heading" : {
+          "color" : {
+            "@" : {
+              "value" : "{color.on-background.@.value}"
+            }
+          },
+          "font-weight" : {
+            "value" : "{font.weight.400.value}"
+          },
+          "font-size" : {
+            "value" : "{h5.font-size.value}"
+          }
+        }
+      }
+    }
+  }
+}

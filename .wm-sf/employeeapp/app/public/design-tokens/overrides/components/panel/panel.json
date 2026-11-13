@@ -1,0 +1,17 @@
+{
+  "panel" : {
+    "appearances" : {
+      "default" : {
+        "variantGroups" : {
+          "status" : {
+            "default" : {
+              "shadow" : {
+                "value" : "{radius.none.value}"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

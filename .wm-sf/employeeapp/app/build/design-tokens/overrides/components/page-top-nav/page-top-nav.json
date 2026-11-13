@@ -1,0 +1,44 @@
+{
+  "top": {
+    "appearances": {
+      "dark-top-nav": {
+        "mapping": {
+          "border": {
+            "color": {
+              "value": "{color.border.@.value}"
+            }
+          }
+        }
+      },
+      "dark-top-nav-elevated": {
+        "mapping": {
+          "background": {
+            "value": "{color.surface.container.@.value}"
+          },
+          "border": {
+            "color": {
+              "value": "{color.border.translucent.value}"
+            }
+          },
+          "box": {
+            "shadow": {
+              "value": "{elevation.elevation.shadow.2.value}"
+            }
+          }
+        }
+      }
+    },
+    "meta": {
+      "appearances": {
+        "dark-top-nav": {
+          "source": "aira",
+          "description": "Dark theme top navigation bar — surface container low background with border separator"
+        },
+        "dark-top-nav-elevated": {
+          "source": "aira",
+          "description": "Dark theme elevated top navigation bar with shadow for depth"
+        }
+      }
+    }
+  }
+}

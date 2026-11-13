@@ -1,0 +1,52 @@
+{
+  "switch" : {
+    "mapping" : {
+      "btn" : {
+        "background" : {
+          "@" : {
+            "value" : "{color.tertiary.container.@.value}"
+          }
+        },
+        "border" : {
+          "color" : {
+            "@" : {
+              "value" : "{color.border.@.value}"
+            }
+          },
+          "width" : {
+            "value" : "{border.width.0.value}"
+          }
+        },
+        "height" : {
+          "@" : {
+            "value" : "36px"
+          }
+        },
+        "radius" : {
+          "value" : "{radius.sm.value}"
+        }
+      },
+      "states" : {
+        "selected" : {
+          "btn" : {
+            "background" : {
+              "@" : {
+                "value" : "{color.surface.@.value}"
+              }
+            },
+            "border" : {
+              "width" : {
+                "value" : "{border.width.1.value}"
+              },
+              "color" : {
+                "@" : {
+                  "value" : "{color.surface.container.highest.@.value}"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

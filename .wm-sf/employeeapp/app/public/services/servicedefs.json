@@ -1,0 +1,191 @@
+{
+  "serviceDefs" : {
+    "CreateIllustration_invoke" : {
+      "id" : "CreateIllustration_invoke",
+      "crudOperationId" : null,
+      "service" : "onwavemaker",
+      "controller" : "CreateIllustration",
+      "operationType" : null,
+      "type" : "CreateIllustration.RootResponse",
+      "wmServiceOperationInfo" : {
+        "name" : "invoke",
+        "methodType" : "post",
+        "relativePath" : "/CreateIllustration/v1/illustrations",
+        "directPath" : "https://wm-illustration.onwavemaker.com/api/v1/illustrations",
+        "httpMethod" : "post",
+        "parameters" : [ {
+          "name" : "RequestBody",
+          "parameterType" : "body",
+          "required" : false,
+          "type" : "java.lang.Object",
+          "readOnly" : false,
+          "contentType" : null
+        } ],
+        "definitions" : {
+          "CreateIllustration.RootRequest" : [ {
+            "name" : "fundSelection",
+            "parameterType" : null,
+            "required" : true,
+            "type" : "CreateIllustration.Request.fundSelection",
+            "readOnly" : false,
+            "contentType" : null
+          }, {
+            "name" : "productCode",
+            "parameterType" : null,
+            "required" : true,
+            "type" : "java.lang.String",
+            "readOnly" : false,
+            "contentType" : null
+          }, {
+            "name" : "accountOwner",
+            "parameterType" : null,
+            "required" : true,
+            "type" : "CreateIllustration.Request.accountOwner",
+            "readOnly" : false,
+            "contentType" : null
+          }, {
+            "name" : "illustrate",
+            "parameterType" : null,
+            "required" : true,
+            "type" : "java.lang.Boolean",
+            "readOnly" : false,
+            "contentType" : null
+          }, {
+            "name" : "preparedByAdviserId",
+            "parameterType" : null,
+            "required" : true,
+            "type" : "java.lang.Integer",
+            "readOnly" : false,
+            "contentType" : null
+          }, {
+            "name" : "charges",
+            "parameterType" : null,
+            "required" : true,
+            "type" : "java.util.List",
+            "readOnly" : false,
+            "contentType" : null
+          }, {
+            "name" : "clientId",
+            "parameterType" : null,
+            "required" : true,
+            "type" : "java.lang.Integer",
+            "readOnly" : false,
+            "contentType" : null
+          }, {
+            "name" : "benefits",
+            "parameterType" : null,
+            "required" : true,
+            "type" : "CreateIllustration.Request.benefits",
+            "readOnly" : false,
+            "contentType" : null
+          }, {
+            "name" : "investment",
+            "parameterType" : null,
+            "required" : true,
+            "type" : "CreateIllustration.Request.investment",
+            "readOnly" : false,
+            "contentType" : null
+          } ]
+        },
+        "produces" : [ "application/json" ],
+        "consumes" : [ "application/json" ],
+        "proxySettings" : {
+          "web" : false,
+          "mobile" : false,
+          "withCredentials" : false
+        },
+        "securityDefinitions" : [ ]
+      }
+    },
+    "getTxlifeXmlByIllustrationId_invoke" : {
+      "id" : "getTxlifeXmlByIllustrationId_invoke",
+      "crudOperationId" : null,
+      "service" : "onwavemaker",
+      "controller" : "getTxlifeXmlByIllustrationId",
+      "operationType" : null,
+      "type" : "getTxlifeXmlByIllustrationId.RootResponse",
+      "wmServiceOperationInfo" : {
+        "name" : "invoke",
+        "methodType" : "get",
+        "relativePath" : "/getTxlifeXmlByIllustrationId/v1/illustrations/{id}/txlife/download",
+        "directPath" : null,
+        "httpMethod" : "get",
+        "parameters" : [ {
+          "name" : "id",
+          "parameterType" : "path",
+          "required" : true,
+          "type" : "String",
+          "readOnly" : false,
+          "contentType" : null
+        } ],
+        "definitions" : { },
+        "produces" : [ "application/xml", "application/octet-stream" ],
+        "consumes" : [ "application/json" ],
+        "proxySettings" : {
+          "web" : true,
+          "mobile" : true,
+          "withCredentials" : false
+        },
+        "securityDefinitions" : [ ]
+      }
+    },
+    "getPdfByIllustrationId_invoke" : {
+      "id" : "getPdfByIllustrationId_invoke",
+      "crudOperationId" : null,
+      "service" : "onwavemaker",
+      "controller" : "getPdfByIllustrationId",
+      "operationType" : null,
+      "type" : "getPdfByIllustrationId.RootResponse",
+      "wmServiceOperationInfo" : {
+        "name" : "invoke",
+        "methodType" : "get",
+        "relativePath" : "/getPdfByIllustrationId/v1/illustrations/{illustrationId}/generate-pdf",
+        "directPath" : null,
+        "httpMethod" : "get",
+        "parameters" : [ {
+          "name" : "illustrationId",
+          "parameterType" : "path",
+          "required" : true,
+          "type" : "String",
+          "readOnly" : false,
+          "contentType" : null
+        } ],
+        "definitions" : { },
+        "produces" : [ "application/json" ],
+        "consumes" : [ "application/json" ],
+        "proxySettings" : {
+          "web" : true,
+          "mobile" : true,
+          "withCredentials" : false
+        },
+        "securityDefinitions" : [ ]
+      }
+    },
+    "getIllustrations_invoke" : {
+      "id" : "getIllustrations_invoke",
+      "crudOperationId" : null,
+      "service" : "onwavemaker",
+      "controller" : "getIllustrations",
+      "operationType" : null,
+      "type" : "array",
+      "wmServiceOperationInfo" : {
+        "name" : "invoke",
+        "methodType" : "get",
+        "relativePath" : "/getIllustrations/v1/illustrations",
+        "directPath" : null,
+        "httpMethod" : "get",
+        "parameters" : [ ],
+        "definitions" : { },
+        "produces" : [ "application/json" ],
+        "consumes" : [ "application/json" ],
+        "proxySettings" : {
+          "web" : true,
+          "mobile" : true,
+          "withCredentials" : false
+        },
+        "securityDefinitions" : [ ]
+      }
+    }
+  },
+  "securityDefinitions" : null
+}

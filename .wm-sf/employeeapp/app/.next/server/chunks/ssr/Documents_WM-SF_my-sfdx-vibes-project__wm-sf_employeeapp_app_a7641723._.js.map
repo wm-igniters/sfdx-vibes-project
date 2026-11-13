@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../../../../../../../../../Documents/WM-SF/my-sfdx-vibes-project/.wm-sf/employeeapp/app/app/page.tsx"],"sourcesContent":["export default async function Home() {\n  return <main className=\"\"></main>;\n}\n"],"names":[],"mappings":"kQAAe,eAAe,IAC5B,MAAO,CAAA,EAAA,EAAA,GAAA,EAAC,OAAA,CAAK,UAAU,IACzB"}

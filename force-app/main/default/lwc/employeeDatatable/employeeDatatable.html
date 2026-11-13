@@ -1,4 +1,105 @@
 <template>
+    <!-- Static application header -->
+    <header class="app-header" onkeydown={handleHeaderKeydown}>
+        <div class="topbar">
+            <p class="topbar-user">
+                <template lwc:if={currentUserName}>
+                    You are logged in as <strong>{currentUserName}</strong>
+                </template>
+            </p>
+            <p class="topbar-title">{appTitle}</p>
+            <a class="topbar-logout" href={logoutUrl}>Log out</a>
+        </div>
+        <div class="mainnav">
+            <div class="brand">
+                <template lwc:if={logoUrl}>
+                    <img class="brand-logo" src={logoUrl} alt={brandName} />
+                </template>
+                <template lwc:else>
+                    <span class="brand-text">{brandName}</span>
+                </template>
+            </div>
+            <ul class="mainnav-list" aria-label="Main">
+                <template for:each={headerNavItems} for:item="item">
+                    <li key={item.key} class="mainnav-li">
+                        <button
+                            type="button"
+                            class={item.className}
+                            data-header={item.key}
+                            aria-haspopup={item.ariaHasPopup}
+                            aria-expanded={item.ariaExpanded}
+                            onclick={handleHeaderNavClick}
+                        >
+                            <span>{item.label}</span>
+                            <template lwc:if={item.menu}>
+                                <lightning-icon
+                                    class="mainnav-caret"
+                                    icon-name="utility:chevrondown"
+                                    size="xx-small"
+                                ></lightning-icon>
+                            </template>
+                        </button>
+                        <template lwc:if={item.showMenu}>
+                            <div class="client-menu" role="dialog" aria-label="Choose a client">
+                                <input
+                                    class="client-search"
+                                    type="search"
+                                    placeholder="Search clients"
+                                    aria-label="Search clients"
+                                    value={clientFilter}
+                                    oninput={handleClientFilter}
+                                />
+                                <template lwc:if={hasClientOptions}>
+                                    <ul class="client-list" aria-label="Clients">
+                                        <template for:each={clientOptions} for:item="opt">
+                                            <li key={opt.id}>
+                                                <button
+                                                    type="button"
+                                                    class={opt.className}
+                                                    data-id={opt.id}
+                                                    aria-current={opt.ariaCurrent}
+                                                    onclick={handleClientSelect}
+                                                >
+                                                    <span class="client-option-name">{opt.label}</span>
+                                                    <span class="client-option-ref">{opt.ref}</span>
+                                                </button>
+                                            </li>
+                                        </template>
+                                    </ul>
+                                </template>
+                                <template lwc:else>
+                                    <p class="client-empty">{clientMenuEmptyText}</p>
+                                </template>
+                            </div>
+                        </template>
+                    </li>
+                </template>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Client header: the client opened from the Clients dropdown -->
+    <div class="page">
+        <div class="client-header" aria-live="polite">
+            <template lwc:if={selectedClient}>
+                <div class="client-header-name">
+                    <lightning-icon icon-name="utility:user" size="small" class="client-header-icon"></lightning-icon>
+                    <h1 class="client-header-title">{selectedClientName}</h1>
+                </div>
+                <button type="button" class="client-close" onclick={handleCloseClient}>
+                    <span>Close client</span>
+                    <lightning-icon icon-name="utility:close" size="xx-small" class="client-close-icon"></lightning-icon>
+                </button>
+            </template>
+            <template lwc:else>
+                <div class="client-header-name">
+                    <lightning-icon icon-name="utility:user" size="small" class="client-header-icon"></lightning-icon>
+                    <p class="client-header-empty">No client selected — choose one from <strong>Clients</strong></p>
+                </div>
+            </template>
+        </div>
+    </div>
+
     <div class="shell">
         <!-- Left navigation -->
         <nav class="nav" aria-label="Client sections">
@@ -30,74 +131,66 @@
         <!-- Content -->
         <section class="content" aria-label={activeSectionLabel}>
             <template lwc:if={showTable}>
-                <template lwc:if={isLoading}>
+                <template lwc:if={productsLoading}>
                     <div class="dir-state">
-                        <lightning-spinner alternative-text="Loading clients" size="small"></lightning-spinner>
+                        <lightning-spinner alternative-text="Loading products" size="small"></lightning-spinner>
                     </div>
                 </template>
-                <template lwc:elseif={hasError}>
-                    <div class="dir-error" role="alert">{errorMessage}</div>
+                <template lwc:elseif={productsError}>
+                    <div class="dir-error" role="alert">{productsError}</div>
                 </template>
                 <template lwc:else>
-                    <div class="dir-scroll">
-                        <table class="dir-table">
-                            <thead>
-                                <tr>
-                                    <template for:each={columns} for:item="col">
-                                        <th key={col.key} scope="col" class={col.thClass} aria-sort={col.ariaSort}>
-                                            <template lwc:if={col.sortable}>
+                    <template lwc:if={noClient}>
+                        <p class="dir-notice" role="status">
+                            Choose a client from Clients to start a new illustration.
+                        </p>
+                    </template>
+                    <template lwc:if={hasProducts}>
+                        <div class="dir-scroll">
+                            <table class="dir-table dir-table_products">
+                                <thead>
+                                    <tr>
+                                        <template for:each={productColumns} for:item="col">
+                                            <th key={col.key} scope="col" class="dir-th">{col.label}</th>
+                                        </template>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <template for:each={productRows} for:item="product">
+                                        <tr key={product.code}>
+                                            <td class="dir-code">{product.code}</td>
+                                            <td>{product.illustrationSource}</td>
+                                            <td>{product.category}</td>
+                                            <td>
                                                 <button
                                                     type="button"
-                                                    class="dir-sort"
-                                                    data-field={col.key}
-                                                    onclick={handleSortClick}
+                                                    class="dir-link"
+                                                    data-code={product.code}
+                                                    title={product.linkTitle}
+                                                    disabled={noClient}
+                                                    onclick={handleProductClick}
                                                 >
-                                                    <span>{col.label}</span>
-                                                    <template lwc:if={col.sortIcon}>
-                                                        <lightning-icon
-                                                            icon-name={col.sortIcon}
-                                                            size="xx-small"
-                                                        ></lightning-icon>
-                                                    </template>
+                                                    {product.description}
                                                 </button>
-                                            </template>
-                                            <template lwc:else>{col.label}</template>
-                                        </th>
+                                            </td>
+                                        </tr>
                                     </template>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <template for:each={rows} for:item="emp">
-                                    <tr key={emp.id}>
-                                        <td class="dir-name">{emp.displayName}</td>
-                                        <td class="dir-code">{emp.externalRef}</td>
-                                        <td>{emp.dobLabel}</td>
-                                        <td>{emp.adviserName}</td>
-                                        <td class="dir-action">
-                                            <button
-                                                type="button"
-                                                class="dir-btn"
-                                                data-id={emp.id}
-                                                aria-label={emp.createLabel}
-                                                onclick={handleCreateIllustration}
-                                            >
-                                                <span class="dir-circle" aria-hidden="true">
-                                                    <lightning-icon
-                                                        icon-name="utility:chevronright"
-                                                        size="xx-small"
-                                                        variant="inverse"
-                                                    ></lightning-icon>
-                                                </span>
-                                                <span>Create Illustration</span>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </template>
-                            </tbody>
-                        </table>
-                    </div>
-                    <p class="dir-count">{countLabel}</p>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p class="dir-count">{productCountLabel}</p>
+                    </template>
+                    <template lwc:else>
+                        <p class="dir-empty">No products available.</p>
+                    </template>
                 </template>
+            </template>
+            <template lwc:elseif={showBusinessManager}>
+                <c-business-manager
+                    lwc:ref="businessManager"
+                    client-id={selectedClientId}
+                    client-name={selectedClientName}
+                ></c-business-manager>
             </template>
             <template lwc:else>
                 <div class="placeholder">

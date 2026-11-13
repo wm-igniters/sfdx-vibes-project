@@ -1,0 +1,31 @@
+{
+  "radius" : {
+    "base" : {
+      "value" : "4px"
+    },
+    "xl" : {
+      "value" : "24px"
+    },
+    "xxl" : {
+      "value" : "32px"
+    },
+    "circle" : {
+      "value" : "100px"
+    },
+    "xxs" : {
+      "value" : "4px"
+    },
+    "xs" : {
+      "value" : "10px"
+    },
+    "sm" : {
+      "value" : "12px"
+    },
+    "md" : {
+      "value" : "16px"
+    },
+    "lg" : {
+      "value" : "20px"
+    }
+  }
+}

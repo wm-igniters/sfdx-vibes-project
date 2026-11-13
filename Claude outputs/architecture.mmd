@@ -1,0 +1,43 @@
+%%{init: {"theme": "neutral"}}%%
+flowchart LR
+  user([Adviser in Lightning Experience])
+
+  subgraph SF["Salesforce org · Lightning app 'illustration-list'"]
+    subgraph TABS["Lightning tabs"]
+      subgraph T1["① Clients tab · LWC"]
+        DT["c-employee-datatable<br/>clients + left nav"]
+        DLG["c-illustration-dialog<br/>select parties"]
+      end
+      subgraph T2["② Create Illustration tab · LWC host"]
+        EMB["c-illustration-embedding<br/>&lt;lightning-ui-embedding&gt;"]
+      end
+      subgraph T3["③ Illustrations tab · LWC"]
+        LST["c-illustration-list<br/>status · PDF / XML download"]
+      end
+    end
+    subgraph APEX["Apex · server side"]
+      CC["ClientController"]
+      IC["IllustrationController"]
+      NC[["Named Credential<br/>WM_Illustration_API"]]
+    end
+  end
+
+  subgraph UIB["UI Bundle on *.salesforce.app · Multi-Framework"]
+    WM["WaveMaker React app<br/>Next.js export + app.js bridge"]
+  end
+
+  API[("WaveMaker Illustration API<br/>REST")]
+
+  user --> DT
+  DT -- "Create Illustration" --> DLG
+  DLG -- "Start illustration" --> EMB
+  EMB <-- "sandboxed iframe · props + events" --> WM
+  WM -- "navigatetab" --> EMB
+  EMB -- "open tab + refresh" --> LST
+  WM -- "create illustration" --> API
+  DT -.-> CC
+  EMB -.-> CC
+  LST -.-> IC
+  CC --> NC
+  IC --> NC
+  NC --> API

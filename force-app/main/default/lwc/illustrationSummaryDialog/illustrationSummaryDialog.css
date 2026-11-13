@@ -1,0 +1,236 @@
+:host {
+    --sum-navy: #1c2c45;
+    --sum-head: #a7b8c9;
+    --sum-panel: #a7b8c9;
+    --sum-border: #d2d9e0;
+    --sum-blue: #2f80c8;
+    --sum-blue-hover: #276daa;
+    --sum-link: #2a6db5;
+    --sum-text: #2b2f33;
+    --sum-muted: #6b7580;
+}
+
+.sum-container {
+    width: 90rem;
+    max-width: calc(100vw - 2rem);
+    min-width: 0;
+    padding: 0;
+}
+
+/* Header */
+.sum-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.875rem 1rem;
+    background: var(--sum-navy);
+    color: #fff;
+}
+
+.sum-title {
+    font-size: 1.125rem;
+    font-weight: 400;
+}
+
+.sum-close {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: none;
+    border: 0;
+    color: #fff;
+    font-size: 1rem;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.sum-close:hover span:first-child,
+.sum-close:focus-visible span:first-child {
+    text-decoration: underline;
+}
+
+.sum-circle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 1.5px solid #fff;
+    border-radius: 50%;
+}
+
+/* Body */
+.sum-body {
+    max-height: calc(100vh - 12rem);
+    padding: 1.5rem 2rem 2rem;
+    overflow-y: auto;
+    background: #fff;
+    color: var(--sum-text);
+}
+
+.sum-body:focus-visible {
+    outline: 2px solid var(--sum-blue);
+    outline-offset: -2px;
+}
+
+.sum-loading {
+    position: relative;
+    min-height: 8rem;
+}
+
+.sum-error,
+.sum-print-error {
+    padding: 0.75rem 1rem;
+    background: #fdecea;
+    color: #c23934;
+}
+
+.sum-print-error {
+    margin-bottom: 0.75rem;
+}
+
+.sum-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+}
+
+.sum-product,
+.sum-section {
+    font-size: 1.125rem;
+    font-weight: 600;
+}
+
+.sum-section {
+    margin: 1.75rem 0 0.75rem;
+}
+
+.sum-print {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: none;
+    border: 0;
+    color: var(--sum-link);
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.sum-print-icon {
+    --slds-c-icon-color-foreground-default: var(--sum-link);
+}
+
+.sum-print:hover span,
+.sum-print:focus-visible span {
+    text-decoration: underline;
+}
+
+.sum-print:disabled {
+    color: #a6adb4;
+    cursor: default;
+    --slds-c-icon-color-foreground-default: #a6adb4;
+}
+
+.sum-print:disabled .sum-print-icon {
+    --slds-c-icon-color-foreground-default: #a6adb4;
+}
+
+/* Facts panel */
+.sum-facts {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 0.25rem 1rem;
+    margin: 0;
+    padding: 1rem 0.75rem;
+    background: var(--sum-panel);
+    color: #34414e;
+}
+
+.sum-facts dd {
+    margin: 0;
+}
+
+/* Tables */
+.sum-scroll {
+    overflow-x: auto;
+}
+
+.sum-table {
+    width: 100%;
+    min-width: 52rem;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-size: 0.9375rem;
+}
+
+.th {
+    padding: 0.75rem 0.5rem;
+    background: var(--sum-head);
+    border: 1px solid #c3cfdb;
+    color: #2f3a45;
+    font-weight: 400;
+    line-height: 1.15;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.td {
+    padding: 0.625rem 0.375rem;
+    border: 1px solid var(--sum-border);
+    vertical-align: top;
+    text-align: left;
+    font-weight: 400;
+}
+
+.td_label {
+    width: 20rem;
+}
+
+.sum-contribution,
+.sum-contributor {
+    display: block;
+}
+
+.tr_total .td {
+    background: #eef1f4;
+}
+
+.sum-empty {
+    padding: 0.75rem 0;
+    color: var(--sum-muted);
+}
+
+/* Footer */
+.sum-footer {
+    display: flex;
+    justify-content: flex-end;
+    min-height: 3rem;
+    background: var(--sum-navy);
+}
+
+.sum-primary {
+    padding: 0 1rem;
+    background: var(--sum-blue);
+    border: 0;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.sum-primary:hover,
+.sum-primary:focus-visible {
+    background: var(--sum-blue-hover);
+}
+
+.sum-primary:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: -4px;
+}
+
+.sum-primary:disabled {
+    opacity: 0.6;
+    cursor: default;
+}

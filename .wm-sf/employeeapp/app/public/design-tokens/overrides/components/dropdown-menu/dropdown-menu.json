@@ -1,0 +1,34 @@
+{
+  "dropdown": {
+    "appearances": {
+      "dark-dropdown": {
+        "mapping": {
+          "menu": {
+            "background": {
+              "value": "{color.surface.container.@.value}"
+            },
+            "box-shadow": {
+              "value": "{elevation.elevation.shadow.3.value}"
+            },
+            "border": {
+              "color": {
+                "value": "{color.border.@.value}"
+              },
+              "width": {
+                "value": "{border.width.base.value}"
+              }
+            }
+          }
+        }
+      }
+    },
+    "meta": {
+      "appearances": {
+        "dark-dropdown": {
+          "source": "aira",
+          "description": "Dark theme dropdown menu — surface container bg with shadow and dark outline border"
+        }
+      }
+    }
+  }
+}

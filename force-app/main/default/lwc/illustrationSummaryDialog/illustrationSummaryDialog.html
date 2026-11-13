@@ -1,0 +1,153 @@
+<template>
+    <section
+        role="dialog"
+        tabindex="-1"
+        aria-modal="true"
+        aria-labelledby="sum-title"
+        class="slds-modal slds-fade-in-open sum-modal"
+        onkeydown={handleKeydown}
+    >
+        <div class="slds-modal__container sum-container">
+            <header class="sum-header">
+                <h2 id="sum-title" class="sum-title">Illustration summary</h2>
+                <button type="button" class="sum-close" onclick={handleClose}>
+                    <span>Cancel and close</span>
+                    <span class="sum-circle" aria-hidden="true">
+                        <lightning-icon icon-name="utility:close" size="xx-small" variant="inverse"></lightning-icon>
+                    </span>
+                </button>
+            </header>
+
+            <div class="sum-body" tabindex="0" aria-label="Illustration summary details">
+                <template lwc:if={isLoading}>
+                    <div class="sum-loading">
+                        <lightning-spinner alternative-text="Loading illustration summary" size="small"></lightning-spinner>
+                    </div>
+                </template>
+                <template lwc:elseif={errorMessage}>
+                    <div class="sum-error" role="alert">{errorMessage}</div>
+                </template>
+                <template lwc:elseif={hasSummary}>
+                    <div class="sum-title-row">
+                        <h3 class="sum-product">{productTitle}</h3>
+                        <button
+                            type="button"
+                            class="sum-print"
+                            title={printTitle}
+                            disabled={printDisabled}
+                            onclick={handlePrint}
+                        >
+                            <lightning-icon icon-name="utility:print" size="small" class="sum-print-icon"></lightning-icon>
+                            <span>Print</span>
+                        </button>
+                    </div>
+                    <template lwc:if={printError}>
+                        <p class="sum-print-error" role="alert">{printError}</p>
+                    </template>
+
+                    <dl class="sum-facts">
+                        <dt>Illustration ID:</dt>
+                        <dd>{summary.illustrationId}</dd>
+                        <dt>Reference:</dt>
+                        <dd>{summary.illustrationRef}</dd>
+                        <dt>Client name:</dt>
+                        <dd>{summary.clientName}</dd>
+                        <dt>Illustration date:</dt>
+                        <dd>{illustrationDateLabel}</dd>
+                    </dl>
+
+                    <!-- Investment details -->
+                    <h3 class="sum-section">Investment details</h3>
+                    <template lwc:if={hasContributions}>
+                        <div class="sum-scroll">
+                            <table class="sum-table">
+                                <thead>
+                                    <tr>
+                                        <th class="th" scope="col" rowspan="2">Contribution(s)</th>
+                                        <th class="th" scope="colgroup" colspan={investment.colspan}>Charges and fees</th>
+                                    </tr>
+                                    <tr>
+                                        <template for:each={investment.columns} for:item="col">
+                                            <th key={col.key} class="th th_sub" scope="col">{col.label}</th>
+                                        </template>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <template for:each={investment.rows} for:item="row">
+                                        <tr key={row.key}>
+                                            <th class="td td_label" scope="row">
+                                                <span class="sum-contribution">{row.label}</span>
+                                                <template for:each={row.contributors} for:item="p">
+                                                    <span key={p.key} class="sum-contributor">{p.label}</span>
+                                                </template>
+                                            </th>
+                                            <template for:each={row.cells} for:item="cell">
+                                                <td key={cell.key} class="td">{cell.value}</td>
+                                            </template>
+                                        </tr>
+                                    </template>
+                                </tbody>
+                            </table>
+                        </div>
+                    </template>
+                    <template lwc:else>
+                        <p class="sum-empty">No contributions recorded.</p>
+                    </template>
+
+                    <!-- Fund selection -->
+                    <h3 class="sum-section">Fund selection</h3>
+                    <template lwc:if={funds.hasFunds}>
+                        <div class="sum-scroll">
+                            <table class="sum-table">
+                                <thead>
+                                    <tr>
+                                        <th class="th" scope="col" rowspan="2">Funds selected</th>
+                                        <template for:each={funds.types} for:item="t">
+                                            <th key={t.key} class="th" scope="colgroup" colspan="2">{t.label}</th>
+                                        </template>
+                                    </tr>
+                                    <tr>
+                                        <th class="th th_sub" scope="col">Income</th>
+                                        <th class="th th_sub" scope="col">Accumulation</th>
+                                        <th class="th th_sub" scope="col">Income</th>
+                                        <th class="th th_sub" scope="col">Accumulation</th>
+                                        <th class="th th_sub" scope="col">Income</th>
+                                        <th class="th th_sub" scope="col">Accumulation</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <template for:each={funds.rows} for:item="fund">
+                                        <tr key={fund.key}>
+                                            <th class="td td_label" scope="row">{fund.name}</th>
+                                            <template for:each={fund.cells} for:item="cell">
+                                                <td key={cell.key} class="td">{cell.value}</td>
+                                            </template>
+                                        </tr>
+                                    </template>
+                                    <tr class="tr_total">
+                                        <th class="td td_label" scope="row">Total:</th>
+                                        <template for:each={funds.totalCells} for:item="cell">
+                                            <td key={cell.key} class="td" colspan="2">{cell.value}</td>
+                                        </template>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </template>
+                    <template lwc:else>
+                        <p class="sum-empty">No funds selected.</p>
+                    </template>
+                </template>
+            </div>
+
+            <footer class="sum-footer">
+                <template lwc:if={showCreateEbs}>
+                    <button type="button" class="sum-primary" disabled={isLoading} onclick={handleCreateEbs}>
+                        Create EBS
+                    </button>
+                </template>
+            </footer>
+        </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+</template>

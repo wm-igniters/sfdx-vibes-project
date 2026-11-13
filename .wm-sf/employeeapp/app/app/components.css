@@ -1,0 +1,305 @@
+/* chips widget css */
+.app-chip:hover {
+  background-color: var(--wm-chips-background) !important;
+}
+
+.app-chip .MuiChip-deleteIcon {
+  padding: 0 !important;
+  font-size: var(--wm-btn-icon-size) !important;
+  min-width: var(--wm-btn-icon-size) !important;
+  width: var(--wm-btn-icon-size) !important;
+  height: var(--wm-btn-icon-size) !important;
+  margin: 0 !important;
+  color: inherit !important;
+}
+
+/* wizard widget css */
+
+.app-wizard .wizard-step-icon {
+  display: inline-flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  min-width: var(--wm-wizard-step-indicator-size) !important;
+  width: var(--wm-wizard-step-indicator-size) !important;
+  height: var(--wm-wizard-step-indicator-size) !important;
+  background: var(--wm-wizard-step-indicator-background);
+  border: var(--wm-wizard-step-indicator-border-width)
+    var(--wm-wizard-step-indicator-border-style)
+    var(--wm-wizard-step-indicator-border-color) !important;
+  border-radius: var(--wm-wizard-step-indicator-radius) !important;
+}
+.app-wizard .wizard-step-icon .count {
+  color: var(--wm-wizard-step-count-color) !important;
+  font-size: var(--wm-wizard-step-count-font-size) !important;
+  font-weight: var(--wm-wizard-step-count-font-weight) !important;
+  font-family: var(--wm-wizard-step-count-font-family) !important;
+  line-height: var(--wm-wizard-step-count-line-height) !important;
+  letter-spacing: var(--wm-wizard-step-count-letter-spacing) !important;
+}
+.app-wizard .title-wrapper .step-title {
+  color: var(--wm-wizard-step-title-color) !important;
+  font-family: var(--wm-wizard-step-title-font-family) !important;
+  font-weight: var(--wm-wizard-step-title-font-weight) !important;
+  font-size: var(--wm-wizard-step-title-font-size) !important;
+  line-height: var(--wm-wizard-step-title-line-height) !important;
+  letter-spacing: var(--wm-wizard-step-title-letter-spacing) !important;
+}
+
+.app-wizard .MuiStepConnector-root {
+  display: none;
+}
+
+.app-wizard .app-wizard-step .MuiStepLabel-label {
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: var(--wm-wizard-step-gap);
+  min-width: fit-content;
+  color: var(--wm-wizard-step-title-color);
+}
+.app-wizard .MuiStepLabel-label {
+  display: table-cell !important;
+  width: 50% !important;
+}
+
+.app-wizard .MuiStepLabel-root.MuiStepLabel-horizontal {
+  display: table-cell !important;
+  width: 50% !important;
+}
+
+.wm-app
+  .app-wizard
+  .app-wizard-heading
+  .app-wizard-steps
+  > .app-wizard-step
+  .MuiStepLabel-horizontal {
+  display: inline-flex !important;
+  flex-direction: row !important;
+  justify-content: flex-start !important;
+  min-width: fit-content !important;
+  color: var(--wm-wizard-step-title-color) !important;
+}
+
+.wm-app .app-wizard .app-wizard-step {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.wm-app .MuiStepLabel-horizontal .MuiStepLabel-horizontal {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: var(--wm-anchor-color) !important;
+  font-size: var(--wm-anchor-font-size) !important;
+  font-family: var(--wm-anchor-font-family) !important;
+  font-weight: var(--wm-anchor-font-weight) !important;
+  line-height: var(--wm-anchor-line-height) !important;
+  letter-spacing: var(--wm-anchor-letter-spacing) !important;
+  text-transform: var(--wm-anchor-text-transform) !important;
+  text-decoration: var(--wm-anchor-text-decoration) !important;
+  gap: var(--wm-anchor-gap) !important;
+  cursor: pointer !important;
+}
+/* baseprefab spinner postion  */
+.wm-app .app-spinner.baseprefab-spinner {
+  background: transparent !important;
+  position: relative !important;
+}
+
+.wm-app
+  .app-date
+  .input-group-btn
+  .btn-defaul
+  .custom-disabled-btn
+  .Mui-disabled {
+  pointer-events: auto !important; /* allow cursor to show */
+  cursor: not-allowed !important;
+}
+
+/* text area  readonly issue fix when readonly and disabled are false adding  .wm-textarea-editable class*/
+.wm-app .app-input-wrapper textarea.app-textarea.wm-textarea-editable {
+  pointer-events: auto !important;
+}
+
+/* date widget css Overriding */
+.wm-app .app-date button {
+  border-width: 0;
+  color: initial;
+}
+
+.wm-app .app-date:not(.Mui-selected) button.MuiPickersDay-root:hover::before,
+.wm-app .app-date button.MuiYearCalendar-button:hover::before,
+.wm-app .app-date button.MuiMonthCalendar-button:hover::before {
+  --wm-btn-state-layer-opacity: 0.5;
+}
+
+.wm-app .app-date button.Mui-selected:hover::before,
+.wm-app .app-date button.Mui-selected:focus::before {
+  background: none;
+}
+.wm-app .app-date button.Mui-selected {
+  --wm-datepicker-date-color: var(--wm-color-surface) !important;
+  --wm-datepicker-date-background: var(--wm-color-primary) !important;
+  --wm-datepicker-date-border-color: var(--wm-color-primary) !important;
+  background: var(--wm-datepicker-date-background) !important ;
+  color: var(--wm-datepicker-date-color) !important;
+}
+.wm-app .app-date button.Mui-disabled {
+  opacity: 0.38;
+  cursor: var(--wm-btn-cursor-disabled);
+}
+.wm-app .app-date .MuiPickersArrowSwitcher-root {
+  display: flex;
+  gap: 12px;
+}
+.wm-app .app-date .MuiDayCalendar-weekContainer button {
+  width: 48px;
+  height: 40px;
+}
+.MuiPickersDay-dayOutsideMonth {
+  color: var(--wm-datepicker-date-other-month-color);
+}
+
+.wm-app .app-date button.today-btn:hover::before,
+.wm-app .app-date button.clear-btn:hover::before {
+  --wm-btn-state-layer-opacity: 0.5;
+  background-color: unset;
+}
+
+/* input component override css for start and end icons in input field */
+.wm-app .app-input-wrapper .MuiInputAdornment-root {
+  position: unset;
+  margin-right: unset;
+  margin-left: unset;
+}
+
+/* select widget inside the table ui issue. */
+.wm-app .table td.app-datagrid-cell {
+  line-height: unset;
+}
+.wm-app .app-select-wrapper .wm-native-select-root {
+  display: unset !important;
+}
+
+.wm-app .search-dropdown-container .app-search .dropdown-status {
+  display: flex;
+  align-items: center !important;
+  justify-content: center;
+  gap: var(--wm-space-1);
+  padding: var(--wm-search-status-padding);
+  background: var(--wm-search-status-background);
+}
+
+.wm-app .search-dropdown-container .app-search .wm-search-match-highlight {
+  color: var(--wm-search-dropdown-menu-item-color);
+}
+
+.wm-app .app-search.dropdown-menu li a.wm-search-item-link > span {
+  font-weight: var(--wm-search-dropdown-menu-item-font-weight);
+}
+/* page size selector widget css */
+
+.wm-app .pagination.page-size-selector {
+  border: none;
+}
+
+.wm-app .pagination.page-size-selector .MuiTablePagination-select {
+  font-size: var(--wm-btn-font-size);
+  font-family: var(--wm-btn-font-family);
+  font-weight: var(--wm-btn-font-weight);
+  color: var(--wm-color-info);
+  padding: 0 8px;
+}
+
+.wm-app .pagination.page-size-selector .MuiInputBase-root {
+  height: auto;
+}
+
+.wm-app
+  .pagination.page-size-selector
+  .MuiInputBase-root
+  .MuiOutlinedInput-notchedOutline {
+  border: none;
+}
+
+.wm-app
+  .pagination.page-size-selector
+  .MuiInputBase-root:hover
+  .MuiOutlinedInput-notchedOutline,
+.wm-app
+  .pagination.page-size-selector
+  .MuiInputBase-root.Mui-focused
+  .MuiOutlinedInput-notchedOutline {
+  border: none;
+}
+
+.wm-app .pagination.page-size-selector .MuiInputBase-root.dropdown-toggle {
+  padding: 0;
+}
+.wm-app .pagination.page-size-selector .MuiInputBase-root .MuiSelect-icon {
+  color: var(--wm-color-info, inherit);
+  right: -3px;
+  font-size: 0.8rem;
+}
+
+.wm-app .pagination.page-size-selector .page-size-select {
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.wm-app .pagination.page-size-selector .page-size-no-range {
+  display: none;
+}
+
+.wm-app .dropdown-menu.pagesize-options {
+  min-width: unset !important;
+  padding: var(--wm-dropdown-menu-padding);
+  border-radius: var(--wm-dropdown-menu-border-radius);
+  background-color: var(--wm-dropdown-menu-background);
+  box-shadow: var(--wm-dropdown-menu-box-shadow);
+}
+
+.wm-app .dropdown-menu.pagesize-options .MuiMenuItem-root {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  padding: var(--wm-dropdown-menu-item-padding);
+  font-size: var(--wm-dropdown-menu-item-font-size);
+  color: var(--wm-dropdown-menu-item-color);
+}
+
+.wm-app .dropdown-menu.pagesize-options .dropdown-item {
+  position: relative;
+  z-index: 0;
+  color: var(--wm-dropdown-menu-item-color);
+  background-color: transparent !important;
+}
+
+.wm-app .dropdown-menu.pagesize-options .dropdown-item:hover,
+.wm-app .dropdown-menu.pagesize-options .dropdown-item.Mui-selected,
+.wm-app .dropdown-menu.pagesize-options .dropdown-item.Mui-selected:hover {
+  background-color: transparent !important;
+  color: var(--wm-dropdown-menu-item-color);
+}
+
+.wm-app .dropdown-menu.pagesize-options .dropdown-item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0;
+  background: var(--wm-dropdown-menu-item-state-layer-color);
+}
+
+.wm-app .dropdown-menu.pagesize-options .dropdown-item.Mui-selected::before,
+.wm-app .dropdown-menu.pagesize-options .dropdown-item:hover::before {
+  opacity: var(--wm-dropdown-menu-item-state-layer-opacity-hover);
+}
+
+.wm-app col[data-wm-col-hidden] {
+  display: none !important;
+  width: 0 !important;
+  min-width: 0 !important;
+  max-width: 0 !important;
+}

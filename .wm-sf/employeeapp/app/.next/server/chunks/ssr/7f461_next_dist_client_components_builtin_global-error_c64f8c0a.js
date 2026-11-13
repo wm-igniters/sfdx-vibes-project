@@ -1,0 +1,3 @@
+module.exports=[30937,(a,b,c)=>{let{createClientModuleProxy:d}=a.r(282909);a.n(d("[project]/Documents/WM-SF/my-sfdx-vibes-project/.wm-sf/employeeapp/app/node_modules/next/dist/client/components/builtin/global-error.js <module evaluation>"))},568581,(a,b,c)=>{let{createClientModuleProxy:d}=a.r(282909);a.n(d("[project]/Documents/WM-SF/my-sfdx-vibes-project/.wm-sf/employeeapp/app/node_modules/next/dist/client/components/builtin/global-error.js"))},216227,a=>{"use strict";a.i(30937);var b=a.i(568581);a.n(b)}];
+
+//# sourceMappingURL=7f461_next_dist_client_components_builtin_global-error_c64f8c0a.js.map

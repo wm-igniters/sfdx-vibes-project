@@ -1,0 +1,305 @@
+{
+  "font" : {
+    "family" : {
+      "brand" : {
+        "value" : "Noe-Display"
+      },
+      "plain" : {
+        "value" : "Poppins"
+      },
+      "Inter" : {
+        "value" : "Poppins"
+      },
+      "LiberationSerif" : {
+        "value" : "Liberation Serif"
+      },
+      "PlayfairDisplay" : {
+        "value" : "Noe-Display"
+      },
+      "SpaceGrotesk" : {
+        "value" : "Noe-Display"
+      },
+      "backup" : {
+        "value" : "Arial, Helvetica, sans-serif"
+      }
+    }
+  },
+  "body" : {
+    "large" : {
+      "font-family" : {
+        "value" : "{font.family.plain.value}"
+      },
+      "font-weight" : {
+        "value" : "{font.weight.400.value}"
+      },
+      "font-size" : {
+        "value" : "16px"
+      },
+      "line-height" : {
+        "value" : "24px"
+      },
+      "letter-spacing" : {
+        "value" : "0px"
+      }
+    },
+    "medium" : {
+      "font-family" : {
+        "value" : "{font.family.plain.value}"
+      },
+      "font-weight" : {
+        "value" : "{font.weight.400.value}"
+      },
+      "font-size" : {
+        "value" : "14px"
+      },
+      "line-height" : {
+        "value" : "20px"
+      },
+      "letter-spacing" : {
+        "value" : "0px"
+      }
+    },
+    "small" : {
+      "font-family" : {
+        "value" : "{font.family.plain.value}"
+      },
+      "font-weight" : {
+        "value" : "{font.weight.400.value}"
+      },
+      "font-size" : {
+        "value" : "12px"
+      },
+      "line-height" : {
+        "value" : "16px"
+      },
+      "letter-spacing" : {
+        "value" : "0px"
+      }
+    }
+  },
+  "h1" : {
+    "font-family" : {
+      "value" : "Noe-Display"
+    },
+    "font-weight" : {
+      "value" : "400"
+    },
+    "font-size" : {
+      "value" : "18px"
+    },
+    "line-height" : {
+      "value" : "28px"
+    },
+    "letter-spacing" : {
+      "value" : "0px"
+    }
+  },
+  "h2" : {
+    "font-family" : {
+      "value" : "Noe-Display"
+    },
+    "font-weight" : {
+      "value" : "700"
+    },
+    "font-size" : {
+      "value" : "20px"
+    },
+    "line-height" : {
+      "value" : "28px"
+    },
+    "letter-spacing" : {
+      "value" : "0px"
+    }
+  },
+  "h3" : {
+    "font-family" : {
+      "value" : "Poppins"
+    },
+    "font-weight" : {
+      "value" : "600"
+    },
+    "font-size" : {
+      "value" : "16px"
+    },
+    "line-height" : {
+      "value" : "24px"
+    },
+    "letter-spacing" : {
+      "value" : "0px"
+    }
+  },
+  "h4" : {
+    "font-family" : {
+      "value" : "Poppins"
+    },
+    "font-weight" : {
+      "value" : "600"
+    },
+    "font-size" : {
+      "value" : "14px"
+    },
+    "line-height" : {
+      "value" : "20px"
+    },
+    "letter-spacing" : {
+      "value" : "0px"
+    }
+  },
+  "h5" : {
+    "font-family" : {
+      "value" : "Poppins"
+    },
+    "font-weight" : {
+      "value" : "600"
+    },
+    "font-size" : {
+      "value" : "12px"
+    },
+    "line-height" : {
+      "value" : "16px"
+    },
+    "letter-spacing" : {
+      "value" : "0px"
+    }
+  },
+  "h6" : {
+    "font-family" : {
+      "value" : "Poppins"
+    },
+    "font-weight" : {
+      "value" : "600"
+    },
+    "font-size" : {
+      "value" : "10px"
+    },
+    "line-height" : {
+      "value" : "14px"
+    },
+    "letter-spacing" : {
+      "value" : "0px"
+    }
+  },
+  "p" : {
+    "font-family" : {
+      "value" : "{font.family.plain.value}"
+    },
+    "font-weight" : {
+      "value" : "{font.weight.400.value}"
+    },
+    "font-size" : {
+      "value" : "14px"
+    },
+    "line-height" : {
+      "value" : "20px"
+    },
+    "letter-spacing" : {
+      "value" : "0px"
+    }
+  },
+  "label" : {
+    "large" : {
+      "font-family" : {
+        "value" : "Poppins"
+      },
+      "font-weight" : {
+        "value" : "500"
+      },
+      "font-size" : {
+        "value" : "16px"
+      },
+      "line-height" : {
+        "value" : "24px"
+      },
+      "letter-spacing" : {
+        "value" : "0px"
+      }
+    },
+    "medium" : {
+      "font-family" : {
+        "value" : "Poppins"
+      },
+      "font-weight" : {
+        "value" : "500"
+      },
+      "font-size" : {
+        "value" : "14px"
+      },
+      "line-height" : {
+        "value" : "20px"
+      },
+      "letter-spacing" : {
+        "value" : "0"
+      }
+    },
+    "small" : {
+      "font-family" : {
+        "value" : "Poppins"
+      },
+      "font-weight" : {
+        "value" : "500"
+      },
+      "font-size" : {
+        "value" : "12px"
+      },
+      "line-height" : {
+        "value" : "16px"
+      },
+      "letter-spacing" : {
+        "value" : "0px"
+      }
+    }
+  },
+  "display" : {
+    "large" : {
+      "font-family" : {
+        "value" : "Noe-Display"
+      },
+      "font-weight" : {
+        "value" : "700"
+      },
+      "font-size" : {
+        "value" : "24px"
+      },
+      "line-height" : {
+        "value" : "32px"
+      },
+      "letter-spacing" : {
+        "value" : "0px"
+      }
+    },
+    "medium" : {
+      "font-family" : {
+        "value" : "Noe-Display"
+      },
+      "font-weight" : {
+        "value" : "600"
+      },
+      "font-size" : {
+        "value" : "18px"
+      },
+      "line-height" : {
+        "value" : "28px"
+      },
+      "letter-spacing" : {
+        "value" : "-0.45px"
+      }
+    },
+    "small" : {
+      "font-family" : {
+        "value" : "Noe-Display"
+      },
+      "font-weight" : {
+        "value" : "600"
+      },
+      "font-size" : {
+        "value" : "16px"
+      },
+      "line-height" : {
+        "value" : "24px"
+      },
+      "letter-spacing" : {
+        "value" : "-0.4px"
+      }
+    }
+  }
+}

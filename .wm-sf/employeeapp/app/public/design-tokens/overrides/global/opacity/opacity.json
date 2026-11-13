@@ -1,0 +1,22 @@
+{
+  "opacity" : {
+    "hover" : {
+      "value" : "10%"
+    },
+    "disabled" : {
+      "value" : "38%"
+    },
+    "overlay" : {
+      "value" : "60%"
+    },
+    "scrim" : {
+      "value" : "72%"
+    },
+    "focus" : {
+      "value" : "14%"
+    },
+    "active" : {
+      "value" : "18%"
+    }
+  }
+}

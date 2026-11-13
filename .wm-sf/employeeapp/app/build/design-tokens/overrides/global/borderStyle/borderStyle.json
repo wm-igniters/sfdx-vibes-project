@@ -1,0 +1,21 @@
+{
+  "border" : {
+    "style" : {
+      "base" : {
+        "value" : "{border.style.solid.value}"
+      },
+      "solid" : {
+        "value" : "solid"
+      },
+      "dotted" : {
+        "value" : "dotted"
+      },
+      "dashed" : {
+        "value" : "dashed"
+      },
+      "none" : {
+        "value" : "none"
+      }
+    }
+  }
+}
