@@ -50,16 +50,22 @@
       "namedRegex": "^/_not\\-found(?:/)?$"
     },
     {
-      "page": "/react-pages/clientIllustrationList",
-      "regex": "^/react\\-pages/clientIllustrationList(?:/)?$",
+      "page": "/react-pages/blank",
+      "regex": "^/react\\-pages/blank(?:/)?$",
       "routeKeys": {},
-      "namedRegex": "^/react\\-pages/clientIllustrationList(?:/)?$"
+      "namedRegex": "^/react\\-pages/blank(?:/)?$"
     },
     {
       "page": "/react-pages/Illustration",
       "regex": "^/react\\-pages/Illustration(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/react\\-pages/Illustration(?:/)?$"
+    },
+    {
+      "page": "/react-pages/IndividualSavingsAccount",
+      "regex": "^/react\\-pages/IndividualSavingsAccount(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/react\\-pages/IndividualSavingsAccount(?:/)?$"
     },
     {
       "page": "/react-pages/printIllustration",

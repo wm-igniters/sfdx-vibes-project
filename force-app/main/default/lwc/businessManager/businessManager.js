@@ -1,5 +1,6 @@
 import { LightningElement, api } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import { NavigationMixin } from 'lightning/navigation';
 import TIME_ZONE from '@salesforce/i18n/timeZone';
 import getClientIllustrations from '@salesforce/apex/IllustrationController.getClientIllustrations';
 import getIllustrationPdf from '@salesforce/apex/IllustrationController.getIllustrationPdf';
@@ -77,7 +78,10 @@ const titleCase = (s) => {
  * styled after the iBusiness Business manager table. Data is reloaded whenever
  * the section is shown (each mount), when the client changes, and on Refresh.
  */
-export default class BusinessManager extends LightningElement {
+// Create Illustration tab (c-illustration-embedding hosts the WaveMaker app).
+const ILLUSTRATION_TAB = 'Illustration_Embedding';
+
+export default class BusinessManager extends NavigationMixin(LightningElement) {
     illustrations = [];
     isLoading = false;
     errorMessage;
@@ -389,16 +393,35 @@ export default class BusinessManager extends LightningElement {
         Promise.resolve().then(() => this.template.querySelector(`button.play[data-id="${id}"]`)?.focus());
     }
 
-    /** Footer "Create EBS": EBS creation isn't connected yet, so report it and close. */
+    /**
+     * Footer "Create EBS" succeeded (the dialog created the submission):
+     * detail { illustrationId, illustrationRef, clientName, submission }.
+     * Open the Create Illustration tab; c-illustration-embedding sends the whole
+     * submission response to the WaveMaker app as the `createEBS` event.
+     */
     handleCreateEbs(event) {
+        const detail = event.detail ?? {};
         const ill = this.illustrations.find((i) => String(i.illustrationId) === this.summaryIllustrationId);
         this.dispatchEvent(
             new CustomEvent('illustrationaction', {
-                detail: { action: 'ebsCreate', group: 'EBS', label: 'Create', illustration: ill ? { ...ill } : event.detail }
+                detail: { action: 'ebsCreate', group: 'EBS', label: 'Create', illustration: ill ? { ...ill } : { ...detail } }
             })
         );
-        this.toast('EBS: Create', `Creating an EBS isn't connected yet for ${event.detail?.illustrationRef ?? 'this illustration'}.`, 'info');
-        this.handleSummaryClose();
+        this.summaryIllustrationId = undefined;
+        const ref = detail.submission?.submissionRef;
+        this.toast('EBS created', ref ? `${ref} for ${detail.illustrationRef ?? 'the illustration'}.` : 'Opening the EBS…', 'success');
+
+        const state = {
+            c__ebsRequestId: String(Date.now()),
+            c__ebsSubmission: JSON.stringify(detail.submission ?? null),
+            c__illustrationId: String(detail.illustrationId ?? ill?.illustrationId ?? '')
+        };
+        if (this.clientId != null && this.clientId !== '') state.c__clientId = String(this.clientId);
+        this[NavigationMixin.Navigate]({
+            type: 'standard__navItemPage',
+            attributes: { apiName: ILLUSTRATION_TAB },
+            state
+        });
     }
 
     handleKeydown(event) {

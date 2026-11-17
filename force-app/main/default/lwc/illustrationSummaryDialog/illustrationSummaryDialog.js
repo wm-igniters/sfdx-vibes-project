@@ -2,6 +2,7 @@ import { LightningElement, api } from 'lwc';
 import TIME_ZONE from '@salesforce/i18n/timeZone';
 import getIllustrationSummary from '@salesforce/apex/IllustrationController.getIllustrationSummary';
 import getIllustrationPdf from '@salesforce/apex/IllustrationController.getIllustrationPdf';
+import createSubmission from '@salesforce/apex/IllustrationController.createSubmission';
 import { investmentTable, fundTable, formatDate } from './summaryModel';
 
 /**
@@ -11,7 +12,10 @@ import { investmentTable, fundTable, formatDate } from './summaryModel';
  * (contributions × charges and fees) and Fund selection, loaded with
  * IllustrationController.getIllustrationSummary.
  *
- * Events: close; createebs { illustrationId, illustrationRef } (footer button).
+ * Events: close;
+ *         createebs { illustrationId, illustrationRef, clientName, submission } — footer
+ *         "Create EBS" after POST /api/v1/illustrations/{id}/submissions succeeded
+ *         (submission = the whole API response).
  */
 export default class IllustrationSummaryDialog extends LightningElement {
     @api illustrationId;
@@ -23,6 +27,8 @@ export default class IllustrationSummaryDialog extends LightningElement {
     errorMessage;
     isPrinting = false;
     printError;
+    isCreatingEbs = false;
+    ebsError;
     _focused = false;
 
     connectedCallback() {
@@ -111,15 +117,44 @@ export default class IllustrationSummaryDialog extends LightningElement {
         }
     }
 
-    handleCreateEbs() {
+    get createEbsDisabled() {
+        return this.isLoading || this.isCreatingEbs || !this.summary;
+    }
+
+    get createEbsLabel() {
+        return this.isCreatingEbs ? 'Creating EBS…' : 'Create EBS';
+    }
+
+    /** Create EBS: create a submission for this illustration, then hand the response on. */
+    async handleCreateEbs() {
+        if (this.createEbsDisabled) return;
+        const illustrationId = this.summary.illustrationId ?? Number(this.illustrationId);
+        this.isCreatingEbs = true;
+        this.ebsError = undefined;
+        let submission;
+        try {
+            const raw = await createSubmission({ illustrationId });
+            submission = typeof raw === 'string' ? JSON.parse(raw) : raw;
+        } catch (error) {
+            this.ebsError = error?.body?.message ?? error?.message ?? 'Could not create the EBS.';
+            this.isCreatingEbs = false;
+            return;
+        }
+        this.isCreatingEbs = false;
         this.dispatchEvent(
             new CustomEvent('createebs', {
-                detail: { illustrationId: this.summary?.illustrationId, illustrationRef: this.summary?.illustrationRef }
+                detail: {
+                    illustrationId,
+                    illustrationRef: this.summary.illustrationRef,
+                    clientName: this.summary.clientName,
+                    submission
+                }
             })
         );
     }
 
     handleClose() {
+        if (this.isCreatingEbs) return; // wait for the submission to finish
         this.dispatchEvent(new CustomEvent('close'));
     }
 

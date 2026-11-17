@@ -3,11 +3,13 @@ import BusinessManager from 'c/businessManager';
 import getClientIllustrations from '@salesforce/apex/IllustrationController.getClientIllustrations';
 import getIllustrationPdf from '@salesforce/apex/IllustrationController.getIllustrationPdf';
 import getIllustrationXml from '@salesforce/apex/IllustrationController.getIllustrationXml';
+import { getNavigateCalls, resetNavigateCalls } from 'lightning/navigation';
 import { formatDate, formatAmount, formatRegular } from '../format';
 
 jest.mock('@salesforce/apex/IllustrationController.getClientIllustrations', () => ({ default: jest.fn() }), { virtual: true });
 jest.mock('@salesforce/apex/IllustrationController.getIllustrationPdf', () => ({ default: jest.fn() }), { virtual: true });
 jest.mock('@salesforce/apex/IllustrationController.getIllustrationXml', () => ({ default: jest.fn() }), { virtual: true });
+jest.mock('@salesforce/apex/IllustrationController.createSubmission', () => ({ default: jest.fn() }), { virtual: true });
 jest.mock('@salesforce/apex/IllustrationController.getIllustrationSummary', () => ({ default: jest.fn(() => new Promise(() => {})) }), { virtual: true });
 jest.mock('@salesforce/i18n/timeZone', () => ({ default: 'Europe/London' }), { virtual: true });
 
@@ -160,10 +162,23 @@ describe('c-business-manager', () => {
 
         const onAction = jest.fn();
         el.addEventListener('illustrationaction', onAction);
-        dialog.dispatchEvent(new CustomEvent('createebs', { detail: { illustrationId: 53, illustrationRef: 'ILL-50D0B93437' } }));
+        resetNavigateCalls();
+        const submission = { submissionId: 3, submissionRef: 'SUB-1', illustrationId: 53, status: 'DRAFT' };
+        dialog.dispatchEvent(
+            new CustomEvent('createebs', { detail: { illustrationId: 53, illustrationRef: 'ILL-50D0B93437', submission } })
+        );
         await flush();
         expect(onAction.mock.calls[0][0].detail).toMatchObject({ action: 'ebsCreate', group: 'EBS' });
         expect(el.shadowRoot.querySelector('c-illustration-summary-dialog')).toBeNull();
+        const nav = getNavigateCalls();
+        expect(nav).toHaveLength(1);
+        expect(nav[0].pageRef).toMatchObject({
+            type: 'standard__navItemPage',
+            attributes: { apiName: 'Illustration_Embedding' },
+            state: { c__illustrationId: '53', c__clientId: '1' }
+        });
+        expect(nav[0].pageRef.state.c__ebsRequestId).toMatch(/^\d+$/);
+        expect(JSON.parse(nav[0].pageRef.state.c__ebsSubmission)).toEqual(submission);
 
         play(el, '53').click();
         await flush();

@@ -3,8 +3,9 @@
     "[project]/Documents/WM-SF/my-sfdx-vibes-project/.wm-sf/employeeapp/app/app/_not-found/page": [],
     "[project]/Documents/WM-SF/my-sfdx-vibes-project/.wm-sf/employeeapp/app/app/page": [],
     "[project]/Documents/WM-SF/my-sfdx-vibes-project/.wm-sf/employeeapp/app/app/react-pages/(layout1)/Illustration/page": [],
-    "[project]/Documents/WM-SF/my-sfdx-vibes-project/.wm-sf/employeeapp/app/app/react-pages/(layout1)/clientIllustrationList/page": [],
-    "[project]/Documents/WM-SF/my-sfdx-vibes-project/.wm-sf/employeeapp/app/app/react-pages/(layout1)/printIllustration/page": []
+    "[project]/Documents/WM-SF/my-sfdx-vibes-project/.wm-sf/employeeapp/app/app/react-pages/(layout1)/blank/page": [],
+    "[project]/Documents/WM-SF/my-sfdx-vibes-project/.wm-sf/employeeapp/app/app/react-pages/(layout1)/printIllustration/page": [],
+    "[project]/Documents/WM-SF/my-sfdx-vibes-project/.wm-sf/employeeapp/app/app/react-pages/IndividualSavingsAccount/page": []
   },
   "appUsingSizeAdjust": true,
   "pages": {},

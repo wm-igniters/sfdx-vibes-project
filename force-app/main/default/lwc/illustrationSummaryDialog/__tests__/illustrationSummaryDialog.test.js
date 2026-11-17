@@ -2,10 +2,12 @@ import { createElement } from '@lwc/engine-dom';
 import IllustrationSummaryDialog from 'c/illustrationSummaryDialog';
 import getIllustrationSummary from '@salesforce/apex/IllustrationController.getIllustrationSummary';
 import getIllustrationPdf from '@salesforce/apex/IllustrationController.getIllustrationPdf';
+import createSubmission from '@salesforce/apex/IllustrationController.createSubmission';
 import { investmentTable, fundTable, contributionLabel, sentenceCase } from '../summaryModel';
 
 jest.mock('@salesforce/apex/IllustrationController.getIllustrationSummary', () => ({ default: jest.fn() }), { virtual: true });
 jest.mock('@salesforce/apex/IllustrationController.getIllustrationPdf', () => ({ default: jest.fn() }), { virtual: true });
+jest.mock('@salesforce/apex/IllustrationController.createSubmission', () => ({ default: jest.fn() }), { virtual: true });
 jest.mock('@salesforce/i18n/timeZone', () => ({ default: 'Europe/London' }), { virtual: true });
 
 const CHARGES = [
@@ -88,15 +90,54 @@ describe('c-illustration-summary-dialog', () => {
         ]);
     });
 
-    it('Create EBS, Cancel and close and Escape raise events', async () => {
+    const SUBMISSION = { submissionId: 3, submissionRef: 'SUB-1', illustrationId: 69, status: 'DRAFT', currentScreen: 'account-owner' };
+
+    it('Create EBS creates a submission and raises createebs with the whole response', async () => {
         getIllustrationSummary.mockResolvedValue(SUMMARY);
+        let resolve;
+        createSubmission.mockReturnValue(new Promise((r) => (resolve = r)));
         const el = await setup();
         const onEbs = jest.fn();
-        const onClose = jest.fn();
         el.addEventListener('createebs', onEbs);
-        el.addEventListener('close', onClose);
+
+        const button = el.shadowRoot.querySelector('.sum-primary');
+        button.click();
+        await flush();
+        expect(createSubmission).toHaveBeenCalledWith({ illustrationId: 69 });
+        expect(button.textContent.trim()).toBe('Creating EBS…');
+        expect(button.disabled).toBe(true);
+        button.click(); // ignored while busy
+        expect(createSubmission).toHaveBeenCalledTimes(1);
+
+        resolve(JSON.stringify(SUBMISSION));
+        await flush();
+        expect(onEbs).toHaveBeenCalledTimes(1);
+        expect(onEbs.mock.calls[0][0].detail).toEqual({
+            illustrationId: 69,
+            illustrationRef: 'ILL-94A090EFA4',
+            clientName: SUMMARY.clientName,
+            submission: SUBMISSION
+        });
+    });
+
+    it('Create EBS shows the API error and stays open', async () => {
+        getIllustrationSummary.mockResolvedValue(SUMMARY);
+        createSubmission.mockRejectedValue({ body: { message: 'Could not create the EBS: A draft submission already exists.' } });
+        const el = await setup();
+        const onEbs = jest.fn();
+        el.addEventListener('createebs', onEbs);
         el.shadowRoot.querySelector('.sum-primary').click();
-        expect(onEbs.mock.calls[0][0].detail).toEqual({ illustrationId: 69, illustrationRef: 'ILL-94A090EFA4' });
+        await flush();
+        expect(onEbs).not.toHaveBeenCalled();
+        expect(el.shadowRoot.querySelector('.sum-ebs-error').textContent).toContain('already exists');
+        expect(el.shadowRoot.querySelector('.sum-primary').disabled).toBe(false);
+    });
+
+    it('Cancel and close and Escape raise close', async () => {
+        getIllustrationSummary.mockResolvedValue(SUMMARY);
+        const el = await setup();
+        const onClose = jest.fn();
+        el.addEventListener('close', onClose);
         el.shadowRoot.querySelector('.sum-close').click();
         el.shadowRoot.querySelector('section').dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
         expect(onClose).toHaveBeenCalledTimes(2);

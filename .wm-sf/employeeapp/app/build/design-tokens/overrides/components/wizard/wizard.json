@@ -1,0 +1,51 @@
+{
+  "wizard" : {
+    "appearances" : {
+      "classic" : {
+        "mapping" : {
+          "background" : {
+            "value" : "{color.transparent.value}"
+          },
+          "step" : {
+            "background" : {
+              "value" : "#1F3864ff"
+            },
+            "color" : {
+              "value" : "{color.white.@.value}"
+            }
+          },
+          "states" : {
+            "current" : {
+              "step" : {
+                "background" : {
+                  "value" : "#2C4A7Cff"
+                },
+                "color" : {
+                  "value" : "{color.white.@.value}"
+                }
+              }
+            },
+            "active" : {
+              "step" : {
+                "background" : {
+                  "value" : "#2C4A7Cff"
+                },
+                "color" : {
+                  "value" : "{color.white.@.value}"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "meta" : {
+      "appearances" : {
+        "classic" : {
+          "source" : "aira",
+          "description" : "St. James's Place classic wizard — dark navy connected arrow-tab step segments with white labels and a lighter navy active step"
+        }
+      }
+    }
+  }
+}

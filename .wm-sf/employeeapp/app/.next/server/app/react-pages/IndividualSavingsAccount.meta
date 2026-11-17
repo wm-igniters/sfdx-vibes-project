@@ -1,0 +1,16 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/react-pages/layout,_N_T_/react-pages/IndividualSavingsAccount/layout,_N_T_/react-pages/IndividualSavingsAccount/page,_N_T_/react-pages/IndividualSavingsAccount"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/react-pages/IndividualSavingsAccount/__PAGE__",
+    "/react-pages/IndividualSavingsAccount",
+    "/react-pages",
+    "/_index",
+    "/_head"
+  ]
+}

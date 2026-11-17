@@ -52,9 +52,9 @@ useEffect(()=>{
                    return (<>
               
                 <React.Fragment key={'list_item' + $index + '_' + 'account_details_tmpl'} >
-                  <WmLabel listener={fragment} name="ad_label" caption={$item?.label} item-id={'account_details_list_' + $index + '_ad_label_mqr'} type="p" styles={{"width":"280px"}} className='label-field-label' >
+                  <WmLabel listener={fragment} name="ad_label" caption={$item?.label} item-id={'account_details_list_' + $index + '_ad_label_g27'} type="p" styles={{"width":"280px"}} className='label-field-label' >
                   </WmLabel>
-                  <WmLabel listener={fragment} name="ad_value" caption={$item?.value} item-id={'account_details_list_' + $index + '_ad_value_di9'} type="p" styles={{"width":"100%"}} className='label-field-value' >
+                  <WmLabel listener={fragment} name="ad_value" caption={$item?.value} item-id={'account_details_list_' + $index + '_ad_value_adg'} type="p" styles={{"width":"100%"}} className='label-field-value' >
                   </WmLabel>
                 </React.Fragment>
               
@@ -74,9 +74,9 @@ useEffect(()=>{
                    return (<>
               
                 <React.Fragment key={'list_item' + $index + '_' + 'party_details_tmpl'} >
-                  <WmLabel listener={fragment} name="pd_label" caption={$item?.label} item-id={'party_details_list_' + $index + '_pd_label_5ms'} type="p" styles={{"width":"280px"}} className='label-field-label' >
+                  <WmLabel listener={fragment} name="pd_label" caption={$item?.label} item-id={'party_details_list_' + $index + '_pd_label_ygu'} type="p" styles={{"width":"280px"}} className='label-field-label' >
                   </WmLabel>
-                  <WmLabel listener={fragment} name="pd_value" caption={$item?.value} item-id={'party_details_list_' + $index + '_pd_value_csq'} type="p" styles={{"width":"100%"}} className='label-field-value' >
+                  <WmLabel listener={fragment} name="pd_value" caption={$item?.value} item-id={'party_details_list_' + $index + '_pd_value_weg'} type="p" styles={{"width":"100%"}} className='label-field-value' >
                   </WmLabel>
                 </React.Fragment>
               
@@ -96,9 +96,9 @@ useEffect(()=>{
                    return (<>
               
                 <React.Fragment key={'list_item' + $index + '_' + 'investment_details_tmpl'} >
-                  <WmLabel listener={fragment} name="id_label" caption={$item?.label} item-id={'investment_details_list_' + $index + '_id_label_a90'} type="p" styles={{"width":"280px"}} className='label-field-label' >
+                  <WmLabel listener={fragment} name="id_label" caption={$item?.label} item-id={'investment_details_list_' + $index + '_id_label_2rc'} type="p" styles={{"width":"280px"}} className='label-field-label' >
                   </WmLabel>
-                  <WmLabel listener={fragment} name="id_value" caption={$item?.value} item-id={'investment_details_list_' + $index + '_id_value_ylr'} type="p" styles={{"width":"100%"}} className='label-field-value' >
+                  <WmLabel listener={fragment} name="id_value" caption={$item?.value} item-id={'investment_details_list_' + $index + '_id_value_jsl'} type="p" styles={{"width":"100%"}} className='label-field-value' >
                   </WmLabel>
                 </React.Fragment>
               
@@ -119,9 +119,9 @@ useEffect(()=>{
                    return (<>
               
                 <React.Fragment key={'list_item' + $index + '_' + 'benefit_details_tmpl'} >
-                  <WmLabel listener={fragment} name="bd_label" caption={$item?.label} item-id={'benefit_details_list_' + $index + '_bd_label_a9t'} type="p" styles={{"width":"280px"}} className='label-field-label' >
+                  <WmLabel listener={fragment} name="bd_label" caption={$item?.label} item-id={'benefit_details_list_' + $index + '_bd_label_9v4'} type="p" styles={{"width":"280px"}} className='label-field-label' >
                   </WmLabel>
-                  <WmLabel listener={fragment} name="bd_value" caption={$item?.value} item-id={'benefit_details_list_' + $index + '_bd_value_j16'} type="p" styles={{"width":"100%"}} className='label-field-value' >
+                  <WmLabel listener={fragment} name="bd_value" caption={$item?.value} item-id={'benefit_details_list_' + $index + '_bd_value_qzc'} type="p" styles={{"width":"100%"}} className='label-field-value' >
                   </WmLabel>
                 </React.Fragment>
               
@@ -141,11 +141,11 @@ useEffect(()=>{
                    return (<>
               
                 <React.Fragment key={'list_item' + $index + '_' + 'single_contributions_tmpl'} >
-                  <WmLabel listener={fragment} name="sc_label" caption={$item?.label} item-id={'single_contributions_list_' + $index + '_sc_label_trn'} type="p" styles={{"width":"280px"}} className='label-field-label' >
+                  <WmLabel listener={fragment} name="sc_label" caption={$item?.label} item-id={'single_contributions_list_' + $index + '_sc_label_zok'} type="p" styles={{"width":"280px"}} className='label-field-label' >
                   </WmLabel>
-                  <WmLabel listener={fragment} name="sc_value" caption={$item?.value} item-id={'single_contributions_list_' + $index + '_sc_value_976'} type="p" styles={{"width":"100%"}} className='label-field-value' >
+                  <WmLabel listener={fragment} name="sc_value" caption={$item?.value} item-id={'single_contributions_list_' + $index + '_sc_value_gqk'} type="p" styles={{"width":"100%"}} className='label-field-value' >
                   </WmLabel>
-                  <WmLabel listener={fragment} name="sc_amount" caption={$item?.amount} item-id={'single_contributions_list_' + $index + '_sc_amount_5zp'} type="p" styles={{"width":"160px"}} className='label-field-value label-field-amount' ></WmLabel>
+                  <WmLabel listener={fragment} name="sc_amount" caption={$item?.amount} item-id={'single_contributions_list_' + $index + '_sc_amount_zsd'} type="p" styles={{"width":"160px"}} className='label-field-value label-field-amount' ></WmLabel>
                 </React.Fragment>
               
             </>)}}></WmList>
@@ -165,13 +165,13 @@ useEffect(()=>{
                return (<>
           
             <React.Fragment key={'list_item' + $index + '_' + 'contribution_card_tmpl'} >
-              <WmContainer listener={fragment} name="contribution_card" direction="column" item-id={'contribution_cards_list_' + $index + '_contribution_card_q91'} styles={{"textAlign":"left","flexDirection":"row","justifyContent":"flex-start","flexWrap":"wrap"}} className='container-illustration-card' layoutClassName='wm-d-flex wm-fd-column wm-fw-nowrap wm-w-100pct' >
-                <WmContainer listener={fragment} name="contribution_card_header" direction="row" gap="8" alignment="middle-left" item-id={'contribution_cards_list_' + $index + '_contribution_card_header_syc'} className='container-card-header' layoutClassName='wm-d-flex wm-fd-row wm-fw-nowrap wm-jc-flex-start wm-ai-center wm-gap-8px wm-w-100pct wm-pt-14px wm-pr-20px wm-pb-14px wm-pl-20px' >
-                  <WmLabel listener={fragment} name="cc_title" caption={$item?.title} item-id={'contribution_cards_list_' + $index + '_cc_title_4wv'} type="p" className='label-header-title' ></WmLabel>
+              <WmContainer listener={fragment} name="contribution_card" direction="column" item-id={'contribution_cards_list_' + $index + '_contribution_card_adw'} styles={{"textAlign":"left","flexDirection":"row","justifyContent":"flex-start","flexWrap":"wrap"}} className='container-illustration-card' layoutClassName='wm-d-flex wm-fd-column wm-fw-nowrap wm-w-100pct' >
+                <WmContainer listener={fragment} name="contribution_card_header" direction="row" gap="8" alignment="middle-left" item-id={'contribution_cards_list_' + $index + '_contribution_card_header_6lk'} className='container-card-header' layoutClassName='wm-d-flex wm-fd-row wm-fw-nowrap wm-jc-flex-start wm-ai-center wm-gap-8px wm-w-100pct wm-pt-14px wm-pr-20px wm-pb-14px wm-pl-20px' >
+                  <WmLabel listener={fragment} name="cc_title" caption={$item?.title} item-id={'contribution_cards_list_' + $index + '_cc_title_9x5'} type="p" className='label-header-title' ></WmLabel>
                 </WmContainer>
-                <WmContainer listener={fragment} name="contribution_card_body" direction="column" item-id={'contribution_cards_list_' + $index + '_contribution_card_body_am4'} styles={{"textAlign":"left","flexDirection":"row","justifyContent":"flex-start","flexWrap":"wrap"}} className='app-container-default container-card-body' layoutClassName='wm-d-flex wm-fd-column wm-fw-nowrap wm-w-100pct wm-pt-20px wm-pr-20px wm-pb-8px wm-pl-20px' >
-                  <WmLabel listener={fragment} name="cc_details_heading" caption="Contribution details" item-id={'contribution_cards_list_' + $index + '_cc_details_heading_gqj'} type="p" className='label-section-heading' ></WmLabel>
-                  <WmList listener={fragment} name="cc_details_list" dataset={$item?.details} navigation="None" pagesize={50} item-id={'contribution_cards_list_' + $index + '_cc_details_list_f2e'} layoutWidth="100%" className='list-detail-rows' layoutClassName='wm-w-100pct wm-fs-0' itemAttrs={($item: any, $index: number) => ({layoutClassName: "wm-d-flex wm-fd-row wm-fw-nowrap wm-jc-flex-start wm-ai-center wm-gap-8px wm-w-100pct wm-h-fit-content wm-fs-0 wm-pt-14px wm-pr-0px wm-pb-14px wm-pl-0px", className: "detail-row-tmpl"})}
+                <WmContainer listener={fragment} name="contribution_card_body" direction="column" item-id={'contribution_cards_list_' + $index + '_contribution_card_body_8dw'} styles={{"textAlign":"left","flexDirection":"row","justifyContent":"flex-start","flexWrap":"wrap"}} className='app-container-default container-card-body' layoutClassName='wm-d-flex wm-fd-column wm-fw-nowrap wm-w-100pct wm-pt-20px wm-pr-20px wm-pb-8px wm-pl-20px' >
+                  <WmLabel listener={fragment} name="cc_details_heading" caption="Contribution details" item-id={'contribution_cards_list_' + $index + '_cc_details_heading_y2k'} type="p" className='label-section-heading' ></WmLabel>
+                  <WmList listener={fragment} name="cc_details_list" dataset={$item?.details} navigation="None" pagesize={50} item-id={'contribution_cards_list_' + $index + '_cc_details_list_cb3'} layoutWidth="100%" className='list-detail-rows' layoutClassName='wm-w-100pct wm-fs-0' itemAttrs={($item: any, $index: number) => ({layoutClassName: "wm-d-flex wm-fd-row wm-fw-nowrap wm-jc-flex-start wm-ai-center wm-gap-8px wm-w-100pct wm-h-fit-content wm-fs-0 wm-pt-14px wm-pr-0px wm-pb-14px wm-pl-0px", className: "detail-row-tmpl"})}
                       
                       
                       
@@ -185,13 +185,13 @@ useEffect(()=>{
                          return (<>
                     
                       <React.Fragment key={'list_item' + $index + '_' + 'cc_details_tmpl'} >
-                        <WmLabel listener={fragment} name="ccd_label" caption={$item?.label} item-id={'cc_details_list_' + $index + '_ccd_label_s4s'} type="p" styles={{"width":"280px"}} className='label-field-label' ></WmLabel>
-                        <WmLabel listener={fragment} name="ccd_value" caption={$item?.value} item-id={'cc_details_list_' + $index + '_ccd_value_jz4'} type="p" styles={{"width":"100%"}} className='label-field-value' ></WmLabel>
+                        <WmLabel listener={fragment} name="ccd_label" caption={$item?.label} item-id={'cc_details_list_' + $index + '_ccd_label_17u'} type="p" styles={{"width":"280px"}} className='label-field-label' ></WmLabel>
+                        <WmLabel listener={fragment} name="ccd_value" caption={$item?.value} item-id={'cc_details_list_' + $index + '_ccd_value_1i3'} type="p" styles={{"width":"100%"}} className='label-field-value' ></WmLabel>
                       </React.Fragment>
                     
                   </>)}}></WmList>
-                  <WmLabel listener={fragment} name="cc_contributors_heading" caption="Contributors" item-id={'contribution_cards_list_' + $index + '_cc_contributors_heading_e38'} type="p" className='label-section-heading' ></WmLabel>
-                  <WmList listener={fragment} name="cc_contributors_list" dataset={$item?.contributors} navigation="None" pagesize={50} item-id={'contribution_cards_list_' + $index + '_cc_contributors_list_4ia'} layoutWidth="100%" className='list-detail-rows' layoutClassName='wm-w-100pct wm-fs-0' itemAttrs={($item: any, $index: number) => ({layoutClassName: "wm-d-flex wm-fd-row wm-fw-nowrap wm-jc-flex-start wm-ai-center wm-gap-8px wm-w-100pct wm-h-fit-content wm-fs-0 wm-pt-14px wm-pr-0px wm-pb-14px wm-pl-0px", className: "detail-row-tmpl"})}
+                  <WmLabel listener={fragment} name="cc_contributors_heading" caption="Contributors" item-id={'contribution_cards_list_' + $index + '_cc_contributors_heading_bx6'} type="p" className='label-section-heading' ></WmLabel>
+                  <WmList listener={fragment} name="cc_contributors_list" dataset={$item?.contributors} navigation="None" pagesize={50} item-id={'contribution_cards_list_' + $index + '_cc_contributors_list_vcg'} layoutWidth="100%" className='list-detail-rows' layoutClassName='wm-w-100pct wm-fs-0' itemAttrs={($item: any, $index: number) => ({layoutClassName: "wm-d-flex wm-fd-row wm-fw-nowrap wm-jc-flex-start wm-ai-center wm-gap-8px wm-w-100pct wm-h-fit-content wm-fs-0 wm-pt-14px wm-pr-0px wm-pb-14px wm-pl-0px", className: "detail-row-tmpl"})}
                       
                       
                       
@@ -205,14 +205,14 @@ useEffect(()=>{
                          return (<>
                     
                       <React.Fragment key={'list_item' + $index + '_' + 'cc_contributors_tmpl'} >
-                        <WmLabel listener={fragment} name="ccc_label" caption={$item?.label} item-id={'cc_contributors_list_' + $index + '_ccc_label_n67'} type="p" styles={{"width":"280px"}} className='label-field-label' ></WmLabel>
-                        <WmLabel listener={fragment} name="ccc_value" caption={$item?.value} item-id={'cc_contributors_list_' + $index + '_ccc_value_coq'} type="p" styles={{"width":"100%"}} className='label-field-value' ></WmLabel>
-                        <WmLabel listener={fragment} name="ccc_amount" caption={$item?.amount} item-id={'cc_contributors_list_' + $index + '_ccc_amount_mdn'} type="p" styles={{"width":"160px"}} className='label-field-value label-field-amount' ></WmLabel>
+                        <WmLabel listener={fragment} name="ccc_label" caption={$item?.label} item-id={'cc_contributors_list_' + $index + '_ccc_label_ex3'} type="p" styles={{"width":"280px"}} className='label-field-label' ></WmLabel>
+                        <WmLabel listener={fragment} name="ccc_value" caption={$item?.value} item-id={'cc_contributors_list_' + $index + '_ccc_value_e45'} type="p" styles={{"width":"100%"}} className='label-field-value' ></WmLabel>
+                        <WmLabel listener={fragment} name="ccc_amount" caption={$item?.amount} item-id={'cc_contributors_list_' + $index + '_ccc_amount_sp3'} type="p" styles={{"width":"160px"}} className='label-field-value label-field-amount' ></WmLabel>
                       </React.Fragment>
                     
                   </>)}}></WmList>
-                  <WmLabel listener={fragment} name="cc_charges_heading" caption="Charges and fees" item-id={'contribution_cards_list_' + $index + '_cc_charges_heading_amc'} type="p" className='label-section-heading' ></WmLabel>
-                  <WmList listener={fragment} name="cc_charges_list" dataset={$item?.charges} navigation="None" pagesize={50} item-id={'contribution_cards_list_' + $index + '_cc_charges_list_pxn'} layoutWidth="100%" className='list-detail-rows' layoutClassName='wm-w-100pct wm-fs-0' itemAttrs={($item: any, $index: number) => ({layoutClassName: "wm-d-flex wm-fd-row wm-fw-nowrap wm-jc-flex-start wm-ai-center wm-gap-8px wm-w-100pct wm-h-fit-content wm-fs-0 wm-pt-14px wm-pr-0px wm-pb-14px wm-pl-0px", className: "detail-row-tmpl"})}
+                  <WmLabel listener={fragment} name="cc_charges_heading" caption="Charges and fees" item-id={'contribution_cards_list_' + $index + '_cc_charges_heading_r1a'} type="p" className='label-section-heading' ></WmLabel>
+                  <WmList listener={fragment} name="cc_charges_list" dataset={$item?.charges} navigation="None" pagesize={50} item-id={'contribution_cards_list_' + $index + '_cc_charges_list_4l3'} layoutWidth="100%" className='list-detail-rows' layoutClassName='wm-w-100pct wm-fs-0' itemAttrs={($item: any, $index: number) => ({layoutClassName: "wm-d-flex wm-fd-row wm-fw-nowrap wm-jc-flex-start wm-ai-center wm-gap-8px wm-w-100pct wm-h-fit-content wm-fs-0 wm-pt-14px wm-pr-0px wm-pb-14px wm-pl-0px", className: "detail-row-tmpl"})}
                       
                       
                       
@@ -226,14 +226,14 @@ useEffect(()=>{
                          return (<>
                     
                       <React.Fragment key={'list_item' + $index + '_' + 'cc_charges_tmpl'} >
-                        <WmLabel listener={fragment} name="ccg_label" caption={$item?.label} item-id={'cc_charges_list_' + $index + '_ccg_label_l3a'} type="p" styles={{"width":"280px"}} className='label-field-label' ></WmLabel>
-                        <WmLabel listener={fragment} name="ccg_value" caption={$item?.value} item-id={'cc_charges_list_' + $index + '_ccg_value_dyk'} type="p" styles={{"width":"100%"}} className='label-field-value' ></WmLabel>
-                        <WmLabel listener={fragment} name="ccg_amount" caption={$item?.amount} item-id={'cc_charges_list_' + $index + '_ccg_amount_ny1'} type="p" styles={{"width":"160px"}} className='label-field-value label-field-amount' ></WmLabel>
+                        <WmLabel listener={fragment} name="ccg_label" caption={$item?.label} item-id={'cc_charges_list_' + $index + '_ccg_label_sfk'} type="p" styles={{"width":"280px"}} className='label-field-label' ></WmLabel>
+                        <WmLabel listener={fragment} name="ccg_value" caption={$item?.value} item-id={'cc_charges_list_' + $index + '_ccg_value_st7'} type="p" styles={{"width":"100%"}} className='label-field-value' ></WmLabel>
+                        <WmLabel listener={fragment} name="ccg_amount" caption={$item?.amount} item-id={'cc_charges_list_' + $index + '_ccg_amount_hiw'} type="p" styles={{"width":"160px"}} className='label-field-value label-field-amount' ></WmLabel>
                       </React.Fragment>
                     
                   </>)}}></WmList>
-                  <WmLabel listener={fragment} name="cc_allocations_heading" caption="Fund allocation" item-id={'contribution_cards_list_' + $index + '_cc_allocations_heading_1y1'} type="p" className='label-section-heading' ></WmLabel>
-                  <WmList listener={fragment} name="cc_allocations_list" dataset={$item?.allocations} navigation="None" pagesize={50} item-id={'contribution_cards_list_' + $index + '_cc_allocations_list_rxc'} layoutWidth="100%" className='list-detail-rows' layoutClassName='wm-w-100pct wm-fs-0' itemAttrs={($item: any, $index: number) => ({layoutClassName: "wm-d-flex wm-fd-row wm-fw-nowrap wm-jc-flex-start wm-ai-center wm-gap-8px wm-w-100pct wm-h-fit-content wm-fs-0 wm-pt-14px wm-pr-0px wm-pb-14px wm-pl-0px", className: "detail-row-tmpl"})}
+                  <WmLabel listener={fragment} name="cc_allocations_heading" caption="Fund allocation" item-id={'contribution_cards_list_' + $index + '_cc_allocations_heading_vmg'} type="p" className='label-section-heading' ></WmLabel>
+                  <WmList listener={fragment} name="cc_allocations_list" dataset={$item?.allocations} navigation="None" pagesize={50} item-id={'contribution_cards_list_' + $index + '_cc_allocations_list_kyo'} layoutWidth="100%" className='list-detail-rows' layoutClassName='wm-w-100pct wm-fs-0' itemAttrs={($item: any, $index: number) => ({layoutClassName: "wm-d-flex wm-fd-row wm-fw-nowrap wm-jc-flex-start wm-ai-center wm-gap-8px wm-w-100pct wm-h-fit-content wm-fs-0 wm-pt-14px wm-pr-0px wm-pb-14px wm-pl-0px", className: "detail-row-tmpl"})}
                       
                       
                       
@@ -247,9 +247,9 @@ useEffect(()=>{
                          return (<>
                     
                       <React.Fragment key={'list_item' + $index + '_' + 'cc_allocations_tmpl'} >
-                        <WmLabel listener={fragment} name="cca_label" caption={$item?.label} item-id={'cc_allocations_list_' + $index + '_cca_label_dns'} type="p" styles={{"width":"280px"}} className='label-field-label' ></WmLabel>
-                        <WmLabel listener={fragment} name="cca_value" caption={$item?.value} item-id={'cc_allocations_list_' + $index + '_cca_value_pxg'} type="p" styles={{"width":"100%"}} className='label-field-value' ></WmLabel>
-                        <WmLabel listener={fragment} name="cca_amount" caption={$item?.amount} item-id={'cc_allocations_list_' + $index + '_cca_amount_qs2'} type="p" styles={{"width":"160px"}} className='label-field-value label-field-amount' ></WmLabel>
+                        <WmLabel listener={fragment} name="cca_label" caption={$item?.label} item-id={'cc_allocations_list_' + $index + '_cca_label_vug'} type="p" styles={{"width":"280px"}} className='label-field-label' ></WmLabel>
+                        <WmLabel listener={fragment} name="cca_value" caption={$item?.value} item-id={'cc_allocations_list_' + $index + '_cca_value_7su'} type="p" styles={{"width":"100%"}} className='label-field-value' ></WmLabel>
+                        <WmLabel listener={fragment} name="cca_amount" caption={$item?.amount} item-id={'cc_allocations_list_' + $index + '_cca_amount_643'} type="p" styles={{"width":"160px"}} className='label-field-value label-field-amount' ></WmLabel>
                       </React.Fragment>
                     
                   </>)}}></WmList>

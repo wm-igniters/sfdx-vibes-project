@@ -3,6 +3,7 @@
   "/_not-found/page": "app/_not-found/page.js",
   "/page": "app/page.js",
   "/react-pages/(layout1)/Illustration/page": "app/react-pages/(layout1)/Illustration/page.js",
-  "/react-pages/(layout1)/clientIllustrationList/page": "app/react-pages/(layout1)/clientIllustrationList/page.js",
-  "/react-pages/(layout1)/printIllustration/page": "app/react-pages/(layout1)/printIllustration/page.js"
+  "/react-pages/(layout1)/blank/page": "app/react-pages/(layout1)/blank/page.js",
+  "/react-pages/(layout1)/printIllustration/page": "app/react-pages/(layout1)/printIllustration/page.js",
+  "/react-pages/IndividualSavingsAccount/page": "app/react-pages/IndividualSavingsAccount/page.js"
 }

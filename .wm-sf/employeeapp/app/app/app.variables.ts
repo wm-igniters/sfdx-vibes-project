@@ -26,6 +26,15 @@ export default (App:any) => {
 
 
             }),
+            ebsSubmissionData: new (ModelVariable as any)({
+                name: 'ebsSubmissionData',
+                _context: App,
+                paramProvider: () => (
+                        {"submissionId":2,"submissionRef":"SUB-7A4DB89101","illustrationId":76,"productCode":"RA","status":"DRAFT","currentScreen":"account-owner","rowVersion":0,"canSubmit":false,"stale":false,"staleReason":null,"screens":[{"key":"account-owner","label":"Account owner","status":"NOT_STARTED","errorCount":0,"subSections":[{"key":"account-owner","label":"Account owner","status":"NOT_STARTED","errorCount":0}]},{"key":"investment","label":"Investment","status":"NOT_STARTED","errorCount":0,"subSections":[{"key":"account-details","label":"Account details","status":"NOT_STARTED","errorCount":0},{"key":"investment","label":"Investment","status":"NOT_STARTED","errorCount":0},{"key":"payment","label":"Payment","status":"NOT_STARTED","errorCount":0}]},{"key":"benefits","label":"Benefits","status":"NOT_STARTED","errorCount":0,"subSections":[{"key":"regular-withdrawals","label":"Regular withdrawals","status":"NOT_STARTED","errorCount":0}]},{"key":"aml-connected-parties","label":"AML connected parties","status":"NOT_STARTED","errorCount":0,"subSections":[{"key":"aml-connected-parties","label":"AML connected parties","status":"NOT_STARTED","errorCount":0}]},{"key":"additional-info","label":"Additional information","status":"NOT_STARTED","errorCount":0,"subSections":[{"key":"partner-remuneration","label":"Partner & remuneration","status":"NOT_STARTED","errorCount":0},{"key":"advice-information","label":"Advice information","status":"NOT_STARTED","errorCount":0},{"key":"marketing-documentation","label":"Marketing & documentation","status":"NOT_STARTED","errorCount":0}]},{"key":"confirm","label":"Confirm","status":"NOT_STARTED","errorCount":0,"subSections":[{"key":"declaration","label":"Declaration","status":"NOT_STARTED","errorCount":0}]}],"outstanding":[{"screen":"account-owner","subSection":"account-owner","label":"Account owner","status":"NOT_STARTED"},{"screen":"investment","subSection":"account-details","label":"Account details","status":"NOT_STARTED"},{"screen":"investment","subSection":"investment","label":"Investment","status":"NOT_STARTED"},{"screen":"investment","subSection":"payment","label":"Payment","status":"NOT_STARTED"},{"screen":"benefits","subSection":"regular-withdrawals","label":"Regular withdrawals","status":"NOT_STARTED"},{"screen":"aml-connected-parties","subSection":"aml-connected-parties","label":"AML connected parties","status":"NOT_STARTED"},{"screen":"additional-info","subSection":"partner-remuneration","label":"Partner & remuneration","status":"NOT_STARTED"},{"screen":"additional-info","subSection":"advice-information","label":"Advice information","status":"NOT_STARTED"},{"screen":"additional-info","subSection":"marketing-documentation","label":"Marketing & documentation","status":"NOT_STARTED"},{"screen":"confirm","subSection":"declaration","label":"Declaration","status":"NOT_STARTED"}],"updatedAt":"2026-11-13T05:06:10.664116Z","outcome":null}
+                ),
+
+
+            }),
             illustrationResult: new (ModelVariable as any)({
                 name: 'illustrationResult',
                 _context: App,
@@ -95,13 +104,13 @@ export default (App:any) => {
 
 
             }),
-            goToPage_clientIllustrationList: new (NavigationAction as any)({
-                name: 'goToPage_clientIllustrationList',
+            goToPage_blank: new (NavigationAction as any)({
+                name: 'goToPage_blank',
                 _context: App,
                 operation: "gotoPage",
                 paramProvider: () => (
                     {
-                        'pageName': "clientIllustrationList",
+                        'pageName': "blank",
                     }
                 ),
                 appConfig: App.appConfig,
@@ -115,6 +124,19 @@ export default (App:any) => {
                 paramProvider: () => (
                     {
                         'pageName': "Illustration",
+                    }
+                ),
+                appConfig: App.appConfig,
+
+
+            }),
+            goToPage_IndividualSavingsAccount: new (NavigationAction as any)({
+                name: 'goToPage_IndividualSavingsAccount',
+                _context: App,
+                operation: "gotoPage",
+                paramProvider: () => (
+                    {
+                        'pageName': "IndividualSavingsAccount",
                     }
                 ),
                 appConfig: App.appConfig,

@@ -31,6 +31,8 @@ const EMPLOYEE_SELECT_EVENT = 'employeeselect';
 // Events this component dispatches *to* the app; the template's onemployeeselect
 // listener sits on the same element, so it must ignore them.
 const hostDispatchedEvents = new WeakSet();
+// Host → app: an EBS submission was created (Business manager → EBS → Create).
+const CREATE_EBS_EVENT = 'createEBS';
 const NOT_INCLUDED = '__none__';
 
 // App → host `navigatetab` { apiName }: open a Lightning tab. The embedded frame is
@@ -76,6 +78,16 @@ const SECTION_PATTERN = /^[A-Za-z][A-Za-z0-9]{0,39}$/;
  *               The same data is also put in props (selectedEmployee/selectionParties/selectionRequestId)
  *               so the app still gets it if it subscribed to events late.
  *
+ *  EBS request: Business manager → Illustration summary → "Create EBS" creates the
+ *               submission (POST /illustrations/{id}/submissions) and opens this tab
+ *               with state { c__ebsRequestId, c__ebsSubmission (JSON), c__illustrationId,
+ *               c__clientId }. The host dispatches `createEBS` ON the embedding →
+ *               ui/events/dispatch { eventType: 'createEBS', detail: { submission,
+ *               illustrationId, clientId, requestId, origin: 'salesforce' } }
+ *               (submission = the whole API response). Every request reloads the app
+ *               (fresh embedding), like "Start illustration". Also in props as
+ *               ebsSubmission/ebsRequestId; the app de-duplicates by requestId.
+ *
  *  App ready  : events dispatched before the app has subscribed (ui/events/subscribe)
  *               are dropped by <lightning-ui-embedding>, and the first one is sent as
  *               soon as the frame connects. The app therefore dispatches `appready`
@@ -109,6 +121,9 @@ export default class IllustrationEmbedding extends NavigationMixin(LightningElem
     _selectionParties = null;
     _pendingRequest = null;
     _lastRequestId;
+    /** Current EBS request { requestId, submission, illustrationId, clientId } (sent on every ready). */
+    _ebsRequest = null;
+    _lastEbsRequestId;
     _appReady = false;
     lastSentName;
     _embeddingListenersAttached = false;
@@ -196,12 +211,17 @@ export default class IllustrationEmbedding extends NavigationMixin(LightningElem
 
     @wire(CurrentPageReference)
     wiredPageRef(pageRef) {
+        if (pageRef?.state?.c__ebsRequestId) {
+            this.receiveEbsRequest(pageRef.state);
+            return;
+        }
         const employeeId = pageRef?.state?.c__employeeId;
         if (!employeeId) return;
         const requestId = pageRef.state.c__requestId || employeeId;
         if (requestId === this._lastRequestId) return; // same request re-emitted (tab revisit)
         const hadPreviousRequest = this._lastRequestId !== undefined;
         this._lastRequestId = requestId;
+        this.clearEbsRequest(); // a new illustration replaces any earlier EBS hand-off
         const {
             c__secondPartyId: secondPartyId,
             c__preparedById: preparedById,
@@ -217,6 +237,57 @@ export default class IllustrationEmbedding extends NavigationMixin(LightningElem
         // delivered once the new frame is ready.
         if (hadPreviousRequest || this.isReady) this.restartEmbedding();
         this.deliverPendingRequest();
+    }
+
+    // ─── EBS request from Business manager ─────────────────────────────────────
+
+    receiveEbsRequest(state) {
+        const requestId = String(state.c__ebsRequestId);
+        if (requestId === this._lastEbsRequestId) return; // same request re-emitted (tab revisit)
+        const hadPreviousRequest = this._lastEbsRequestId !== undefined || this._lastRequestId !== undefined;
+        this._lastEbsRequestId = requestId;
+        let submission;
+        try {
+            submission = JSON.parse(state.c__ebsSubmission ?? 'null');
+        } catch {
+            this.loadError = 'The EBS submission could not be read.';
+            return;
+        }
+        const rawId = state.c__illustrationId;
+        const illustrationId = rawId && /^\d+$/.test(rawId) ? Number(rawId) : rawId ?? submission?.illustrationId ?? null;
+        this._ebsRequest = { requestId, submission, illustrationId, clientId: state.c__clientId ?? null };
+        this.loadError = undefined;
+        this.updateProps();
+        // Like "Start illustration", every "Create EBS" reloads the app from the start:
+        // if it was already loaded (an earlier request, or connected), mount a fresh
+        // embedding; createEBS is sent once the new frame is ready.
+        if (hadPreviousRequest || this.isReady) this.restartEmbedding();
+        this.deliverEbsRequest();
+    }
+
+    clearEbsRequest() {
+        if (!this._ebsRequest) return;
+        this._ebsRequest = null;
+        this.updateProps();
+    }
+
+    /** Send `createEBS` to the app once the frame is connected (re-sent on ready/appready). */
+    deliverEbsRequest() {
+        const req = this._ebsRequest;
+        const el = this.refs?.embedding;
+        if (!req || !this.isReady || !el) return;
+        const event = new CustomEvent(CREATE_EBS_EVENT, {
+            detail: {
+                submission: req.submission,
+                illustrationId: req.illustrationId,
+                clientId: req.clientId,
+                requestId: req.requestId,
+                origin: 'salesforce',
+                source: 'businessManager'
+            }
+        });
+        hostDispatchedEvents.add(event);
+        el.dispatchEvent(event);
     }
 
     /** Mount a brand-new <lightning-ui-embedding> (fresh iframe, app state reset). */
@@ -305,7 +376,9 @@ export default class IllustrationEmbedding extends NavigationMixin(LightningElem
             selectedEmployeeId: this._selectedEmployeeId,
             selectedEmployee: this._selectedEmployee,
             selectionParties: this._selectionParties,
-            selectionRequestId: this._selectionRequestId
+            selectionRequestId: this._selectionRequestId,
+            ebsSubmission: this._ebsRequest?.submission ?? null,
+            ebsRequestId: this._ebsRequest?.requestId ?? null
         });
     }
 
@@ -317,6 +390,7 @@ export default class IllustrationEmbedding extends NavigationMixin(LightningElem
         this.isReady = true;
         this.embeddingError = undefined;
         this.deliverPendingRequest();
+        this.deliverEbsRequest();
     };
 
     handleError = (event) => {
@@ -341,6 +415,7 @@ export default class IllustrationEmbedding extends NavigationMixin(LightningElem
     /** `appready` from the app: it is subscribed and its pages are up — (re)send the current selection. */
     handleAppReady() {
         this._appReady = true;
+        this.deliverEbsRequest();
         if (this._pendingRequest) {
             this.deliverPendingRequest();
             return;

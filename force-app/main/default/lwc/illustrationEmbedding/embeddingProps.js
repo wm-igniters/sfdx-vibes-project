@@ -6,7 +6,7 @@ import LOCALE from '@salesforce/i18n/locale';
  * read-only proxy and fails with DataCloneError, so the app never receives the
  * ui-state (its ui/subscribe/ui-state request times out). Keep every prop a
  * primitive: objects and arrays travel as JSON strings under `<name>Json`
- * (employeesJson, selectedEmployeeJson, selectionPartiesJson); the app's bridge
+ * (employeesJson, selectedEmployeeJson, selectionPartiesJson, ebsSubmissionJson); the app's bridge
  * parses them back to `<name>`.
  */
 export function toEmbeddingProps({
@@ -14,7 +14,9 @@ export function toEmbeddingProps({
     selectedEmployeeId = null,
     selectedEmployee = null,
     selectionParties = null,
-    selectionRequestId = null
+    selectionRequestId = null,
+    ebsSubmission = null,
+    ebsRequestId = null
 }) {
     return {
         employeesJson: JSON.stringify(employees ?? []),
@@ -22,6 +24,8 @@ export function toEmbeddingProps({
         selectedEmployeeJson: JSON.stringify(selectedEmployee ?? null),
         selectionPartiesJson: JSON.stringify(selectionParties ?? null),
         selectionRequestId: selectionRequestId ?? null,
+        ebsSubmissionJson: JSON.stringify(ebsSubmission ?? null),
+        ebsRequestId: ebsRequestId ?? null,
         locale: LOCALE,
         source: 'illustrationEmbedding'
     };

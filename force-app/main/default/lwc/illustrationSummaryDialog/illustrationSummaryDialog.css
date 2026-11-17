@@ -211,6 +211,13 @@
     background: var(--sum-navy);
 }
 
+.sum-ebs-error {
+    align-self: center;
+    flex: 1 1 auto;
+    margin: 0 1rem;
+    color: #ffb4ab;
+}
+
 .sum-primary {
     padding: 0 1rem;
     background: var(--sum-blue);

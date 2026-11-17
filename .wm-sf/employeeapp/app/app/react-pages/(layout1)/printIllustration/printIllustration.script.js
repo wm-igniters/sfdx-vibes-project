@@ -24,7 +24,10 @@ export default function addPageScript(App, Page) {
   };
   
   Page.goToIllustrationClick = function ($event, widget) {
-      App.salesforce && App.salesforce.dispatchEvent("navigatetab", { apiName: "illustrationClientList" });
+      App.salesforce && App.salesforce.dispatchEvent("navigatetab", {
+          apiName: "Client_Illustration",   // the Clients tab
+          section: "businessManager"        // left-nav item to open
+      });
   };
   
   Page.btn_printClick = function ($event, widget) {

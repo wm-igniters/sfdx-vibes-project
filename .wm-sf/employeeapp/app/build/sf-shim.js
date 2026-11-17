@@ -4,7 +4,7 @@
 
   // Salesforce caches every file for a year; tag non-hashed app files with this build's id.
   var version = function (u) {
-    if (sameApp(u) && u.pathname.indexOf(base + '/_next/static/') !== 0) u.searchParams.set('v', "A1I75B29Wv_Y36BbNRq4t");
+    if (sameApp(u) && u.pathname.indexOf(base + '/_next/static/') !== 0) u.searchParams.set('v', "Zy1RB1b8h1M-z7SMKA0x6");
     return u;
   };
 

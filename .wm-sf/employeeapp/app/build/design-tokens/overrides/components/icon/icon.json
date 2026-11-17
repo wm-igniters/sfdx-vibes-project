@@ -203,6 +203,64 @@
             "value" : "{space.1.value}"
           }
         }
+      },
+      "help-phone" : {
+        "mapping" : {
+          "color" : {
+            "value" : "#4A6A8Aff"
+          },
+          "font-size" : {
+            "value" : "{icon.size.2x.value}"
+          },
+          "min-width" : {
+            "value" : "{icon.size.2x.value}"
+          },
+          "width" : {
+            "value" : "{icon.size.2x.value}"
+          },
+          "height" : {
+            "value" : "{icon.size.2x.value}"
+          },
+          "gap" : {
+            "value" : "{space.1.value}"
+          }
+        }
+      },
+      "section-icon" : {
+        "mapping" : {
+          "color" : {
+            "value" : "{color.on-surface.@.value}"
+          },
+          "font-size" : {
+            "value" : "{icon.size.sm.value}"
+          },
+          "min-width" : {
+            "value" : "{icon.size.sm.value}"
+          },
+          "width" : {
+            "value" : "{icon.size.sm.value}"
+          },
+          "height" : {
+            "value" : "{icon.size.sm.value}"
+          },
+          "gap" : {
+            "value" : "{space.1.value}"
+          }
+        }
+      },
+      "section-icon-doc" : {
+        "mapping" : {
+          "color" : {
+            "value" : "#4A7BBEff"
+          }
+        }
+      },
+      "section-icon-done" : {
+        "mapping" : {
+          "color" : {
+            "value" : "{color.on-surface.@.value}"
+          }
+        }
       }
     },
     "meta" : {
@@ -227,6 +285,22 @@
         },
         "success-xs" : {
           "source" : "user"
+        },
+        "help-phone" : {
+          "source" : "aira",
+          "description" : "Mobile phone icon in the Need Help card — muted navy-blue tone"
+        },
+        "section-icon" : {
+          "source" : "aira",
+          "description" : "Base appearance for section-link row icons — small neutral glyph"
+        },
+        "section-icon-doc" : {
+          "source" : "aira",
+          "description" : "Blue document/checkbox icon override for sections needing completion"
+        },
+        "section-icon-done" : {
+          "source" : "aira",
+          "description" : "Dark checkmark icon override for completed sections"
         }
       }
     }

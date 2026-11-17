@@ -342,4 +342,81 @@ private class IllustrationControllerTest {
             Assert.areEqual('Illustration 5 was not found.', e.getMessage());
         }
     }
+
+    // ─── EBS: createSubmission ──────────────────────────────────────────────
+
+    private class SubmissionMock implements HttpCalloutMock {
+        private Integer status;
+        private String body;
+        public HttpRequest lastRequest;
+        SubmissionMock(Integer status, String body) {
+            this.status = status;
+            this.body = body;
+        }
+        public HttpResponse respond(HttpRequest req) {
+            lastRequest = req;
+            HttpResponse res = new HttpResponse();
+            res.setStatusCode(status);
+            res.setStatus(status < 300 ? 'Created' : 'Error');
+            res.setBody(body);
+            return res;
+        }
+    }
+
+    private static final String SUBMISSION =
+        '{"submissionId":3,"submissionRef":"SUB-1234567890","illustrationId":76,"productCode":"PISA",' +
+        '"status":"DRAFT","currentScreen":"account-owner","createdAt":"2026-11-13T05:06:10Z","submittedAt":null}';
+
+    @IsTest
+    static void createSubmission_postsAndReturnsTheWholeResponse() {
+        SubmissionMock mock = new SubmissionMock(201, SUBMISSION);
+        Test.setMock(HttpCalloutMock.class, mock);
+
+        Test.startTest();
+        String result = IllustrationController.createSubmission(76);
+        Test.stopTest();
+
+        Assert.areEqual('POST', mock.lastRequest.getMethod());
+        Assert.areEqual('callout:WM_Illustration_API/api/v1/illustrations/76/submissions', mock.lastRequest.getEndpoint());
+        Assert.areEqual('application/json', mock.lastRequest.getHeader('Content-Type'));
+        Assert.areEqual(SUBMISSION, result, 'response is passed through unchanged');
+    }
+
+    @IsTest
+    static void createSubmission_surfacesTheApiProblemDetail() {
+        Test.setMock(HttpCalloutMock.class, new SubmissionMock(409,
+            '{"title":"Conflict","status":409,"detail":"A draft submission already exists."}'));
+        try {
+            IllustrationController.createSubmission(76);
+            Assert.fail('Expected an AuraHandledException');
+        } catch (AuraHandledException e) {
+            Assert.areEqual('Could not create the EBS: A draft submission already exists.', e.getMessage());
+        }
+    }
+
+    @IsTest
+    static void createSubmission_rejectsBadResponsesAndMissingId() {
+        Test.setMock(HttpCalloutMock.class, new SubmissionMock(500, 'oops'));
+        try {
+            IllustrationController.createSubmission(76);
+            Assert.fail('Expected an AuraHandledException');
+        } catch (AuraHandledException e) {
+            Assert.isTrue(e.getMessage().contains('500'), e.getMessage());
+        }
+
+        Test.setMock(HttpCalloutMock.class, new SubmissionMock(200, '<html/>'));
+        try {
+            IllustrationController.createSubmission(76);
+            Assert.fail('Expected an AuraHandledException');
+        } catch (AuraHandledException e) {
+            Assert.isTrue(e.getMessage().contains('unexpected'), e.getMessage());
+        }
+
+        try {
+            IllustrationController.createSubmission(null);
+            Assert.fail('Expected an AuraHandledException');
+        } catch (AuraHandledException e) {
+            Assert.areEqual('An illustration id is required.', e.getMessage());
+        }
+    }
 }

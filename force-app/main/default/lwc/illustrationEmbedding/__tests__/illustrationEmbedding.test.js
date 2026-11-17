@@ -503,6 +503,8 @@ describe('c-illustration-embedding', () => {
         const props = rawEmbedding(el).props;
         Object.values(props).forEach((v) => expect(v === null || typeof v !== 'object').toBe(true));
         expect(Object.keys(props).sort()).toEqual([
+            'ebsRequestId',
+            'ebsSubmissionJson',
             'employeesJson',
             'locale',
             'selectedEmployeeId',
@@ -514,6 +516,106 @@ describe('c-illustration-embedding', () => {
         expect(JSON.parse(props.selectedEmployeeJson)).toMatchObject({ id: 'EMP-007', name: 'Grace Patel' });
         expect(JSON.parse(props.selectionPartiesJson).secondParty).toMatchObject({ id: 'EMP-001' });
         expect(JSON.parse(props.employeesJson)).toHaveLength(2);
+    });
+
+    describe('"Create EBS" from Business manager', () => {
+        const SUBMISSION = { submissionId: 3, submissionRef: 'SUB-1', illustrationId: 76, productCode: 'PISA', status: 'DRAFT' };
+        const ebsState = (requestId, extra = {}) => ({
+            type: 'standard__navItemPage',
+            attributes: { apiName: 'Illustration_Embedding' },
+            state: {
+                c__ebsRequestId: requestId,
+                c__ebsSubmission: JSON.stringify(SUBMISSION),
+                c__illustrationId: '76',
+                c__clientId: '5',
+                ...extra
+            }
+        });
+
+        afterEach(() => jest.restoreAllMocks());
+
+        function captureEbsEvents() {
+            const sent = [];
+            const original = EventTarget.prototype.dispatchEvent;
+            jest.spyOn(EventTarget.prototype, 'dispatchEvent').mockImplementation(function (event) {
+                if (this.tagName === 'LIGHTNING-UI-EMBEDDING' && event.type === 'createEBS') sent.push(event.detail);
+                return original.call(this, event);
+            });
+            return sent;
+        }
+
+        it('sends createEBS with the whole response once the app is connected, and puts it in props', async () => {
+            const el = await setup();
+            const sent = captureEbsEvents();
+            CurrentPageReference.emit(ebsState('e1'));
+            await flush();
+            expect(sent).toHaveLength(0); // not connected yet
+            expect(embedding(el).decodedProps).toMatchObject({ ebsRequestId: 'e1', ebsSubmission: SUBMISSION });
+
+            embedding(el).dispatchEvent(new CustomEvent('sf-embedding.component.ready'));
+            await flush();
+            expect(sent).toEqual([
+                {
+                    submission: SUBMISSION,
+                    illustrationId: 76,
+                    clientId: '5',
+                    requestId: 'e1',
+                    origin: 'salesforce',
+                    source: 'businessManager'
+                }
+            ]);
+
+            embedding(el).dispatchEvent(new CustomEvent('appready', { detail: {} }));
+            await flush();
+            expect(sent.map((d) => d.requestId)).toEqual(['e1', 'e1']); // re-sent; app de-duplicates
+        });
+
+        const settle = () => flush().then(flush).then(flush).then(flush);
+
+        it('reloads the app when it was already loaded, sends createEBS to the fresh frame, ignores repeats', async () => {
+            const el = await setup();
+            embedding(el).dispatchEvent(new CustomEvent('sf-embedding.component.ready'));
+            await flush();
+            const before = rawEmbedding(el);
+            const sent = captureEbsEvents();
+            CurrentPageReference.emit(ebsState('e2'));
+            await settle();
+            expect(rawEmbedding(el)).not.toBe(before); // fresh embedding instance
+            expect(sent).toHaveLength(0); // waits for the new frame
+            expect(el.shadowRoot.querySelector('[data-id="loading-overlay"]')).not.toBeNull();
+
+            embedding(el).dispatchEvent(new CustomEvent('sf-embedding.component.ready'));
+            await flush();
+            expect(sent.map((d) => d.requestId)).toEqual(['e2']);
+
+            const fresh = rawEmbedding(el);
+            CurrentPageReference.emit(ebsState('e2')); // same request (tab revisit)
+            await settle();
+            expect(rawEmbedding(el)).toBe(fresh);
+            expect(sent).toHaveLength(1);
+
+            CurrentPageReference.emit(ebsState('e3')); // next Create EBS reloads again
+            await settle();
+            expect(rawEmbedding(el)).not.toBe(fresh);
+        });
+
+        it('a new illustration request clears the EBS hand-off', async () => {
+            const el = await setup();
+            CurrentPageReference.emit(ebsState('e3'));
+            getClients.emit(EMPLOYEES);
+            await flush();
+            CurrentPageReference.emit({ state: { c__employeeId: 'EMP-001', c__requestId: 'r50' } });
+            await flush();
+            await flush();
+            expect(embedding(el).decodedProps).toMatchObject({ ebsRequestId: null, ebsSubmission: null });
+        });
+
+        it('reports an unreadable submission', async () => {
+            const el = await setup();
+            CurrentPageReference.emit(ebsState('e4', { c__ebsSubmission: '{bad' }));
+            await flush();
+            expect(el.shadowRoot.querySelector('.slds-alert_warning').textContent).toContain('EBS submission could not be read');
+        });
     });
 
     describe('navigatetab from the app', () => {

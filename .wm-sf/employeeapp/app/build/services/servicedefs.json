@@ -161,26 +161,33 @@
         "securityDefinitions" : [ ]
       }
     },
-    "getIllustrations_invoke" : {
-      "id" : "getIllustrations_invoke",
+    "getEBSPrefillDataBySubmissionId_invoke" : {
+      "id" : "getEBSPrefillDataBySubmissionId_invoke",
       "crudOperationId" : null,
       "service" : "onwavemaker",
-      "controller" : "getIllustrations",
+      "controller" : "getEBSPrefillDataBySubmissionId",
       "operationType" : null,
-      "type" : "array",
+      "type" : "getEBSPrefillDataBySubmissionId.RootResponse",
       "wmServiceOperationInfo" : {
         "name" : "invoke",
         "methodType" : "get",
-        "relativePath" : "/getIllustrations/v1/illustrations",
-        "directPath" : null,
+        "relativePath" : "/getEBSPrefillDataBySubmissionId/v1/submissions/{submissionId}/screens",
+        "directPath" : "https://wm-illustration.onwavemaker.com/api/v1/submissions/{submissionId}/screens",
         "httpMethod" : "get",
-        "parameters" : [ ],
+        "parameters" : [ {
+          "name" : "submissionId",
+          "parameterType" : "path",
+          "required" : true,
+          "type" : "String",
+          "readOnly" : false,
+          "contentType" : null
+        } ],
         "definitions" : { },
         "produces" : [ "application/json" ],
         "consumes" : [ "application/json" ],
         "proxySettings" : {
-          "web" : true,
-          "mobile" : true,
+          "web" : false,
+          "mobile" : false,
           "withCredentials" : false
         },
         "securityDefinitions" : [ ]

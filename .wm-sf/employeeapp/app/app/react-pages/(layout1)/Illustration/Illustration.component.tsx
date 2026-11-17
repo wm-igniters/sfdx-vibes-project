@@ -57,8 +57,8 @@ useEffect(()=>{
                         
                         
                       >
-                    <WmFormBody name="wm_form_body_ji34aa17g6">
-                      <WmContainer listener={fragment} name="wm_container_gaf5a35he2" className='form-elements' >
+                    <WmFormBody name="wm_form_body_jd95g707b2">
+                      <WmContainer listener={fragment} name="wm_container_994cg14452" className='form-elements' >
                         <WmFormField  field="true"   role="form-field"    name="ffTitle" widget="select" displayname="Title:" dataset="Mr,Mrs,Miss,Ms,Dr" defaultvalue={fragment?.Variables?.selectedEmployee?.dataSet?.title} isDataSetBound={true} displayfield="ffTitle" datafield="ffTitle" formKey="ffTitle" placeholder="Select value" formName="accountOwnerForm" renderFormFields={($formField) => (<>
                           <WmLabel listener={fragment} required={$formField?.required} htmlFor="ffTitle_formWidget" caption={$formField?.displayname} notag="true" name="ffTitle_formLabel" type="label" className={'app-label control-label formfield-label ' + $formField?.captionCls + ' ' + $formField?.invalidCls} ></WmLabel>
                           <WmSelect  {...$formField} name="ffTitle_formWidget" formfield="true" datavalue={$formField?.datavalue ?? $formField?.defaultvalue} dataset={$formField?.dataset} displayfield={$formField?.displayfield} datafield={$formField?.datafield} listener={fragment}
@@ -102,8 +102,8 @@ useEffect(()=>{
                             
                             
                           >
-                        <WmFormBody name="wm_form_body_76b48j11be">
-                          <WmContainer listener={fragment} name="wm_container_gec40faj4j" className='form-elements' >
+                        <WmFormBody name="wm_form_body_higic6a0d7">
+                          <WmContainer listener={fragment} name="wm_container_3gcc3h15h1" className='form-elements' >
                             <WmFormField  field="true"   role="form-field"    name="ffAccountAdditional" widget="radioset" show-caption="false" dataset="Yes,No" required={true} isDataSetBound={true} displayfield="ffAccountAdditional" datafield="ffAccountAdditional" formKey="additionalToExistingIsa" formName="accountAdditionalForm" dataKey="additionalToExistingIsa" className='illustration-benefits-radio' renderFormFields={($formField) => (<>
                               <WmLabel listener={fragment} required={$formField?.required} htmlFor="ffAccountAdditional_formWidget" caption={$formField?.displayname} notag="true" name="additionalToExistingIsa_formLabel" hidden={true} type="label" className={'app-label control-label formfield-label ' + $formField?.captionCls + ' ' + $formField?.invalidCls} ></WmLabel>
                               <WmRadioset  {...$formField} listener={fragment}  name="ffAccountAdditional_formWidget" formfield="true" datavalue={$formField?.datavalue ?? $formField?.defaultvalue} dataset={$formField?.dataset} displayfield={$formField?.displayfield} datafield={$formField?.datafield}  ></WmRadioset>
@@ -125,8 +125,8 @@ useEffect(()=>{
                         
                         
                       >
-                    <WmFormBody name="wm_form_body_50jji3ihd9">
-                      <WmContainer listener={fragment} name="wm_container_744c52e4a2" className='form-elements' >
+                    <WmFormBody name="wm_form_body_e26d18568f">
+                      <WmContainer listener={fragment} name="wm_container_gjggg09ahh" className='form-elements' >
                         <WmFormField  field="true"   role="form-field"    name="ffCommencementDate" widget="date" displayname="Commencement date:" datavalue="2026-10-14" formKey="ffCommencementDate" placeholder="Select date" formName="illustrationBasisForm" renderFormFields={($formField) => (<>
                           <WmLabel listener={fragment} required={$formField?.required} htmlFor="ffCommencementDate_formWidget" caption={$formField?.displayname} notag="true" name="ffCommencementDate_formLabel" type="label" className={'app-label control-label formfield-label ' + $formField?.captionCls + ' ' + $formField?.invalidCls} ></WmLabel>
                           <WmDate listener={fragment}  {...$formField}  name="ffCommencementDate_formWidget" formfield="true" datavalue={$formField?.datavalue ?? $formField?.defaultvalue} mindate={$formField?.mindate} maxdate={$formField?.maxdate} datepattern={$formField?.datepattern}></WmDate>
@@ -150,8 +150,8 @@ useEffect(()=>{
                           
                           
                         >
-                      <WmFormBody name="wm_form_body_8j561h783i">
-                        <WmContainer listener={fragment} name="wm_container_8c3i20ih6j" className='form-elements' >
+                      <WmFormBody name="wm_form_body_3e1118g24h">
+                        <WmContainer listener={fragment} name="wm_container_890833553h" className='form-elements' >
                           <WmFormField  field="true"   role="form-field"    name="ffBasisOtherInvestments" widget="radioset" show-caption="false" dataset="Yes,No" required={true} isDataSetBound={true} displayfield="ffBasisOtherInvestments" datafield="ffBasisOtherInvestments" formKey="otherNewInvestmentsInRound" formName="basisOtherInvestmentsForm" dataKey="otherNewInvestmentsInRound" className='illustration-benefits-radio' renderFormFields={($formField) => (<>
                             <WmLabel listener={fragment} required={$formField?.required} htmlFor="ffBasisOtherInvestments_formWidget" caption={$formField?.displayname} notag="true" name="otherNewInvestmentsInRound_formLabel" hidden={true} type="label" className={'app-label control-label formfield-label ' + $formField?.captionCls + ' ' + $formField?.invalidCls} ></WmLabel>
                             <WmRadioset  {...$formField} listener={fragment}  name="ffBasisOtherInvestments_formWidget" formfield="true" datavalue={$formField?.datavalue ?? $formField?.defaultvalue} dataset={$formField?.dataset} displayfield={$formField?.displayfield} datafield={$formField?.datafield}  ></WmRadioset>
@@ -208,8 +208,8 @@ useEffect(()=>{
                           
                           
                         >
-                      <WmFormBody name="wm_form_body_cdc73i77bj">
-                        <WmContainer listener={fragment} name="wm_container_6jaghg31fc" className='form-elements' >
+                      <WmFormBody name="wm_form_body_5h32iahcj3">
+                        <WmContainer listener={fragment} name="wm_container_2ed721b1jb" className='form-elements' >
                           <WmFormField  field="true"   role="form-field"    name="ffRegularWithdrawals" widget="radioset" show-caption="false" dataset="Yes,No" datavalue="No" required={true} isDataSetBound={true} displayfield="ffRegularWithdrawals" datafield="ffRegularWithdrawals" formKey="takesRegularWithdrawals" formName="regularWithdrawalsForm" dataKey="takesRegularWithdrawals" className='illustration-benefits-radio' renderFormFields={($formField) => (<>
                             <WmLabel listener={fragment} required={$formField?.required} htmlFor="ffRegularWithdrawals_formWidget" caption={$formField?.displayname} notag="true" name="takesRegularWithdrawals_formLabel" hidden={true} type="label" className={'app-label control-label formfield-label ' + $formField?.captionCls + ' ' + $formField?.invalidCls} ></WmLabel>
                             <WmRadioset  {...$formField} listener={fragment}  name="ffRegularWithdrawals_formWidget" formfield="true" datavalue={$formField?.datavalue ?? $formField?.defaultvalue} dataset={$formField?.dataset} displayfield={$formField?.displayfield} datafield={$formField?.datafield}  ></WmRadioset>
@@ -233,8 +233,8 @@ useEffect(()=>{
                         
                         
                       >
-                    <WmFormBody name="wm_form_body_a61383j2jf">
-                      <WmContainer listener={fragment} name="wm_container_j2i5d75ggd" className='form-elements' >
+                    <WmFormBody name="wm_form_body_0h64ecfde1">
+                      <WmContainer listener={fragment} name="wm_container_ac055ge2h5" className='form-elements' >
                         <WmContainer listener={fragment} name="chargesHeaderRow" direction="row" layoutWidth="100%" className='illustration-charges-row illustration-charges-header' layoutClassName='wm-d-flex wm-fd-row wm-fw-nowrap wm-w-100pct wm-fs-0' >
                           <WmLabel listener={fragment} name="lblChargesColName" caption="Charges" type="p" className='illustration-charges-name illustration-charges-colhead' >
                           </WmLabel>
@@ -766,7 +766,7 @@ useEffect(()=>{
           </WmWizard>
         </WmContainer>
 <WmDialog listener={fragment} name="illustrationResultDialog" title="Create Illustration" closable={false} modal={true}>
-      <WmDialogBody name="wm_dialogbody_c2g3ee7e24">
+      <WmDialogBody name="wm_dialogbody_9a9i4da1gg">
         <WmContainer listener={fragment} name="illustrationResultDialogContent" direction="column" gap="8" alignment="top-left" width="fill" layoutWidth="fill" layoutHeight="hug" styles={{"width":"100%"}} className='app-container-default' layoutClassName='wm-d-flex wm-fd-column wm-fw-nowrap wm-jc-flex-start wm-ai-flex-start wm-gap-8px wm-w-100pct wm-h-fit-content wm-fs-0' >
           <WmLabel listener={fragment} name="lblIllustrationResultMessage" caption={fragment?.Variables?.illustrationResultMessage?.dataSet?.dataValue} type="p" >
           </WmLabel>

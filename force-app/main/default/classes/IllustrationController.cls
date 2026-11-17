@@ -482,6 +482,79 @@ public with sharing class IllustrationController {
         return file;
     }
 
+    // ─── EBS ────────────────────────────────────────────────────────────────
+
+    /**
+     * EBS → Create: POST /api/v1/illustrations/{illustrationId}/submissions.
+     * Returns the API's JSON response unchanged, so the caller can hand the whole
+     * response to the WaveMaker app.
+     */
+    @AuraEnabled
+    public static String createSubmission(Integer illustrationId) {
+        try {
+            return postSubmission(illustrationId);
+        } catch (IllustrationApiException e) {
+            throw newAuraException(e.getMessage());
+        } catch (Exception e) {
+            throw newAuraException('Could not create the EBS: ' + e.getMessage());
+        }
+    }
+
+    public static String postSubmission(Integer illustrationId) {
+        requireId(illustrationId);
+        HttpRequest req = new HttpRequest();
+        req.setEndpoint('callout:' + NAMED_CREDENTIAL + BASE_PATH + '/' + illustrationId + '/submissions');
+        req.setMethod('POST');
+        req.setHeader('Accept', 'application/json');
+        req.setHeader('Content-Type', 'application/json');
+        req.setBody('{}');
+        req.setTimeout(60000);
+        HttpResponse res = new Http().send(req);
+
+        Integer status = res.getStatusCode();
+        String body = res.getBody();
+        if (status < 200 || status > 299) {
+            String detail = problemDetail(body);
+            throw new IllustrationApiException(
+                String.isNotBlank(detail)
+                    ? 'Could not create the EBS: ' + detail
+                    : 'Submission service returned ' + status + ' ' + res.getStatus() + '.'
+            );
+        }
+        if (String.isBlank(body)) {
+            throw new IllustrationApiException('Submission service returned an empty response.');
+        }
+        try {
+            JSON.deserializeUntyped(body); // must be JSON; returned as-is
+        } catch (JSONException e) {
+            throw new IllustrationApiException('Submission service returned an unexpected response.');
+        }
+        return body;
+    }
+
+    /** "detail" (or "message") from an RFC 7807 problem / error JSON body, if any. */
+    @TestVisible
+    private static String problemDetail(String body) {
+        if (String.isBlank(body)) {
+            return null;
+        }
+        try {
+            Object parsed = JSON.deserializeUntyped(body);
+            if (parsed instanceof Map<String, Object>) {
+                Map<String, Object> problem = (Map<String, Object>) parsed;
+                for (String key : new List<String>{ 'detail', 'message', 'title' }) {
+                    Object value = problem.get(key);
+                    if (value instanceof String && String.isNotBlank((String) value)) {
+                        return (String) value;
+                    }
+                }
+            }
+        } catch (JSONException e) {
+            return null;
+        }
+        return null;
+    }
+
     // ─── Helpers ────────────────────────────────────────────────────────────
 
     private static HttpResponse send(String path, String accept, Integer timeoutMs) {

@@ -1,0 +1,52 @@
+{
+  "nav" : {
+    "appearances" : {
+      "header-links" : {
+        "mapping" : {
+          "background" : {
+            "value" : "{color.transparent.value}"
+          },
+          "padding" : {
+            "value" : "{space.0.value}"
+          },
+          "item" : {
+            "color" : {
+              "value" : "{color.on-surface.@.value}"
+            },
+            "font-size" : {
+              "value" : "{h5.font-size.value}"
+            },
+            "font-weight" : {
+              "value" : "{font.weight.600.value}"
+            },
+            "padding" : {
+              "value" : "{space.0.value} {space.3.value}"
+            },
+            "background" : {
+              "value" : "{color.transparent.value}"
+            },
+            "border" : {
+              "color" : {
+                "value" : "{color.outline.variant.value}"
+              },
+              "width" : {
+                "value" : "0px 1px 0px 0px"
+              },
+              "style" : {
+                "value" : "{border.style.solid.value}"
+              }
+            }
+          }
+        }
+      }
+    },
+    "meta" : {
+      "appearances" : {
+        "header-links" : {
+          "source" : "aira",
+          "description" : "Horizontal header nav links with pipe separators, bold dark text"
+        }
+      }
+    }
+  }
+}

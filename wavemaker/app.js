@@ -1,32 +1,9 @@
-/*
- * Use App.getDependency for Dependency Injection
- * eg: var DialogService = App.getDependency('DialogService');
- */
+/* 
+Salesforce Microfrontend UI Embedding - Start
+*/
 
-/* =============================================================================
- * Salesforce UI Embedding bridge (package-free) for WaveMaker
- * sf-embedding protocol, JSON-RPC 2.0 over MessagePort
- * Host: c-illustration-embedding (<lightning-ui-embedding>, "Illustration" tab)
- *
- *  Host → app : props  = { employees, selectedEmployeeId, selectedEmployee,
- *                          selectionRequestId, locale, source }
- *               event  'employeeselect' { employeeId, employee, parties, requestId, origin: 'salesforce' }
- *               parties = { firstParty, secondParty|null, preparedBy|null, adviser }
- *               (chosen in the "Select illustration parties" dialog)
- *               (sent when "Create Illustration" is clicked in the Employee Directory)
- *  App → host : 'appready'        {}  (sent once from App.onPageReady; host then (re)sends
- *                                     the current 'employeeselect' — events sent before the app
- *                                     subscribed are dropped by <lightning-ui-embedding>)
- *               'employeeselect'  { employeeId }
- *               'trackdirtystate' { isDirty, instanceId, label }
- *
- *  Needs one app-level Model variable: selectedEmployee (object)
- * ========================================================================== */
-
-// hostMetaData arrives as a query parameter of the URL the frame was opened with.
-// The app's router may already have replaced that URL (e.g. "/" → "/react-pages/<Home>",
-// dropping the query) by the time this code runs, so also read it from the original
-// document URL kept in the navigation timing entry.
+// The router may already have replaced the URL (dropping ?hostMetaData) by the time
+// this runs, so also read it from the original document URL (navigation timing entry).
 function sfReadHostMetaData() {
     const fromUrl = (url) => {
         try {
@@ -36,12 +13,7 @@ function sfReadHostMetaData() {
         }
     };
     const nav = window.performance?.getEntriesByType?.("navigation")?.[0];
-    return (
-        fromUrl(location.href) ??
-        (nav ? fromUrl(nav.name) : null) ??
-        window.__SF_HOST_METADATA__ ??
-        null
-    );
+    return fromUrl(location.href) ?? (nav ? fromUrl(nav.name) : null) ?? window.__SF_HOST_METADATA__ ?? null;
 }
 
 // Step 1: handshake — wait for the host to transfer a MessagePort.
@@ -52,7 +24,12 @@ function sfBootstrap({ signal } = {}) {
             // Loaded directly, not embedded. Stay silent so the app works standalone.
             return reject(new Error("NOT_EMBEDDED"));
         }
+        // sf-shim.js (patched by `npm run wm:patch`) keeps the first-load value in
+        // window.__SF_HOST_METADATA__, because the redirect to the home page drops the query string.
+        // const rawMeta =
+        //     new URL(location.href).searchParams.get("hostMetaData") ?? window.__SF_HOST_METADATA__ ?? null;
         const rawMeta = sfReadHostMetaData();
+
         if (!rawMeta) return reject(new Error("NOT_EMBEDDED")); // framed, but not by lightning-ui-embedding
         let meta = null;
         try {
@@ -140,14 +117,30 @@ function sfCreateBridge(port) {
     };
 }
 
+// Salesforce sends only primitive props (nested values would fail to cross the
+// MessagePort): objects/arrays arrive as JSON strings named "<name>Json".
+// Parse them back, e.g. selectedEmployeeJson → selectedEmployee, ebsSubmissionJson → ebsSubmission.
+function decodeJsonProps(raw) {
+    const props = { ...(raw ?? {}) };
+    Object.keys(props).forEach((key) => {
+        if (!key.endsWith("Json") || typeof props[key] !== "string") return;
+        try {
+            props[key.slice(0, -4)] = JSON.parse(props[key]);
+        } catch (e) {
+            console.warn("Salesforce embedding: could not parse prop " + key, e);
+        }
+    });
+    return props;
+}
+
 // Step 3: lifecycle, host state, events, auto-resize. Single session promise, started at load.
 App.salesforce = (function () {
     const stateListeners = [];
     const eventListeners = [];
     const employeeSelectListeners = [];
+    const createEbsListeners = [];
     let lastEmployeeRequestId = null;
-    const lastRequestIdByChannel = { event: null, props: null };
-    let appReadySent = false;
+    let lastEbsRequestId = null;
 
     const remove = (list, fn) => () => {
         const i = list.indexOf(fn);
@@ -163,8 +156,9 @@ App.salesforce = (function () {
         session: null,
         /** Last employee sent by Salesforce ("Create Illustration"), or null. */
         selectedEmployee: null,
-        /** Parties chosen in the Salesforce dialog for that employee, or null. */
-        selectedParties: null,
+        /** Last EBS submission sent by Salesforce ("Create EBS" — the whole API response), or null. */
+        ebsSubmission: null,
+        ebsInfo: null,
 
         // Subscribe to host props/styles; fires immediately if a snapshot already exists.
         onUiStateChange(fn) {
@@ -180,19 +174,28 @@ App.salesforce = (function () {
         },
 
         // Employee row sent by Salesforce on "Create Illustration":
-        // fn(employee, { employeeId, parties, requestId, via: 'event' | 'props' | 'replay' }).
+        // fn(employee, { employeeId, requestId, via: 'event' | 'props' | 'replay' }).
         // Replays the last one immediately, so late subscribers still get it.
         onEmployeeSelect(fn) {
             employeeSelectListeners.push(fn);
             if (api.selectedEmployee) {
                 fn(api.selectedEmployee, {
                     employeeId: api.selectedEmployee.id,
-                    parties: api.selectedParties,
                     requestId: lastEmployeeRequestId,
                     via: "replay",
                 });
             }
             return remove(employeeSelectListeners, fn);
+        },
+
+        // EBS submission sent by Salesforce on Business manager → "Create EBS"
+        // (the whole POST /illustrations/{id}/submissions response):
+        // fn(submission, { requestId, illustrationId, clientId, via: 'event' | 'props' | 'replay' }).
+        // Replays the last one immediately, so late subscribers still get it.
+        onCreateEbs(fn) {
+            createEbsListeners.push(fn);
+            if (api.ebsSubmission) fn(api.ebsSubmission, { ...api.ebsInfo, via: "replay" });
+            return remove(createEbsListeners, fn);
         },
 
         // Size hint in CSS px; host may honor, clamp or ignore.
@@ -219,16 +222,6 @@ App.salesforce = (function () {
             );
         },
 
-        // Tell the host the app is up (pages rendered, listeners attached). Sent once; the
-        // host answers by (re)sending the current 'employeeselect'. Call from App.onPageReady.
-        notifyAppReady() {
-            if (appReadySent) return api.session;
-            appReadySent = true;
-            return api.session.then(({ bridge }) =>
-                bridge.notify("ui/events/dispatch", { eventType: "appready", detail: {} })
-            );
-        },
-
         // ── c-illustration-embedding helpers ──────────────────────────────
         // Current employees passed by the host (loaded via Apex in Salesforce).
         getEmployees() {
@@ -236,11 +229,6 @@ App.salesforce = (function () {
         },
         getSelectedEmployeeId() {
             return api.uiState.props?.selectedEmployeeId ?? null;
-        },
-        // App → Salesforce: open a Lightning tab (the frame can't navigate Lightning itself).
-        // Default: the Client Illustration list ("Client_Illustration").
-        navigateToTab(apiName = "Client_Illustration") {
-            return api.dispatchEvent("navigatetab", { apiName });
         },
         // App → Salesforce: the user picked an employee inside the WaveMaker app.
         // Host updates selectedEmployeeId, broadcasts to the Lightning page and shows a toast.
@@ -250,23 +238,14 @@ App.salesforce = (function () {
         },
     };
 
-    // Deliver a Salesforce-initiated employee once per requestId and channel. The props copy
-    // can arrive before the WaveMaker pages are ready; the event copy arrives after 'appready'.
+    // Deliver a Salesforce-initiated employee once per requestId (event and props both carry it).
     function emitEmployeeSelect(employee, info) {
         if (!employee || typeof employee !== "object") return;
         const requestId = info.requestId ?? null;
-        const channel = info.via === "event" ? "event" : "props";
-        if (requestId && requestId === lastRequestIdByChannel[channel]) return;
-        lastRequestIdByChannel[channel] = requestId;
+        if (requestId && requestId === lastEmployeeRequestId) return;
         lastEmployeeRequestId = requestId;
         api.selectedEmployee = employee;
-        api.selectedParties = info.parties ?? null;
-        const meta = {
-            employeeId: employee.id ?? info.employeeId,
-            parties: api.selectedParties,
-            requestId,
-            via: info.via,
-        };
+        const meta = { employeeId: employee.id ?? info.employeeId, requestId, via: info.via };
         employeeSelectListeners.forEach((fn) => {
             try {
                 fn(employee, meta);
@@ -276,23 +255,30 @@ App.salesforce = (function () {
         });
     }
 
-    // Salesforce sends only primitive props (nested values would fail to cross the
-    // MessagePort): objects/arrays arrive as JSON strings named "<name>Json".
-    // Parse them back, e.g. selectedEmployeeJson → selectedEmployee.
-    function decodeJsonProps(raw) {
-        const props = { ...(raw ?? {}) };
-        Object.keys(props).forEach((key) => {
-            if (!key.endsWith("Json") || typeof props[key] !== "string") return;
+    // Deliver a Salesforce-initiated EBS submission once per requestId (event and props both carry it).
+    function emitCreateEbs(submission, info) {
+        if (!submission || typeof submission !== "object") return;
+        const requestId = info.requestId ?? null;
+        if (requestId && requestId === lastEbsRequestId) return;
+        lastEbsRequestId = requestId;
+        api.ebsSubmission = submission;
+        api.ebsInfo = {
+            requestId,
+            illustrationId: info.illustrationId ?? submission.illustrationId ?? null,
+            clientId: info.clientId ?? null,
+        };
+        const meta = { ...api.ebsInfo, via: info.via };
+        createEbsListeners.forEach((fn) => {
             try {
-                props[key.slice(0, -4)] = JSON.parse(props[key]);
+                fn(submission, meta);
             } catch (e) {
-                console.warn("Salesforce embedding: could not parse prop " + key, e);
+                console.error("Salesforce embedding: onCreateEbs listener failed", e);
             }
         });
-        return props;
     }
 
     function applyState(current) {
+        //api.uiState = { props: current?.props ?? {}, styles: current?.styles ?? {} };
         api.uiState = { props: decodeJsonProps(current?.props), styles: current?.styles ?? {} };
         stateListeners.forEach((fn) => {
             try {
@@ -304,11 +290,11 @@ App.salesforce = (function () {
         // Fallback: the row also arrives in props, in case the event came before we subscribed.
         const p = api.uiState.props;
         if (p.selectionRequestId && p.selectedEmployee) {
-            emitEmployeeSelect(p.selectedEmployee, {
-                requestId: p.selectionRequestId,
-                parties: p.selectionParties,
-                via: "props",
-            });
+            emitEmployeeSelect(p.selectedEmployee, { requestId: p.selectionRequestId, via: "props" });
+        }
+        // Same for "Create EBS": the submission is also in props.
+        if (p.ebsRequestId && p.ebsSubmission) {
+            emitCreateEbs(p.ebsSubmission, { requestId: p.ebsRequestId, via: "props" });
         }
     }
 
@@ -325,12 +311,46 @@ App.salesforce = (function () {
                 detail.employee ?? api.getEmployees().find((e) => e.id === detail.employeeId) ?? null;
             emitEmployeeSelect(employee, {
                 employeeId: detail.employeeId,
-                parties: detail.parties,
                 requestId: detail.requestId,
                 via: "event",
             });
         }
+        // detail: { submission, illustrationId, clientId, requestId, origin: 'salesforce' }
+        if (eventType === "createEBS" && detail?.origin === "salesforce") {
+            emitCreateEbs(detail.submission, {
+                requestId: detail.requestId,
+                illustrationId: detail.illustrationId,
+                clientId: detail.clientId,
+                via: "event",
+            });
+        }
     }
+
+    // No auto-resizer without the Salesforce package: report content height ourselves.
+    // function startAutoResize() {
+    //     let last = 0;
+    //     let frame = 0;
+    //     const measure = () => {
+    //         frame = 0;
+    //         const h = Math.ceil(
+    //             Math.max(document.documentElement.scrollHeight, document.body?.scrollHeight ?? 0)
+    //         );
+    //         if (h && Math.abs(h - last) > 1) {
+    //             last = h;
+    //             api.resize(h).catch(() => { });
+    //         }
+    //     };
+    //     const schedule = () => {
+    //         if (!frame) frame = requestAnimationFrame(measure);
+    //     };
+    //     if (window.ResizeObserver) {
+    //         const ro = new ResizeObserver(schedule);
+    //         ro.observe(document.documentElement);
+    //         if (document.body) ro.observe(document.body);
+    //     }
+    //     window.addEventListener("load", schedule);
+    //     schedule();
+    // }
 
     api.session = sfBootstrap().then(async ({ port, hostAppOrigin, instanceId }) => {
         const bridge = sfCreateBridge(port);
@@ -367,9 +387,8 @@ App.salesforce = (function () {
         return { bridge, port, hostAppOrigin, instanceId: api.instanceId };
     });
 
-    // No auto-resize: the Salesforce component sizes the frame to the space on the page
-    // and the app scrolls inside it. Reporting the content height back made the frame
-    // grow forever (the app's full-height layout grew with the frame on every report).
+    // Start resizing once connected (no-op when standalone).
+    //api.session.then(startAutoResize, () => { });
 
     // Standalone / failed bootstrap must not surface as unhandled rejections.
     api.session.catch((err) => {
@@ -379,33 +398,131 @@ App.salesforce = (function () {
     return api;
 })();
 
+// ── Page navigation for Salesforce requests ─────────────────────────────────
+// A request can arrive while the app is still starting, so navigation waits for the
+// first App.onPageReady (the router is up by then).
+var sfPageIsReady = false;
+var sfAfterPageReady = [];
+var sfNavigationRequested = false; // Salesforce asked for a page (e.g. Create EBS) → skip the home page
+function sfWhenPageReady(fn) {
+    sfNavigationRequested = true;
+    if (sfPageIsReady) fn();
+    else sfAfterPageReady.push(fn);
+}
+
+// Resolves once the Salesforce bridge has applied its first state (at once when standalone),
+// so requests carried in the initial props are known; gives up after timeoutMs.
+function sfWhenSettled(timeoutMs) {
+    return Promise.race([
+        App.salesforce.session.then(function () { }, function () { }),
+        new Promise(function (resolve) {
+            setTimeout(resolve, timeoutMs);
+        }),
+    ]);
+}
+
+// Open a WaveMaker page. Uses the app action "goToPage_<pageName>" when it exists;
+// otherwise any gotoPage navigation action can open it, because the pageName
+// passed in data overrides the action's own page.
+function sfGoToPage(pageName) {
+    var actions = App.Actions || {};
+    var own = actions["goToPage_" + pageName];
+    if (own && typeof own.invoke === "function") return own.invoke();
+    var key = Object.keys(actions).find(function (k) {
+        var a = actions[k];
+        return a && a.config && a.config.operation === "gotoPage" && typeof a.invoke === "function";
+    });
+    if (key) return actions[key].invoke({ data: { pageName: pageName } });
+    console.warn("Salesforce embedding: no navigation action available to open page '" + pageName + "'");
+}
+
+/* 
+Salesforce Microfrontend UI Embedding - End
+*/
+
+
+/*
+ * Default home page
+ * Page opened when the app is loaded at its root URL, e.g. "clientIllustrationList".
+ * Leave "" to keep WaveMaker's own home page.
+ */
+App.homePageConfig = {
+    page: ""
+};
+
+// True when the document was loaded at the app root (no page in the path or hash).
+// Uses the original document URL, because the router may already have replaced it.
+// In Salesforce the app is loaded at /app/c__<bundle>, which also counts as the root.
+function appOpenedAtRoot() {
+    var nav = window.performance && window.performance.getEntriesByType
+        ? window.performance.getEntriesByType("navigation")[0]
+        : null;
+    var url;
+    try {
+        url = new URL((nav && nav.name) || location.href, location.href);
+    } catch (e) {
+        url = location;
+    }
+    var hash = (url.hash || "").replace(/^#\/?/, "").split("?")[0];
+    if (hash) return false;
+    var path = url.pathname || "/";
+    var lastSegment = path.split("/").filter(Boolean).pop() || "";
+    return path === "/" || path.endsWith("/") || /\.html?$/i.test(lastSegment) || /^\/app\/c__[^/]+\/?$/.test(path);
+}
+
+/*
+ * Runs before the app UI is initialized (first load only).
+ * Decides the target home page and remembers whether the app was opened at its root URL,
+ * so deep links to a specific page are never overridden. The redirect itself happens in App.onPageReady.
+ */
+App.onBeforeAppReady = function () {
+    App.homeRedirect = {
+        target: (App.homePageConfig && App.homePageConfig.page) || "",
+        pending: appOpenedAtRoot()
+    };
+};
+
+var appActivePageName = null;
+
+/*
+ * Use App.getDependency for Dependency Injection
+ * eg: var DialogService = App.getDependency('DialogService');
+ */
+
 /* perform any action on the variables within this block(on-page-load) */
 App.onAppVariablesReady = function () {
     /*
      * variables can be accessed through 'App.Variables' property here
      * e.g. App.Variables.staticVariable1.getData()
      */
+    // Salesforce Microfrontend UI Embedding
     function setVariable(name, value) {
         var v = App.Variables && App.Variables[name];
         if (v) v.dataSet = value;
         else console.warn("Salesforce embedding: app variable '" + name + "' not found");
     }
 
-    // Client row sent by Salesforce on "Start illustration":
-    // { id, clientId, name, displayName, title, forename, surname, externalRef,
-    //   dateOfBirth, adviserId, adviserName, avatarInitials }
+    // Row sent by Salesforce on "Create Illustration":
+    // { id, name, department, title, email, phone, salary, location, hireDate, status, avatarInitials }
     App.salesforce.onEmployeeSelect(function (employee, info) {
         setVariable("selectedEmployee", employee);
-        // Optional app-level Model variable for the dialog's parties
-        if (App.Variables && App.Variables.illustrationParties) {
-            App.Variables.illustrationParties.dataSet = info.parties || {};
-        }
-        console.log("employeeselect from Salesforce:", employee.name, info.parties, info.requestId, info.via);
+        console.log("employeeselect from Salesforce:", employee.name, info.requestId, info.via);
     });
 
-    // Host props also carry the selected client: keep selectedEmployee in sync with them.
+    // Full employee list pushed by the host
     App.salesforce.onUiStateChange(function (props) {
         if (props && props.selectedEmployee) setVariable("selectedEmployee", props.selectedEmployee);
+    });
+
+    // "Create EBS" in Salesforce (Business manager → Illustration summary): the whole
+    // submission response, e.g. { submissionId, submissionRef, illustrationId, productCode,
+    // status, currentScreen, createdAt, updatedAt, submittedAt }.
+    App.salesforce.onCreateEbs(function (submission, info) {
+        setVariable("ebsSubmissionData", submission);
+        console.log("createEBS from Salesforce:", submission.submissionRef, info.requestId, info.via);
+        sfWhenPageReady(function () {
+            sfGoToPage("IndividualSavingsAccount");
+        });
     });
 };
 
@@ -427,12 +544,33 @@ App.onSessionTimeout = function () {
  * $activePageEl  : page jQuery element
  */
 App.onPageReady = function (activePageName, activePageScope, $activePageEl) {
-    // Salesforce data that arrived before this page was ready: apply it now.
-    if (App.salesforce && App.salesforce.selectedEmployee && App.Variables && App.Variables.selectedEmployee) {
-        App.Variables.selectedEmployee.dataSet = App.salesforce.selectedEmployee;
+    console.log("Page Ready")
+    appActivePageName = activePageName;
+
+    // Salesforce Microfrontend UI Embedding: run navigations queued before the first page was up.
+    sfPageIsReady = true;
+    sfAfterPageReady.splice(0).forEach(function (fn) {
+        try {
+            fn();
+        } catch (e) {
+            console.error("Salesforce embedding: page navigation failed", e);
+        }
+    });
+
+    // Configurable home page: redirect once on first load at the root URL.
+    // A page requested by Salesforce (e.g. Create EBS → IndividualSavingsAccount) takes priority,
+    // including one that arrives with the bridge's first state, so wait for that first.
+    var homeRedirect = App.homeRedirect;
+    if (homeRedirect && homeRedirect.pending) {
+        homeRedirect.pending = false;
+        if (homeRedirect.target) {
+            sfWhenSettled(5000).then(function () {
+                if (!sfNavigationRequested && homeRedirect.target !== appActivePageName) {
+                    sfGoToPage(homeRedirect.target);
+                }
+            });
+        }
     }
-    // Tell Salesforce we're ready to receive 'employeeselect' (sent once per session).
-    if (App.salesforce && App.salesforce.notifyAppReady) App.salesforce.notifyAppReady();
 };
 
 /*

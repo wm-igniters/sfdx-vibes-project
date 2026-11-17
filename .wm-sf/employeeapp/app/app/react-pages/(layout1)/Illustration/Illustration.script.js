@@ -67,7 +67,7 @@ export default function addPageScript(App, Page) {
       Page.Variables.svCreateIllustration.setInput({
           RequestBody: {
               "clientId": App.Variables.selectedEmployee.dataSet.clientId, // fetch client id from salesforce app and pass here
-              "productCode": "PISA",
+              "productCode": "RA",
               "preparedByAdviserId": App.Variables.selectedEmployee.dataSet.adviserId,
               "accountOwner": {
                   "title": owner.ffTitle.datavalue,

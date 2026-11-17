@@ -6,7 +6,7 @@ export const WMAppProperties = {
   "platformType" : "WEB",
   "type" : "APPLICATION",
   "version" : "1.0.0",
-  "homePage" : "Illustration",
+  "homePage" : "blank",
   "serviceDefSources" : "STATIC",
   "defaultLanguage" : "en",
   "preferBrowserLang" : "true",

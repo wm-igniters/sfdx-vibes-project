@@ -7,6 +7,6 @@ interface Config {
   allowedRoles?: string[];
 }
 
-const configs:Config[] = [{"name":"Illustration","type":"PAGE","params":[],"permission":"Authenticated"},{"name":"clientIllustrationList","type":"PAGE","params":[],"permission":"Authenticated"},{"name":"printIllustration","type":"PAGE","params":[],"permission":"Authenticated"}];
+const configs:Config[] = [{"name":"Illustration","type":"PAGE","params":[],"permission":"Authenticated"},{"name":"IndividualSavingsAccount","type":"PAGE","params":[],"permission":"Authenticated"},{"name":"blank","type":"PAGE","params":[],"permission":"Authenticated"},{"name":"printIllustration","type":"PAGE","params":[],"permission":"Authenticated"}];
 
 export default configs;

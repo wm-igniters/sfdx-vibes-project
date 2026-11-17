@@ -882,6 +882,162 @@
             }
           }
         }
+      },
+      "navy-cta" : {
+        "mapping" : {
+          "background" : {
+            "value" : "#1F3864ff"
+          },
+          "color" : {
+            "value" : "{color.white.@.value}"
+          },
+          "font-size" : {
+            "value" : "{label.large.font-size.value}"
+          },
+          "font-family" : {
+            "value" : "{label.large.font-family.value}"
+          },
+          "font-weight" : {
+            "value" : "{font.weight.700.value}"
+          },
+          "line-height" : {
+            "value" : "{label.large.line-height.value}"
+          },
+          "letter-spacing" : {
+            "value" : "{label.large.letter-spacing.value}"
+          },
+          "border" : {
+            "color" : {
+              "value" : "#1F3864ff"
+            },
+            "width" : {
+              "value" : "{border.width.1.value}"
+            },
+            "style" : {
+              "value" : "{border.style.solid.value}"
+            }
+          },
+          "radius" : {
+            "value" : "{radius.xs.value}"
+          },
+          "padding" : {
+            "value" : "{space.0.value} {space.6.value}"
+          },
+          "height" : {
+            "value" : "{space.11.value}"
+          },
+          "gap" : {
+            "value" : "{space.3.value}"
+          },
+          "icon-size" : {
+            "value" : "{icon.size.md.value}"
+          },
+          "shadow" : {
+            "@" : {
+              "value" : "{elevation.shadow.1.value}"
+            }
+          },
+          "state" : {
+            "layer" : {
+              "color" : {
+                "value" : "{color.white.@.value}"
+              }
+            }
+          }
+        }
+      },
+      "close-icon" : {
+        "mapping" : {
+          "background" : {
+            "value" : "{color.transparent.value}"
+          },
+          "color" : {
+            "value" : "{color.on-surface.variant.@.value}"
+          },
+          "border" : {
+            "color" : {
+              "value" : "{color.outline.variant.value}"
+            },
+            "width" : {
+              "value" : "{border.width.1.value}"
+            },
+            "style" : {
+              "value" : "{border.style.solid.value}"
+            }
+          },
+          "radius" : {
+            "value" : "{radius.xs.value}"
+          },
+          "padding" : {
+            "value" : "{space.0.value}"
+          },
+          "min-width" : {
+            "value" : "{space.5.value}"
+          },
+          "height" : {
+            "value" : "{space.5.value}"
+          },
+          "icon-size" : {
+            "value" : "{icon.size.sm.value}"
+          }
+        }
+      },
+      "link-action" : {
+        "mapping" : {
+          "background" : {
+            "value" : "{color.transparent.value}"
+          },
+          "color" : {
+            "value" : "{color.on-surface.@.value}"
+          },
+          "font-size" : {
+            "value" : "{body.medium.font-size.value}"
+          },
+          "font-family" : {
+            "value" : "{body.medium.font-family.value}"
+          },
+          "font-weight" : {
+            "value" : "{font.weight.400.value}"
+          },
+          "line-height" : {
+            "value" : "{body.medium.line-height.value}"
+          },
+          "letter-spacing" : {
+            "value" : "{body.medium.letter-spacing.value}"
+          },
+          "text-transform" : {
+            "value" : "none"
+          },
+          "border" : {
+            "color" : {
+              "value" : "{color.transparent.value}"
+            },
+            "width" : {
+              "value" : "{border.width.0.value}"
+            },
+            "style" : {
+              "value" : "{border.style.none.value}"
+            }
+          },
+          "radius" : {
+            "value" : "{radius.none.value}"
+          },
+          "padding" : {
+            "value" : "{space.0.value}"
+          },
+          "min-width" : {
+            "value" : "auto"
+          },
+          "height" : {
+            "value" : "{space.6.value}"
+          },
+          "gap" : {
+            "value" : "{space.2.value}"
+          },
+          "icon-size" : {
+            "value" : "{icon.size.md.value}"
+          }
+        }
       }
     },
     "meta" : {
@@ -946,6 +1102,18 @@
         },
         "transparent-icon-xs" : {
           "source" : "user"
+        },
+        "navy-cta" : {
+          "source" : "aira",
+          "description" : "Dark navy-blue CTA button with white bold text and right-arrow icon (Complete entire form / Continue)"
+        },
+        "close-icon" : {
+          "source" : "aira",
+          "description" : "Small transparent close (X) icon button with a thin outline"
+        },
+        "link-action" : {
+          "source" : "aira",
+          "description" : "Underlined link-style text action with a leading icon (Print / Exit)"
         }
       }
     }

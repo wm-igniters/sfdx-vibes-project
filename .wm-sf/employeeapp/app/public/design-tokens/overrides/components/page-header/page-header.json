@@ -42,6 +42,33 @@
             "value" : "60px"
           }
         }
+      },
+      "sjp" : {
+        "mapping" : {
+          "background" : {
+            "value" : "{color.white.@.value}"
+          },
+          "color" : {
+            "value" : "{color.on-surface.@.value}"
+          },
+          "height" : {
+            "value" : "auto"
+          },
+          "border" : {
+            "color" : {
+              "value" : "#2EC4C6ff"
+            },
+            "width" : {
+              "value" : "0px 0px 2px 0px"
+            },
+            "style" : {
+              "value" : "{border.style.solid.value}"
+            }
+          },
+          "shadow" : {
+            "value" : "{elevation.shadow.none.value}"
+          }
+        }
       }
     },
     "meta" : {
@@ -53,6 +80,10 @@
         "dark-header-elevated" : {
           "source" : "aira",
           "description" : "Dark theme elevated page header — surface container with stronger shadow for depth"
+        },
+        "sjp" : {
+          "source" : "aira",
+          "description" : "St. James's Place header — white background with a thin turquoise bottom divider"
         }
       }
     },

@@ -895,6 +895,126 @@
             "value" : "{elevation.shadow.none.value}"
           }
         }
+      },
+      "sjp-header" : {
+        "mapping" : {
+          "background" : {
+            "value" : "{color.white.@.value}"
+          },
+          "border" : {
+            "color" : {
+              "value" : "#2EC4C6ff"
+            },
+            "width" : {
+              "value" : "0px 0px 2px 0px"
+            },
+            "style" : {
+              "value" : "{border.style.solid.value}"
+            },
+            "radius" : {
+              "value" : "{radius.none.value}"
+            }
+          },
+          "shadow" : {
+            "value" : "{elevation.shadow.none.value}"
+          }
+        }
+      },
+      "notification" : {
+        "mapping" : {
+          "background" : {
+            "value" : "{color.surface.variant.@.value}"
+          },
+          "border" : {
+            "color" : {
+              "value" : "{color.outline.variant.value}"
+            },
+            "width" : {
+              "value" : "{border.width.1.value}"
+            },
+            "style" : {
+              "value" : "{border.style.solid.value}"
+            },
+            "radius" : {
+              "value" : "{radius.none.value}"
+            }
+          },
+          "shadow" : {
+            "value" : "{elevation.shadow.1.value}"
+          }
+        }
+      },
+      "need-help" : {
+        "mapping" : {
+          "background" : {
+            "value" : "#DCEAF4ff"
+          },
+          "border" : {
+            "color" : {
+              "value" : "#B9D2E6ff"
+            },
+            "width" : {
+              "value" : "{border.width.1.value}"
+            },
+            "style" : {
+              "value" : "{border.style.solid.value}"
+            },
+            "radius" : {
+              "value" : "{radius.xs.value}"
+            }
+          },
+          "shadow" : {
+            "value" : "{elevation.shadow.none.value}"
+          }
+        }
+      },
+      "wizard-card" : {
+        "mapping" : {
+          "background" : {
+            "value" : "{color.surface.@.value}"
+          },
+          "border" : {
+            "color" : {
+              "value" : "{color.border.@.value}"
+            },
+            "width" : {
+              "value" : "{border.width.1.value}"
+            },
+            "style" : {
+              "value" : "{border.style.solid.value}"
+            },
+            "radius" : {
+              "value" : "{radius.none.value}"
+            }
+          },
+          "shadow" : {
+            "value" : "{elevation.shadow.1.value}"
+          }
+        }
+      },
+      "confirm-box-error" : {
+        "mapping" : {
+          "background" : {
+            "value" : "{color.surface.@.value}"
+          },
+          "border" : {
+            "color" : {
+              "value" : "{color.error.@.value}"
+            },
+            "width" : {
+              "value" : "{border.width.2.value}"
+            },
+            "style" : {
+              "value" : "{border.style.solid.value}"
+            },
+            "radius" : {
+              "value" : "{radius.xs.value}"
+            }
+          },
+          "shadow" : {
+            "value" : "{elevation.shadow.none.value}"
+          }
+        }
       }
     },
     "meta" : {
@@ -1025,6 +1145,26 @@
         "card-header" : {
           "source" : "aira",
           "description" : "Dark navy (#1F3864) full-width header band inside the illustration card"
+        },
+        "sjp-header" : {
+          "source" : "aira",
+          "description" : "St. James's Place header band — white background with a thin turquoise bottom divider"
+        },
+        "notification" : {
+          "source" : "aira",
+          "description" : "Light-grey notification box with a subtle border and soft shadow"
+        },
+        "need-help" : {
+          "source" : "aira",
+          "description" : "Light-blue Need Help card with a soft blue border"
+        },
+        "wizard-card" : {
+          "source" : "aira",
+          "description" : "White wizard container with a subtle 1px border and soft shadow"
+        },
+        "confirm-box-error" : {
+          "source" : "aira",
+          "description" : "Red-bordered confirmation box — white background with a 2px error (red) border for declaration and confirm banners that cannot be amended later"
         }
       }
     }

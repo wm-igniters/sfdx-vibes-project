@@ -142,8 +142,17 @@
 
             <footer class="sum-footer">
                 <template lwc:if={showCreateEbs}>
-                    <button type="button" class="sum-primary" disabled={isLoading} onclick={handleCreateEbs}>
-                        Create EBS
+                    <template lwc:if={ebsError}>
+                        <p class="sum-ebs-error" role="alert">{ebsError}</p>
+                    </template>
+                    <button
+                        type="button"
+                        class="sum-primary"
+                        disabled={createEbsDisabled}
+                        aria-busy={isCreatingEbs}
+                        onclick={handleCreateEbs}
+                    >
+                        {createEbsLabel}
                     </button>
                 </template>
             </footer>
